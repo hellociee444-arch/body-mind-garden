@@ -4,61 +4,26 @@ import RecipeCard from "@/components/RecipeCard";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
+import { receitas } from "@/data/content";
 import saladBowl from "@/assets/recipe-salad-bowl.jpg";
 import smoothie from "@/assets/recipe-smoothie.jpg";
 import breakfast from "@/assets/recipe-breakfast.jpg";
 
 const Recipes = () => {
-  const recipes = [
-    {
-      title: "Bowl de Quinoa com Abacate e Vegetais Coloridos",
-      image: saladBowl,
-      time: "25 min",
-      calories: "420",
-      rating: 4.9,
-      tags: ["Vegana", "Low Carb", "Rico em proteína"],
-    },
-    {
-      title: "Smoothie Verde Detox com Espinafre e Banana",
-      image: smoothie,
-      time: "10 min",
-      calories: "180",
-      rating: 4.8,
-      tags: ["Detox", "Rápido", "Energético"],
-    },
-    {
-      title: "Overnight Oats com Frutas Vermelhas e Mel",
-      image: breakfast,
-      time: "5 min",
-      calories: "310",
-      rating: 4.9,
-      tags: ["Café da manhã", "Prático", "Sem glúten"],
-    },
-    {
-      title: "Bowl de Quinoa com Abacate e Vegetais Coloridos",
-      image: saladBowl,
-      time: "25 min",
-      calories: "420",
-      rating: 4.9,
-      tags: ["Vegana", "Low Carb", "Rico em proteína"],
-    },
-    {
-      title: "Smoothie Verde Detox com Espinafre e Banana",
-      image: smoothie,
-      time: "10 min",
-      calories: "180",
-      rating: 4.8,
-      tags: ["Detox", "Rápido", "Energético"],
-    },
-    {
-      title: "Overnight Oats com Frutas Vermelhas e Mel",
-      image: breakfast,
-      time: "5 min",
-      calories: "310",
-      rating: 4.9,
-      tags: ["Café da manhã", "Prático", "Sem glúten"],
-    },
-  ];
+  const imageMap: { [key: string]: string } = {
+    "/src/assets/recipe-salad-bowl.jpg": saladBowl,
+    "/src/assets/recipe-smoothie.jpg": smoothie,
+    "/src/assets/recipe-breakfast.jpg": breakfast,
+  };
+
+  const recipes = receitas.map(recipe => ({
+    title: recipe.nome,
+    image: imageMap[recipe.image],
+    time: recipe.time,
+    calories: recipe.calories,
+    rating: recipe.rating,
+    tags: recipe.tags,
+  }));
 
   return (
     <div className="min-h-screen flex flex-col">
