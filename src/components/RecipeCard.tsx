@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Clock, Star } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -9,11 +10,13 @@ interface RecipeCardProps {
   calories: string;
   rating: number;
   tags: string[];
+  recipeId: number;
 }
 
-const RecipeCard = ({ title, image, time, calories, rating, tags }: RecipeCardProps) => {
+const RecipeCard = ({ title, image, time, calories, rating, tags, recipeId }: RecipeCardProps) => {
   return (
-    <Card className="group overflow-hidden border-none shadow-card hover:shadow-soft transition-all duration-300 hover:-translate-y-1">
+    <Link to={`/receita/${recipeId}`} className="block">
+      <Card className="group overflow-hidden border-none shadow-card hover:shadow-soft transition-all duration-300 hover:-translate-y-1 cursor-pointer">
       <div className="relative overflow-hidden aspect-square">
         <img 
           src={image} 
@@ -50,7 +53,8 @@ const RecipeCard = ({ title, image, time, calories, rating, tags }: RecipeCardPr
           ))}
         </div>
       </CardContent>
-    </Card>
+      </Card>
+    </Link>
   );
 };
 

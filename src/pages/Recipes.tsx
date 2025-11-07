@@ -58,7 +58,7 @@ const Recipes = () => {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {recipes.map((recipe, index) => (
-                <RecipeCard key={index} {...recipe} />
+                <RecipeCard key={index} {...recipe} recipeId={index} />
               ))}
             </div>
           </div>
