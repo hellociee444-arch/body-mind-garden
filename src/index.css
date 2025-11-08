@@ -8,11 +8,12 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Natural green palette */
-    --primary: 122 38% 65%;
+    /* Vibrant green palette */
+    --primary: 142 76% 45%;
     --primary-foreground: 0 0% 100%;
-    --primary-light: 122 38% 75%;
-    --primary-dark: 122 41% 55%;
+    --primary-light: 142 70% 55%;
+    --primary-dark: 142 80% 35%;
+    --primary-glow: 142 70% 65%;
     
     /* Neutral beige and gray */
     --background: 40 20% 97%;
@@ -30,35 +31,38 @@ All colors MUST be HSL.
     --muted: 40 20% 93%;
     --muted-foreground: 30 8% 45%;
     
-    --accent: 122 35% 85%;
-    --accent-foreground: 122 41% 30%;
+    --accent: 142 65% 90%;
+    --accent-foreground: 142 80% 25%;
     
     --destructive: 0 70% 60%;
     --destructive-foreground: 0 0% 100%;
     
     --border: 40 15% 88%;
     --input: 40 15% 88%;
-    --ring: 122 38% 65%;
+    --ring: 142 76% 45%;
     
     --radius: 1rem;
     
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(122, 38%, 75%) 0%, hsl(122, 41%, 64%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(142, 76%, 45%) 0%, hsl(142, 70%, 55%) 100%);
     --gradient-soft: linear-gradient(180deg, hsl(40, 20%, 97%) 0%, hsl(0, 0%, 100%) 100%);
+    --gradient-accent: linear-gradient(120deg, hsl(142, 76%, 45%) 0%, hsl(162, 70%, 50%) 100%);
     
     /* Shadows */
-    --shadow-soft: 0 4px 20px -2px hsl(122 38% 65% / 0.15);
+    --shadow-soft: 0 4px 20px -2px hsl(142 76% 45% / 0.2);
     --shadow-card: 0 2px 12px -2px hsl(30 10% 25% / 0.08);
+    --shadow-glow: 0 0 30px hsl(142 76% 45% / 0.3);
     
     /* Animation */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .dark {
-    --primary: 122 38% 70%;
+    --primary: 142 70% 50%;
     --primary-foreground: 30 10% 10%;
-    --primary-light: 122 38% 75%;
-    --primary-dark: 122 41% 60%;
+    --primary-light: 142 70% 60%;
+    --primary-dark: 142 76% 40%;
+    --primary-glow: 142 65% 70%;
     
     --background: 30 10% 12%;
     --foreground: 40 20% 95%;
@@ -75,18 +79,19 @@ All colors MUST be HSL.
     --muted: 30 10% 18%;
     --muted-foreground: 40 15% 65%;
     
-    --accent: 122 35% 25%;
-    --accent-foreground: 122 38% 85%;
+    --accent: 142 60% 20%;
+    --accent-foreground: 142 70% 85%;
     
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
     
     --border: 30 10% 22%;
     --input: 30 10% 22%;
-    --ring: 122 38% 70%;
+    --ring: 142 70% 50%;
     
     --shadow-soft: 0 4px 20px -2px hsl(0 0% 0% / 0.3);
     --shadow-card: 0 2px 12px -2px hsl(0 0% 0% / 0.2);
+    --shadow-glow: 0 0 30px hsl(142 70% 50% / 0.4);
   }
 }
 

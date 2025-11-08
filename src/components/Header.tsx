@@ -18,15 +18,15 @@ const Header = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
+    <header className="sticky top-0 z-50 w-full border-b bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80 shadow-sm animate-slide-down">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
-            <div className="rounded-full bg-primary p-2">
-              <Leaf className="h-5 w-5 text-primary-foreground" />
+          <Link to="/" className="flex items-center gap-2 group">
+            <div className="rounded-full bg-gradient-accent p-2 group-hover:shadow-glow transition-all duration-300">
+              <Leaf className="h-5 w-5 text-primary-foreground group-hover:rotate-12 transition-transform" />
             </div>
-            <span className="font-heading text-xl font-bold text-foreground">Viva Leve</span>
+            <span className="font-heading text-xl font-bold text-foreground group-hover:text-primary transition-colors">Viva Leve</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -35,7 +35,7 @@ const Header = () => {
               <Link
                 key={item.name}
                 to={item.path}
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                className="text-sm font-medium text-muted-foreground transition-all duration-300 hover:text-primary relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
               >
                 {item.name}
               </Link>
