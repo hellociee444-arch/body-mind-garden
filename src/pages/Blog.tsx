@@ -65,18 +65,19 @@ const Blog = () => {
                   to={`/blog/${post.id}`}
                   className="block group"
                 >
-                  <Card className="overflow-hidden border-none shadow-card hover:shadow-glow transition-all duration-500 transform hover:-translate-y-1 animate-fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
+                  <Card className="overflow-hidden border-none shadow-card hover:shadow-hover transition-all duration-500 transform hover:-translate-y-2 animate-fade-in-up border border-border/50 hover:border-primary/30 hover:bg-gradient-to-br hover:from-accent/30 hover:to-card" style={{animationDelay: `${index * 0.1}s`}}>
                     <div className="grid md:grid-cols-5 gap-6">
-                      <div className="md:col-span-2 overflow-hidden">
+                      <div className="md:col-span-2 overflow-hidden relative">
                         <img 
                           src={post.image} 
                           alt={post.title}
-                          className="w-full h-full object-cover min-h-[200px] group-hover:scale-110 transition-transform duration-500"
+                          className="w-full h-full object-cover min-h-[200px] group-hover:scale-110 group-hover:brightness-105 transition-all duration-700"
                         />
+                        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                       </div>
                       <CardContent className="md:col-span-3 p-6 space-y-4">
-                        <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                          <Badge variant="secondary" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                        <div className="flex items-center gap-3 text-sm text-muted-foreground transition-all duration-500 group-hover:text-foreground group-hover:translate-x-1">
+                          <Badge variant="secondary" className="group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500">
                             {post.category}
                           </Badge>
                           <span>{post.date}</span>
@@ -84,17 +85,17 @@ const Blog = () => {
                           <span>{post.readTime} de leitura</span>
                         </div>
                         
-                        <h2 className="font-heading text-2xl font-bold group-hover:text-primary transition-colors">
+                        <h2 className="font-heading text-2xl font-bold text-foreground group-hover:text-primary transition-all duration-500 group-hover:translate-x-1">
                           {post.title}
                         </h2>
                         
-                        <p className="text-muted-foreground leading-relaxed">
+                        <p className="text-muted-foreground leading-relaxed transition-all duration-500 group-hover:text-foreground">
                           {post.excerpt}
                         </p>
                         
-                        <div className="flex items-center text-primary font-medium group-hover:gap-3 gap-2 transition-all">
-                          Ler artigo completo
-                          <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                        <div className="flex items-center text-primary font-medium group-hover:gap-3 gap-2 transition-all duration-500">
+                          <span className="group-hover:translate-x-1 transition-transform duration-500">Ler artigo completo</span>
+                          <ArrowRight className="h-4 w-4 group-hover:translate-x-2 transition-transform duration-500" />
                         </div>
                       </CardContent>
                     </div>
