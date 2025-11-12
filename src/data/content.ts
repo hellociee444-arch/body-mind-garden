@@ -87,6 +87,85 @@ export const receitas = [
     calories: "290",
     rating: 4.9,
     tags: ["Café da manhã", "Prático", "Sem glúten"]
+  },
+  {
+    nome: "Avocado Toast",
+    ingredientes: [
+      "1 fatia de pão integral",
+      "1/2 abacate pequeno (80 g)",
+      "Suco de 1/2 limão",
+      "Sal e pimenta a gosto",
+      "1 fio de azeite",
+      "1 ovo (opcional)",
+      "Sementes (chia, linhaça ou gergelim)"
+    ],
+    modo_preparo: [
+      "Amasse o abacate com limão, sal e pimenta.",
+      "Torre o pão e espalhe o creme de abacate.",
+      "Finalize com sementes e ovo, se desejar."
+    ],
+    dicas: [
+      "Adicione tomate ou rúcula para mais frescor.",
+      "Use pão sem glúten se preferir.",
+      "O ovo pochê traz cremosidade extra."
+    ],
+    image: "/src/assets/recipe-avocado-toast.jpg",
+    time: "10 min",
+    calories: "250",
+    rating: 4.7,
+    tags: ["Rápido", "Vegetariano", "Proteico"]
+  },
+  {
+    nome: "Bowl de Açaí Energético",
+    ingredientes: [
+      "200 g de polpa de açaí",
+      "1 banana média congelada",
+      "100 ml de leite vegetal ou iogurte",
+      "1 colher de sopa de aveia",
+      "1 colher de chá de mel (opcional)",
+      "Frutas frescas e granola para topping"
+    ],
+    modo_preparo: [
+      "Bata o açaí, banana, leite e aveia até cremoso.",
+      "Sirva em tigela e adicione toppings de frutas e granola."
+    ],
+    dicas: [
+      "Congele as frutas para textura mais cremosa.",
+      "Adicione proteína em pó para pós-treino.",
+      "Varie os toppings com coco ralado ou cacau."
+    ],
+    image: "/src/assets/recipe-acai-bowl.jpg",
+    time: "8 min",
+    calories: "320",
+    rating: 4.8,
+    tags: ["Energético", "Pós-treino", "Antioxidante"]
+  },
+  {
+    nome: "Salmão com Quinoa e Granola Fit",
+    ingredientes: [
+      "150 g de filé de salmão",
+      "1/2 xícara de quinoa crua",
+      "2 colheres de sopa de aveia",
+      "1 colher de sopa de sementes",
+      "1 colher de chá de azeite",
+      "Ervas e limão a gosto"
+    ],
+    modo_preparo: [
+      "Tempere e grelhe o salmão.",
+      "Cozinhe a quinoa até macia.",
+      "Prepare a granola assando aveia, sementes e azeite por 10 min.",
+      "Monte o prato com quinoa, salmão e granola por cima."
+    ],
+    dicas: [
+      "Use salmão selvagem para mais ômega-3.",
+      "Adicione vegetais grelhados.",
+      "A granola pode ser preparada com antecedência."
+    ],
+    image: "/src/assets/recipe-salmon-quinoa.jpg",
+    time: "30 min",
+    calories: "480",
+    rating: 4.9,
+    tags: ["Alto em proteína", "Ômega-3", "Gourmet"]
   }
 ];
 
@@ -123,6 +202,39 @@ export const nutricao = [
     fibras: 6,
     acucares_naturais: 15,
     beneficios: "Fibras, antioxidantes; promove saciedade, digestão e fornece energia sustentada."
+  },
+  {
+    receita: "Avocado Toast",
+    porcao: "1 fatia",
+    calorias: 250,
+    carboidratos: 22,
+    proteinas: 5,
+    gorduras: 15,
+    fibras: 6,
+    acucares_naturais: null,
+    beneficios: "Fonte de gorduras boas e fibras; aumenta saciedade; melhora saúde cardiovascular."
+  },
+  {
+    receita: "Bowl de Açaí Energético",
+    porcao: "1 bowl (300 ml)",
+    calorias: 320,
+    carboidratos: 55,
+    proteinas: 7,
+    gorduras: 9,
+    fibras: 8,
+    acucares_naturais: 25,
+    beneficios: "Rico em antioxidantes; fornece energia; melhora controle glicêmico."
+  },
+  {
+    receita: "Salmão com Quinoa e Granola Fit",
+    porcao: "1 prato (350-400 g)",
+    calorias: 480,
+    carboidratos: 30,
+    proteinas: 35,
+    gorduras: 22,
+    fibras: 5,
+    acucares_naturais: null,
+    beneficios: "Rico em ômega-3; alto teor proteico; antioxidante e anti-inflamatório."
   }
 ];
 

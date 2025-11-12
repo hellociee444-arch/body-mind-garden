@@ -9,6 +9,9 @@ import { receitas, nutricao } from "@/data/content";
 import saladBowl from "@/assets/recipe-salad-bowl.jpg";
 import smoothie from "@/assets/recipe-smoothie.jpg";
 import breakfast from "@/assets/recipe-breakfast.jpg";
+import avocadoToast from "@/assets/recipe-avocado-toast.jpg";
+import acaiBowl from "@/assets/recipe-acai-bowl.jpg";
+import salmonQuinoa from "@/assets/recipe-salmon-quinoa.jpg";
 
 const RecipeDetail = () => {
   const { id } = useParams();
@@ -18,6 +21,9 @@ const RecipeDetail = () => {
     "/src/assets/recipe-salad-bowl.jpg": saladBowl,
     "/src/assets/recipe-smoothie.jpg": smoothie,
     "/src/assets/recipe-breakfast.jpg": breakfast,
+    "/src/assets/recipe-avocado-toast.jpg": avocadoToast,
+    "/src/assets/recipe-acai-bowl.jpg": acaiBowl,
+    "/src/assets/recipe-salmon-quinoa.jpg": salmonQuinoa,
   };
 
   const recipe = receitas[recipeIndex];
