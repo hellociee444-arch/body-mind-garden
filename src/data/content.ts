@@ -273,6 +273,257 @@ export const receitas = [
     calories: "120",
     rating: 4.7,
     tags: ["Detox", "Vegana", "Leve"]
+  },
+  {
+    nome: "Omelete de Claras com Legumes",
+    ingredientes: [
+      "4 claras de ovo",
+      "1/2 pimentão vermelho",
+      "1/2 tomate",
+      "1 punhado de espinafre",
+      "Sal e pimenta a gosto",
+      "1 colher de chá de azeite",
+      "Cúrcuma e pimenta-do-reino (opcional)"
+    ],
+    modo_preparo: [
+      "Pique os legumes em cubos pequenos.",
+      "Bata as claras levemente com sal e pimenta.",
+      "Aqueça uma frigideira antiaderente com azeite.",
+      "Adicione os legumes e refogue por 2 minutos.",
+      "Despeje as claras sobre os legumes e cozinhe até firmar."
+    ],
+    dicas: [
+      "Adicione cúrcuma e pimenta-do-reino para potencializar o efeito anti-inflamatório."
+    ],
+    image: "/src/assets/recipe-omelete-claras.jpg",
+    time: "15 min",
+    calories: "180",
+    rating: 4.7,
+    tags: ["Proteico", "Low Carb", "Café da manhã"]
+  },
+  {
+    nome: "Muffin de Banana e Aveia",
+    ingredientes: [
+      "2 bananas maduras",
+      "1 xícara de aveia",
+      "2 ovos",
+      "1 colher de chá de fermento",
+      "1 colher de chá de canela",
+      "Pitada de sal"
+    ],
+    modo_preparo: [
+      "Amasse as bananas em uma tigela.",
+      "Adicione os ovos, aveia, fermento, canela e sal.",
+      "Misture bem até formar uma massa homogênea.",
+      "Distribua em forminhas de muffin.",
+      "Asse a 180°C por 20-25 minutos."
+    ],
+    dicas: [
+      "Congele por até 1 mês e aqueça 20 segundos no micro-ondas antes de servir."
+    ],
+    image: "/src/assets/recipe-muffin-banana.jpg",
+    time: "30 min",
+    calories: "150",
+    rating: 4.8,
+    tags: ["Café da manhã", "Sem glúten", "Prático"]
+  },
+  {
+    nome: "Pasta de Amendoim Caseira",
+    ingredientes: [
+      "2 xícaras de amendoim torrado sem sal",
+      "Pitada de sal (opcional)",
+      "1 colher de chá de mel (opcional)"
+    ],
+    modo_preparo: [
+      "Coloque o amendoim torrado no processador.",
+      "Bata por 10 minutos até virar creme.",
+      "Adicione sal ou mel se desejar.",
+      "Armazene em pote de vidro na geladeira."
+    ],
+    dicas: [
+      "Bata o amendoim torrado no processador por 10 minutos até virar creme — sem precisar adicionar açúcar ou óleo."
+    ],
+    image: "/src/assets/recipe-pasta-amendoim.jpg",
+    time: "15 min",
+    calories: "90",
+    rating: 4.9,
+    tags: ["Proteico", "Natural", "Versátil"]
+  },
+  {
+    nome: "Bolinho de Frango com Aveia",
+    ingredientes: [
+      "300 g de peito de frango moído",
+      "1/2 xícara de aveia",
+      "1 ovo",
+      "Sal, alho e ervas a gosto",
+      "1 colher de sopa de azeite"
+    ],
+    modo_preparo: [
+      "Misture o frango moído, aveia, ovo e temperos.",
+      "Modele bolinhos do tamanho desejado.",
+      "Asse no forno a 180°C por 20-25 minutos.",
+      "Ou cozinhe na air fryer a 180°C por 15 minutos.",
+      "Sirva com molho de iogurte e salada."
+    ],
+    dicas: [
+      "Asse no forno ou na air fryer para reduzir a gordura."
+    ],
+    image: "/src/assets/recipe-bolinho-frango.jpg",
+    time: "30 min",
+    calories: "160",
+    rating: 4.7,
+    tags: ["Alto em proteína", "Low Carb", "Fit"]
+  },
+  {
+    nome: "Smoothie Verde com Couve",
+    ingredientes: [
+      "1 folha de couve",
+      "1 maçã verde",
+      "Suco de 1/2 limão",
+      "1 pedaço pequeno de gengibre",
+      "200 ml de água ou água de coco",
+      "Gelo a gosto"
+    ],
+    modo_preparo: [
+      "Lave bem a couve e pique grosseiramente.",
+      "Corte a maçã em pedaços.",
+      "Bata todos os ingredientes no liquidificador.",
+      "Sirva imediatamente."
+    ],
+    dicas: [
+      "Beba pela manhã em jejum para estimular o metabolismo."
+    ],
+    image: "/src/assets/recipe-smoothie-couve.jpg",
+    time: "8 min",
+    calories: "120",
+    rating: 4.8,
+    tags: ["Detox", "Energético", "Rápido"]
+  },
+  {
+    nome: "Frango Grelhado com Legumes",
+    ingredientes: [
+      "150 g de peito de frango",
+      "1 abobrinha",
+      "1 cenoura",
+      "Brócolis a gosto",
+      "Limão, alho e ervas para marinar",
+      "Sal e pimenta a gosto"
+    ],
+    modo_preparo: [
+      "Marine o frango com limão, alho e ervas por 30 minutos.",
+      "Corte os legumes em pedaços.",
+      "Grelhe o frango até cozinhar completamente.",
+      "Cozinhe os legumes no vapor ou grelhe levemente.",
+      "Monte o prato e sirva."
+    ],
+    dicas: [
+      "Marine o frango com limão, alho e ervas antes de grelhar para mais sabor e maciez."
+    ],
+    image: "/src/assets/recipe-frango-legumes.jpg",
+    time: "40 min",
+    calories: "280",
+    rating: 4.9,
+    tags: ["Alto em proteína", "Low Carb", "Almoço"]
+  },
+  {
+    nome: "Purê de Batata-Doce com Frango Desfiado",
+    ingredientes: [
+      "2 batatas-doces médias",
+      "150 g de peito de frango",
+      "2 colheres de sopa de requeijão light",
+      "Sal e pimenta a gosto",
+      "Salsinha para decorar"
+    ],
+    modo_preparo: [
+      "Cozinhe as batatas-doces até ficarem macias.",
+      "Amasse e misture com requeijão, sal e pimenta.",
+      "Cozinhe e desfie o frango temperado.",
+      "Monte o prato com purê e frango por cima.",
+      "Decore com salsinha."
+    ],
+    dicas: [
+      "Misture um pouco de requeijão light no purê para mais cremosidade."
+    ],
+    image: "/src/assets/recipe-pure-batata-doce.jpg",
+    time: "35 min",
+    calories: "320",
+    rating: 4.8,
+    tags: ["Reconfortante", "Proteico", "Carboidrato bom"]
+  },
+  {
+    nome: "Overnight Oats em Pote",
+    ingredientes: [
+      "1/2 xícara de aveia",
+      "1/2 xícara de iogurte",
+      "100 ml de leite",
+      "1 colher de chá de chia",
+      "Frutas vermelhas",
+      "Mel a gosto"
+    ],
+    modo_preparo: [
+      "Em um pote de vidro, misture aveia, iogurte, leite e chia.",
+      "Adicione as frutas vermelhas.",
+      "Tampe e leve à geladeira durante a noite.",
+      "Pela manhã, adicione mel e sirva."
+    ],
+    dicas: [
+      "Monte à noite e deixe na geladeira — ideal para café da manhã rápido e nutritivo."
+    ],
+    image: "/src/assets/recipe-overnight-oats-pote.jpg",
+    time: "5 min",
+    calories: "210",
+    rating: 4.9,
+    tags: ["Café da manhã", "Prático", "Nutritivo"]
+  },
+  {
+    nome: "Tapioca com Ovo e Abacate",
+    ingredientes: [
+      "3 colheres de sopa de goma de tapioca",
+      "1 ovo",
+      "1/2 abacate",
+      "Suco de limão",
+      "Sal rosa a gosto"
+    ],
+    modo_preparo: [
+      "Aqueça uma frigideira antiaderente.",
+      "Espalhe a goma de tapioca formando um disco.",
+      "Quando firmar, adicione o ovo.",
+      "Dobre e deixe cozinhar.",
+      "Sirva com abacate amassado temperado com limão e sal."
+    ],
+    dicas: [
+      "Use abacate amassado com limão e sal rosa para sabor e gorduras boas."
+    ],
+    image: "/src/assets/recipe-tapioca-ovo.jpg",
+    time: "12 min",
+    calories: "250",
+    rating: 4.7,
+    tags: ["Sem glúten", "Brasileiro", "Prático"]
+  },
+  {
+    nome: "Arroz Integral com Lentilha e Legumes",
+    ingredientes: [
+      "1 xícara de arroz integral",
+      "1/2 xícara de lentilha",
+      "Legumes variados (cenoura, pimentão)",
+      "Açafrão e alho para temperar",
+      "Sal a gosto"
+    ],
+    modo_preparo: [
+      "Cozinhe o arroz integral com açafrão e alho.",
+      "Cozinhe a lentilha separadamente.",
+      "Salteie os legumes picados.",
+      "Misture tudo e ajuste o sal.",
+      "Sirva quente."
+    ],
+    dicas: [
+      "Cozinhe o arroz com açafrão e alho para aroma e cor dourada natural."
+    ],
+    image: "/src/assets/recipe-arroz-lentilha.jpg",
+    time: "45 min",
+    calories: "280",
+    rating: 4.8,
+    tags: ["Vegano", "Proteico", "Completo"]
   }
 ];
 
@@ -386,6 +637,116 @@ export const nutricao = [
     fibras: 5,
     acucares_naturais: null,
     beneficios: "Rico em vitaminas e minerais; auxilia desintoxicação; hidrata e melhora digestão."
+  },
+  {
+    receita: "Omelete de Claras com Legumes",
+    porcao: "1 omelete média",
+    calorias: 180,
+    carboidratos: 8,
+    proteinas: 20,
+    gorduras: 7,
+    fibras: 2,
+    acucares_naturais: null,
+    beneficios: "Excelente fonte de proteínas magras; rico em vitaminas dos legumes; efeito anti-inflamatório da cúrcuma."
+  },
+  {
+    receita: "Muffin de Banana e Aveia",
+    porcao: "1 muffin médio",
+    calorias: 150,
+    carboidratos: 25,
+    proteinas: 5,
+    gorduras: 4,
+    fibras: 3,
+    acucares_naturais: 8,
+    beneficios: "Fonte de fibras e potássio; fornece energia sustentada; prático para lanche."
+  },
+  {
+    receita: "Pasta de Amendoim Caseira",
+    porcao: "1 colher de sopa",
+    calorias: 90,
+    carboidratos: 3,
+    proteinas: 4,
+    gorduras: 8,
+    fibras: 1,
+    acucares_naturais: 1,
+    beneficios: "Rica em gorduras boas e proteínas vegetais; fornece energia; versátil para várias receitas."
+  },
+  {
+    receita: "Bolinho de Frango com Aveia",
+    porcao: "2 bolinhos (100 g)",
+    calorias: 160,
+    carboidratos: 6,
+    proteinas: 22,
+    gorduras: 5,
+    fibras: 1,
+    acucares_naturais: null,
+    beneficios: "Alto teor de proteína magra; baixo em gordura; auxilia ganho de massa muscular."
+  },
+  {
+    receita: "Smoothie Verde com Couve",
+    porcao: "1 copo (300 ml)",
+    calorias: 120,
+    carboidratos: 22,
+    proteinas: 4,
+    gorduras: 2,
+    fibras: 5,
+    acucares_naturais: 10,
+    beneficios: "Rico em ferro e vitaminas; estimula metabolismo; propriedades detox e anti-inflamatórias."
+  },
+  {
+    receita: "Frango Grelhado com Legumes",
+    porcao: "1 prato (150 g de frango + legumes)",
+    calorias: 280,
+    carboidratos: 10,
+    proteinas: 35,
+    gorduras: 10,
+    fibras: 3,
+    acucares_naturais: null,
+    beneficios: "Excelente fonte de proteínas magras; rico em fibras dos legumes; baixo em carboidratos."
+  },
+  {
+    receita: "Purê de Batata-Doce com Frango Desfiado",
+    porcao: "1 prato",
+    calorias: 320,
+    carboidratos: 35,
+    proteinas: 30,
+    gorduras: 7,
+    fibras: 4,
+    acucares_naturais: 6,
+    beneficios: "Carboidrato de baixo índice glicêmico; alto teor proteico; reconfortante e nutritivo."
+  },
+  {
+    receita: "Overnight Oats em Pote",
+    porcao: "1 copo (250 ml)",
+    calorias: 210,
+    carboidratos: 30,
+    proteinas: 10,
+    gorduras: 7,
+    fibras: 5,
+    acucares_naturais: 8,
+    beneficios: "Rica em fibras e probióticos; promove saciedade prolongada; prática para rotina."
+  },
+  {
+    receita: "Tapioca com Ovo e Abacate",
+    porcao: "1 unidade",
+    calorias: 250,
+    carboidratos: 22,
+    proteinas: 12,
+    gorduras: 13,
+    fibras: 4,
+    acucares_naturais: null,
+    beneficios: "Sem glúten; gorduras boas do abacate; proteína do ovo; carboidrato de fácil digestão."
+  },
+  {
+    receita: "Arroz Integral com Lentilha e Legumes",
+    porcao: "1 prato",
+    calorias: 280,
+    carboidratos: 45,
+    proteinas: 12,
+    gorduras: 6,
+    fibras: 8,
+    acucares_naturais: 2,
+    beneficios: "Combinação completa de proteínas vegetais; rico em fibras e ferro; vegano e nutritivo."
   }
 ];
 

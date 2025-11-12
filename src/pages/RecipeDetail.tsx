@@ -16,6 +16,16 @@ import bananaPancake from "@/assets/recipe-banana-pancake.jpg";
 import fitBrigadeiro from "@/assets/recipe-fit-brigadeiro.jpg";
 import tunaSandwich from "@/assets/recipe-tuna-sandwich.jpg";
 import detoxSoup from "@/assets/recipe-detox-soup.jpg";
+import omeleteClaras from "@/assets/recipe-omelete-claras.jpg";
+import muffinBanana from "@/assets/recipe-muffin-banana.jpg";
+import pastaAmendoim from "@/assets/recipe-pasta-amendoim.jpg";
+import bolinhoFrango from "@/assets/recipe-bolinho-frango.jpg";
+import smoothieCouve from "@/assets/recipe-smoothie-couve.jpg";
+import frangoLegumes from "@/assets/recipe-frango-legumes.jpg";
+import pureBatatadoce from "@/assets/recipe-pure-batata-doce.jpg";
+import overnightOatsPote from "@/assets/recipe-overnight-oats-pote.jpg";
+import tapiocaOvo from "@/assets/recipe-tapioca-ovo.jpg";
+import arrozLentilha from "@/assets/recipe-arroz-lentilha.jpg";
 
 const RecipeDetail = () => {
   const { id } = useParams();
@@ -32,6 +42,16 @@ const RecipeDetail = () => {
     "/src/assets/recipe-fit-brigadeiro.jpg": fitBrigadeiro,
     "/src/assets/recipe-tuna-sandwich.jpg": tunaSandwich,
     "/src/assets/recipe-detox-soup.jpg": detoxSoup,
+    "/src/assets/recipe-omelete-claras.jpg": omeleteClaras,
+    "/src/assets/recipe-muffin-banana.jpg": muffinBanana,
+    "/src/assets/recipe-pasta-amendoim.jpg": pastaAmendoim,
+    "/src/assets/recipe-bolinho-frango.jpg": bolinhoFrango,
+    "/src/assets/recipe-smoothie-couve.jpg": smoothieCouve,
+    "/src/assets/recipe-frango-legumes.jpg": frangoLegumes,
+    "/src/assets/recipe-pure-batata-doce.jpg": pureBatatadoce,
+    "/src/assets/recipe-overnight-oats-pote.jpg": overnightOatsPote,
+    "/src/assets/recipe-tapioca-ovo.jpg": tapiocaOvo,
+    "/src/assets/recipe-arroz-lentilha.jpg": arrozLentilha,
   };
 
   const recipe = receitas[recipeIndex];
