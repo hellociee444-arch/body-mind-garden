@@ -11,6 +11,10 @@ import breakfast from "@/assets/recipe-breakfast.jpg";
 import avocadoToast from "@/assets/recipe-avocado-toast.jpg";
 import acaiBowl from "@/assets/recipe-acai-bowl.jpg";
 import salmonQuinoa from "@/assets/recipe-salmon-quinoa.jpg";
+import bananaPancake from "@/assets/recipe-banana-pancake.jpg";
+import fitBrigadeiro from "@/assets/recipe-fit-brigadeiro.jpg";
+import tunaSandwich from "@/assets/recipe-tuna-sandwich.jpg";
+import detoxSoup from "@/assets/recipe-detox-soup.jpg";
 
 const Recipes = () => {
   const imageMap: { [key: string]: string } = {
@@ -20,6 +24,10 @@ const Recipes = () => {
     "/src/assets/recipe-avocado-toast.jpg": avocadoToast,
     "/src/assets/recipe-acai-bowl.jpg": acaiBowl,
     "/src/assets/recipe-salmon-quinoa.jpg": salmonQuinoa,
+    "/src/assets/recipe-banana-pancake.jpg": bananaPancake,
+    "/src/assets/recipe-fit-brigadeiro.jpg": fitBrigadeiro,
+    "/src/assets/recipe-tuna-sandwich.jpg": tunaSandwich,
+    "/src/assets/recipe-detox-soup.jpg": detoxSoup,
   };
 
   const recipes = receitas.map(recipe => ({

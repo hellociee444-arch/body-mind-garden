@@ -166,6 +166,113 @@ export const receitas = [
     calories: "480",
     rating: 4.9,
     tags: ["Alto em proteína", "Ômega-3", "Gourmet"]
+  },
+  {
+    nome: "Panqueca de Banana e Aveia",
+    ingredientes: [
+      "1 banana madura",
+      "1/2 xícara de aveia",
+      "2 ovos",
+      "1 colher de chá de canela",
+      "1 colher de chá de fermento (opcional)",
+      "Pitada de sal",
+      "Óleo de coco para untar"
+    ],
+    modo_preparo: [
+      "Amasse a banana com um garfo.",
+      "Adicione os ovos, aveia, canela, fermento e sal. Misture bem.",
+      "Aqueça uma frigideira antiaderente com um pouco de óleo de coco.",
+      "Despeje a massa e cozinhe até dourar dos dois lados.",
+      "Sirva com rodelas de banana, pasta de amendoim e canela."
+    ],
+    dicas: [
+      "Adicione uma colher de chia ou linhaça para mais fibras e sirva com frutas vermelhas para um toque antioxidante."
+    ],
+    image: "/src/assets/recipe-banana-pancake.jpg",
+    time: "15 min",
+    calories: "230",
+    rating: 4.7,
+    tags: ["Café da manhã", "Sem glúten", "Proteico"]
+  },
+  {
+    nome: "Brigadeiro Fit de Whey",
+    ingredientes: [
+      "3 colheres de sopa de whey protein sabor chocolate",
+      "2 colheres de sopa de cacau em pó",
+      "2 colheres de sopa de leite (ou vegetal)",
+      "1 colher de chá de adoçante (opcional)",
+      "Cacau em pó ou coco ralado para decorar"
+    ],
+    modo_preparo: [
+      "Misture o whey, cacau, leite e adoçante até formar uma massa homogênea.",
+      "Leve à geladeira por 30 minutos para firmar.",
+      "Modele em bolinhas e passe no cacau em pó ou coco ralado.",
+      "Mantenha refrigerado até servir."
+    ],
+    dicas: [
+      "Para variar o sabor, troque o whey de chocolate por baunilha e adicione raspas de coco sem açúcar. Mantenha refrigerado para textura firme."
+    ],
+    image: "/src/assets/recipe-fit-brigadeiro.jpg",
+    time: "35 min",
+    calories: "90",
+    rating: 4.8,
+    tags: ["Sobremesa", "Low Carb", "Alto em proteína"]
+  },
+  {
+    nome: "Sanduíche Natural de Atum",
+    ingredientes: [
+      "2 fatias de pão integral",
+      "1 lata de atum em água (140g)",
+      "2 colheres de sopa de cottage ou cream cheese light",
+      "Folhas de alface",
+      "Rodelas de tomate",
+      "Cenoura ralada (opcional)",
+      "Sal e pimenta a gosto"
+    ],
+    modo_preparo: [
+      "Escorra bem o atum e misture com o cottage ou cream cheese.",
+      "Tempere com sal e pimenta.",
+      "Monte o sanduíche com as fatias de pão, pasta de atum, alface, tomate e cenoura.",
+      "Corte ao meio e sirva."
+    ],
+    dicas: [
+      "Inclua cenoura ralada ou folhas de rúcula para mais crocância e nutrientes. Se quiser menos sódio, prefira atum em água ao invés de conserva em óleo."
+    ],
+    image: "/src/assets/recipe-tuna-sandwich.jpg",
+    time: "10 min",
+    calories: "290",
+    rating: 4.6,
+    tags: ["Rápido", "Alto em proteína", "Prático"]
+  },
+  {
+    nome: "Sopa Detox de Legumes",
+    ingredientes: [
+      "1 cenoura média",
+      "1 abobrinha média",
+      "1 chuchu",
+      "1 batata-doce pequena",
+      "1 cebola pequena",
+      "2 dentes de alho",
+      "1 litro de água ou caldo de legumes",
+      "Sal, pimenta e ervas frescas a gosto",
+      "Gengibre ralado (opcional)"
+    ],
+    modo_preparo: [
+      "Pique todos os legumes em cubos.",
+      "Refogue a cebola e o alho em uma panela.",
+      "Adicione os legumes e refogue por mais 2 minutos.",
+      "Acrescente a água ou caldo, tampe e cozinhe até os legumes ficarem macios.",
+      "Bata no liquidificador até obter uma consistência cremosa.",
+      "Sirva quente com ervas frescas por cima."
+    ],
+    dicas: [
+      "Adicione gengibre ralado para potencial detox e sabor. Se quiser mais proteína, acrescente peito de frango desfiado."
+    ],
+    image: "/src/assets/recipe-detox-soup.jpg",
+    time: "35 min",
+    calories: "120",
+    rating: 4.7,
+    tags: ["Detox", "Vegana", "Leve"]
   }
 ];
 
@@ -235,6 +342,50 @@ export const nutricao = [
     fibras: 5,
     acucares_naturais: null,
     beneficios: "Rico em ômega-3; alto teor proteico; antioxidante e anti-inflamatório."
+  },
+  {
+    receita: "Panqueca de Banana e Aveia",
+    porcao: "1 panqueca grande",
+    calorias: 230,
+    carboidratos: 28,
+    proteinas: 10,
+    gorduras: 8,
+    fibras: 4,
+    acucares_naturais: 10,
+    beneficios: "Rica em fibras e potássio; fornece energia sustentada; melhora digestão e saciedade."
+  },
+  {
+    receita: "Brigadeiro Fit de Whey",
+    porcao: "1 unidade (25 g)",
+    calorias: 90,
+    carboidratos: 5,
+    proteinas: 9,
+    gorduras: 3,
+    fibras: 0,
+    acucares_naturais: 1,
+    beneficios: "Alto teor de proteína; baixo em açúcar; auxilia recuperação muscular e controle de peso."
+  },
+  {
+    receita: "Sanduíche Natural de Atum",
+    porcao: "1 sanduíche",
+    calorias: 290,
+    carboidratos: 25,
+    proteinas: 27,
+    gorduras: 8,
+    fibras: 5,
+    acucares_naturais: null,
+    beneficios: "Excelente fonte de proteínas magras; rico em ômega-3; promove saciedade prolongada."
+  },
+  {
+    receita: "Sopa Detox de Legumes",
+    porcao: "1 prato fundo (350 ml)",
+    calorias: 120,
+    carboidratos: 25,
+    proteinas: 3,
+    gorduras: 2,
+    fibras: 5,
+    acucares_naturais: null,
+    beneficios: "Rico em vitaminas e minerais; auxilia desintoxicação; hidrata e melhora digestão."
   }
 ];
 
