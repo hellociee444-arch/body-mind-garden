@@ -2,99 +2,99 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
     /* Soft light green palette */
-    --primary: 142 60% 60%;
+    --primary: 142 60% 50%;
     --primary-foreground: 0 0% 100%;
-    --primary-light: 142 55% 70%;
-    --primary-dark: 142 65% 50%;
+    --primary-light: 142 55% 65%;
+    --primary-dark: 142 65% 40%;
     --primary-glow: 142 50% 75%;
-    
+
     /* Warm beige tones */
-    --background: 40 35% 94%;
-    --foreground: 35 25% 30%;
-    
-    --card: 40 40% 98%;
-    --card-foreground: 35 25% 30%;
-    
-    --popover: 40 40% 98%;
-    --popover-foreground: 35 25% 30%;
-    
-    --secondary: 40 30% 88%;
-    --secondary-foreground: 35 25% 30%;
-    
-    --muted: 40 28% 91%;
-    --muted-foreground: 35 20% 50%;
-    
+    --background: 40 35% 96%;
+    --foreground: 35 25% 20%;
+
+    --card: 40 40% 99%;
+    --card-foreground: 35 25% 20%;
+
+    --popover: 40 40% 99%;
+    --popover-foreground: 35 25% 20%;
+
+    --secondary: 40 30% 90%;
+    --secondary-foreground: 35 25% 25%;
+
+    --muted: 40 28% 92%;
+    --muted-foreground: 35 15% 40%;
+
     --accent: 142 45% 88%;
-    --accent-foreground: 142 65% 30%;
-    
-    --destructive: 0 65% 58%;
+    --accent-foreground: 142 65% 25%;
+
+    --destructive: 0 65% 55%;
     --destructive-foreground: 0 0% 100%;
-    
+
     --border: 40 25% 85%;
     --input: 40 25% 85%;
-    --ring: 142 60% 60%;
-    
+    --ring: 142 60% 50%;
+
     --radius: 1rem;
-    
-    /* Soft gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(142, 55%, 65%) 0%, hsl(142, 50%, 75%) 100%);
-    --gradient-soft: linear-gradient(180deg, hsl(40, 35%, 94%) 0%, hsl(40, 40%, 98%) 100%);
-    --gradient-accent: linear-gradient(120deg, hsl(142, 60%, 60%) 0%, hsl(162, 55%, 65%) 100%);
-    --gradient-card-hover: linear-gradient(135deg, hsl(142, 55%, 96%) 0%, hsl(40, 40%, 98%) 100%);
-    
-    /* Soft shadows */
-    --shadow-soft: 0 8px 24px -4px hsl(142 60% 60% / 0.15);
-    --shadow-card: 0 2px 8px -1px hsl(35 25% 30% / 0.06);
-    --shadow-glow: 0 0 40px hsl(142 60% 60% / 0.25);
-    --shadow-hover: 0 12px 32px -6px hsl(142 60% 60% / 0.25);
-    
-    /* Animation */
+
+    --gradient-hero: linear-gradient(135deg, hsl(142 55% 55%) 0%, hsl(142 50% 70%) 100%);
+    --gradient-soft: linear-gradient(180deg, hsl(40 35% 94%) 0%, hsl(40 40% 98%) 100%);
+    --gradient-accent: linear-gradient(120deg, hsl(142 60% 55%) 0%, hsl(162 55% 60%) 100%);
+    --gradient-card-hover: linear-gradient(135deg, hsl(142 55% 96%) 0%, hsl(40 40% 98%) 100%);
+
+    --shadow-soft: 0 8px 24px -4px hsl(142 60% 40% / 0.15);
+    --shadow-card: 0 2px 8px -1px hsl(35 25% 20% / 0.06);
+    --shadow-glow: 0 0 40px hsl(142 60% 55% / 0.25);
+    --shadow-hover: 0 12px 32px -6px hsl(142 60% 40% / 0.22);
+
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   .dark {
-    --primary: 142 70% 50%;
-    --primary-foreground: 30 10% 10%;
-    --primary-light: 142 70% 60%;
-    --primary-dark: 142 76% 40%;
-    --primary-glow: 142 65% 70%;
-    
-    --background: 30 10% 12%;
-    --foreground: 40 20% 95%;
-    
-    --card: 30 10% 15%;
-    --card-foreground: 40 20% 95%;
-    
-    --popover: 30 10% 15%;
-    --popover-foreground: 40 20% 95%;
-    
-    --secondary: 30 10% 20%;
-    --secondary-foreground: 40 20% 95%;
-    
-    --muted: 30 10% 18%;
+    /* Deep green + warm charcoal */
+    --primary: 142 55% 58%;
+    --primary-foreground: 142 40% 8%;
+    --primary-light: 142 55% 68%;
+    --primary-dark: 142 60% 45%;
+    --primary-glow: 142 55% 55%;
+
+    --background: 30 12% 8%;
+    --foreground: 40 25% 94%;
+
+    --card: 30 12% 12%;
+    --card-foreground: 40 25% 94%;
+
+    --popover: 30 12% 12%;
+    --popover-foreground: 40 25% 94%;
+
+    --secondary: 30 10% 18%;
+    --secondary-foreground: 40 25% 94%;
+
+    --muted: 30 10% 16%;
     --muted-foreground: 40 15% 65%;
-    
-    --accent: 142 60% 20%;
-    --accent-foreground: 142 70% 85%;
-    
-    --destructive: 0 70% 50%;
+
+    --accent: 142 40% 22%;
+    --accent-foreground: 142 55% 82%;
+
+    --destructive: 0 65% 55%;
     --destructive-foreground: 0 0% 100%;
-    
+
     --border: 30 10% 22%;
     --input: 30 10% 22%;
-    --ring: 142 70% 50%;
-    
-    --shadow-soft: 0 4px 20px -2px hsl(0 0% 0% / 0.3);
-    --shadow-card: 0 2px 12px -2px hsl(0 0% 0% / 0.2);
-    --shadow-glow: 0 0 30px hsl(142 70% 50% / 0.4);
+    --ring: 142 55% 58%;
+
+    --gradient-hero: linear-gradient(135deg, hsl(142 60% 30%) 0%, hsl(142 55% 45%) 100%);
+    --gradient-soft: linear-gradient(180deg, hsl(30 12% 8%) 0%, hsl(30 12% 12%) 100%);
+    --gradient-accent: linear-gradient(120deg, hsl(142 55% 45%) 0%, hsl(162 50% 45%) 100%);
+    --gradient-card-hover: linear-gradient(135deg, hsl(142 40% 18%) 0%, hsl(30 12% 14%) 100%);
+
+    --shadow-soft: 0 8px 24px -4px hsl(0 0% 0% / 0.4);
+    --shadow-card: 0 2px 12px -2px hsl(0 0% 0% / 0.3);
+    --shadow-glow: 0 0 40px hsl(142 55% 58% / 0.3);
+    --shadow-hover: 0 12px 32px -6px hsl(0 0% 0% / 0.5);
   }
 }
 
@@ -103,13 +103,37 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
-  body {
-    @apply bg-background text-foreground font-body;
-    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  html {
+    scroll-behavior: smooth;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', 'Poppins', sans-serif;
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Montserrat", "Poppins", sans-serif;
     font-weight: 700;
+  }
+
+  /* Focus visible ring for keyboard users */
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .story-link {
+    @apply relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left;
   }
 }
