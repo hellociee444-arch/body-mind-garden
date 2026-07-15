@@ -5,29 +5,17 @@ import RecipeCard from "@/components/RecipeCard";
 import WellnessTip from "@/components/WellnessTip";
 import Newsletter from "@/components/Newsletter";
 import Footer from "@/components/Footer";
-import { Heart, Brain, Dumbbell, Moon, Sparkles, ArrowRight } from "lucide-react";
+import { SEO } from "@/components/SEO";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Heart, Brain, Dumbbell, Moon, Sparkles, ArrowRight, Clock, Flame, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-import { receitas } from "@/data/content";
-import saladBowl from "@/assets/recipe-salad-bowl.jpg";
-import smoothie from "@/assets/recipe-smoothie.jpg";
-import breakfast from "@/assets/recipe-breakfast.jpg";
+import { enrichedRecipes, getFeaturedRecipe } from "@/data/enrichedRecipes";
+import { CATEGORY_LABELS } from "@/data/recipeMetadata";
 
 const Index = () => {
-  const imageMap: { [key: string]: string } = {
-    "/src/assets/recipe-salad-bowl.jpg": saladBowl,
-    "/src/assets/recipe-smoothie.jpg": smoothie,
-    "/src/assets/recipe-breakfast.jpg": breakfast,
-  };
-
-  const featuredRecipes = receitas.map(recipe => ({
-    title: recipe.nome,
-    image: imageMap[recipe.image],
-    time: recipe.time,
-    calories: recipe.calories,
-    rating: recipe.rating,
-    tags: recipe.tags,
-  }));
+  const featuredRecipes = enrichedRecipes.slice(0, 6);
+  const weekly = getFeaturedRecipe();
 
   const wellnessTips = [
     {
