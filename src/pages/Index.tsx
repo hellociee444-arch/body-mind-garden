@@ -42,6 +42,10 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Viva Leve — Coma bem. Viva leve."
+        description="Receitas saudáveis, nutrição, fitness e bem-estar. Transforme sua rotina com alimentação natural e hábitos equilibrados."
+      />
       <Header />
       <main className="flex-1">
         <Hero />
