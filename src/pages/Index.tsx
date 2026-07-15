@@ -67,12 +67,82 @@ const Index = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {featuredRecipes.map((recipe, index) => (
-                <RecipeCard key={index} {...recipe} recipeId={index} />
+              {featuredRecipes.map((r) => (
+                <RecipeCard
+                  key={r.id}
+                  recipeId={r.id}
+                  title={r.nome}
+                  image={r.image}
+                  time={r.time}
+                  calories={r.calories}
+                  rating={r.rating}
+                  tags={r.tags}
+                />
               ))}
             </div>
           </div>
         </section>
+
+        {/* Receita da Semana */}
+        <section className="py-16 bg-accent/20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-5xl mx-auto">
+              <div className="text-center mb-8 space-y-2">
+                <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2">
+                  <Sparkles className="h-4 w-4 text-primary" />
+                  <span className="text-sm font-medium text-primary">Receita da Semana</span>
+                </div>
+                <h2 className="font-heading text-3xl md:text-4xl font-bold">
+                  Escolhida a dedo para você
+                </h2>
+              </div>
+
+              <Card className="overflow-hidden border-none shadow-hover">
+                <div className="grid grid-cols-1 md:grid-cols-2">
+                  <div className="relative aspect-square md:aspect-auto">
+                    <img
+                      src={weekly.image}
+                      alt={weekly.nome}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <CardContent className="p-8 flex flex-col justify-center space-y-5">
+                    <Badge variant="outline" className="w-fit">
+                      {CATEGORY_LABELS[weekly.category]}
+                    </Badge>
+                    <h3 className="font-heading text-2xl md:text-3xl font-bold text-balance">
+                      {weekly.nome}
+                    </h3>
+                    <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+                      <span className="flex items-center gap-1.5">
+                        <Clock className="h-4 w-4 text-primary" /> {weekly.time}
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <Flame className="h-4 w-4 text-primary" /> {weekly.calories} kcal
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <Star className="h-4 w-4 fill-primary text-primary" /> {weekly.rating}
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {weekly.tags.slice(0, 4).map((t) => (
+                        <Badge key={t} variant="secondary">
+                          {t}
+                        </Badge>
+                      ))}
+                    </div>
+                    <Button asChild size="lg" className="w-fit gap-2">
+                      <Link to={`/receita/${weekly.id}`}>
+                        Ver receita completa <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </Button>
+                  </CardContent>
+                </div>
+              </Card>
+            </div>
+          </div>
+        </section>
+
 
         {/* Wellness Tips Section */}
         <section className="py-16 bg-accent/20">
