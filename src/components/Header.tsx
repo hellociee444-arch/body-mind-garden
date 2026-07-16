@@ -13,6 +13,8 @@ const Header = () => {
   const navItems = [
     { name: "Início", path: "/" },
     { name: "Receitas", path: "/receitas" },
+    { name: "Nutri IA", path: "/nutri-assistente" },
+    { name: "Ferramentas", path: "/ferramentas" },
     { name: "Nutrição", path: "/nutricao" },
     { name: "Fitness", path: "/fitness" },
     { name: "Bem-Estar", path: "/bem-estar" },
