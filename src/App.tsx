@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import Index from "./pages/Index";
 import Recipes from "./pages/Recipes";
 import RecipeDetail from "./pages/RecipeDetail";
+import Category from "./pages/Category";
 import Nutrition from "./pages/Nutrition";
 import Fitness from "./pages/Fitness";
 import Wellness from "./pages/Wellness";
