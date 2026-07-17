@@ -142,7 +142,7 @@ const RecipeDetail = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-6 text-muted-foreground">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-muted-foreground">
                   <div className="flex items-center gap-2">
                     <Clock className="h-5 w-5 text-primary" aria-hidden="true" />
                     <div>
@@ -155,6 +155,44 @@ const RecipeDetail = () => {
                     <div>
                       <p className="text-xs">Calorias</p>
                       <p className="font-semibold text-foreground">{recipe.calories} kcal</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Users className="h-5 w-5 text-primary" aria-hidden="true" />
+                    <div>
+                      <p className="text-xs">Rendimento</p>
+                      <p className="font-semibold text-foreground">{recipe.yieldLabel}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Wallet className="h-5 w-5 text-primary" aria-hidden="true" />
+                    <div>
+                      <p className="text-xs">Custo total</p>
+                      <p className="font-semibold text-foreground">
+                        R$ {recipe.costTotal.toFixed(2).replace(".", ",")}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <ChefHat className="h-5 w-5 text-primary" aria-hidden="true" />
+                    <div>
+                      <p className="text-xs">Dificuldade</p>
+                      <p className="font-semibold text-foreground capitalize">
+                        {recipe.difficulty === "facil"
+                          ? "Fácil"
+                          : recipe.difficulty === "medio"
+                            ? "Médio"
+                            : "Difícil"}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Wallet className="h-5 w-5 text-primary" aria-hidden="true" />
+                    <div>
+                      <p className="text-xs">Custo/porção</p>
+                      <p className="font-semibold text-foreground">
+                        R$ {recipe.costPerServing.toFixed(2).replace(".", ",")}
+                      </p>
                     </div>
                   </div>
                 </div>
