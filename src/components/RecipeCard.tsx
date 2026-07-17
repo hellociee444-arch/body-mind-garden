@@ -25,6 +25,8 @@ const RecipeCard = ({
   rating,
   tags,
   recipeId,
+  costPerServing,
+  servings,
 }: RecipeCardProps) => {
   const { isFavorite, toggle } = useFavorites();
   const favorited = isFavorite(recipeId);
