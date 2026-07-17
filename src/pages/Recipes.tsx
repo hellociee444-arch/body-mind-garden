@@ -194,6 +194,30 @@ const Recipes = () => {
                 </SelectContent>
               </Select>
 
+              <Select value={cost} onValueChange={(v) => setCost(v as CostFilter)}>
+                <SelectTrigger className="w-[160px]" aria-label="Filtrar por custo">
+                  <SelectValue placeholder="Custo total" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Qualquer custo</SelectItem>
+                  <SelectItem value="10">Até R$ 10</SelectItem>
+                  <SelectItem value="20">Até R$ 20</SelectItem>
+                  <SelectItem value="30">Até R$ 30</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select value={time} onValueChange={(v) => setTime(v as TimeFilter)}>
+                <SelectTrigger className="w-[160px]" aria-label="Filtrar por tempo">
+                  <SelectValue placeholder="Tempo" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Qualquer tempo</SelectItem>
+                  <SelectItem value="20">Até 20 min</SelectItem>
+                  <SelectItem value="30">Até 30 min</SelectItem>
+                  <SelectItem value="45">Até 45 min</SelectItem>
+                </SelectContent>
+              </Select>
+
               <Select value={sort} onValueChange={(v) => setSort(v as SortOption)}>
                 <SelectTrigger className="w-[200px] ml-auto" aria-label="Ordenar">
                   <SelectValue placeholder="Ordenar" />
@@ -201,6 +225,7 @@ const Recipes = () => {
                 <SelectContent>
                   <SelectItem value="relevance">Mais relevantes</SelectItem>
                   <SelectItem value="time-asc">Mais rápidas</SelectItem>
+                  <SelectItem value="cost-asc">Mais baratas</SelectItem>
                   <SelectItem value="calories-asc">Menos calorias</SelectItem>
                   <SelectItem value="calories-desc">Mais calorias</SelectItem>
                   <SelectItem value="rating-desc">Melhor avaliadas</SelectItem>
