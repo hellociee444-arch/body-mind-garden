@@ -326,6 +326,32 @@ const RecipeDetail = () => {
           </section>
         )}
 
+        {/* Conservação & Congelamento */}
+        <section className="py-12">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              <Card className="border-none shadow-card">
+                <CardContent className="p-6 space-y-2">
+                  <h3 className="font-heading text-lg font-semibold flex items-center gap-2">
+                    <Refrigerator className="h-5 w-5 text-primary" aria-hidden="true" />
+                    Conservação
+                  </h3>
+                  <p className="text-sm text-muted-foreground">{recipe.conservacao}</p>
+                </CardContent>
+              </Card>
+              <Card className="border-none shadow-card">
+                <CardContent className="p-6 space-y-2">
+                  <h3 className="font-heading text-lg font-semibold flex items-center gap-2">
+                    <Snowflake className="h-5 w-5 text-primary" aria-hidden="true" />
+                    Congelamento
+                  </h3>
+                  <p className="text-sm text-muted-foreground">{recipe.congelamento}</p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
         {/* Related Recipes */}
         {related.length > 0 && (
           <section className="py-16 bg-accent/10">
@@ -344,6 +370,8 @@ const RecipeDetail = () => {
                     calories={r.calories}
                     rating={r.rating}
                     tags={r.tags}
+                    costPerServing={r.costPerServing}
+                    servings={r.servings}
                   />
                 ))}
               </div>
