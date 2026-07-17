@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/select";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { enrichedRecipes } from "@/data/enrichedRecipes";
+import { CATEGORIES } from "@/data/categories";
 import {
   CATEGORY_LABELS,
   GOAL_LABELS,
@@ -25,13 +26,24 @@ import {
   type RecipeRestriction,
 } from "@/data/recipeMetadata";
 
-type SortOption = "relevance" | "time-asc" | "calories-asc" | "calories-desc" | "rating-desc";
+type SortOption =
+  | "relevance"
+  | "time-asc"
+  | "calories-asc"
+  | "calories-desc"
+  | "rating-desc"
+  | "cost-asc";
+
+type CostFilter = "all" | "10" | "20" | "30";
+type TimeFilter = "all" | "20" | "30" | "45";
 
 const Recipes = () => {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<RecipeCategory | "all">("all");
   const [goal, setGoal] = useState<RecipeGoal | "all">("all");
   const [restrictions, setRestrictions] = useState<RecipeRestriction[]>([]);
+  const [cost, setCost] = useState<CostFilter>("all");
+  const [time, setTime] = useState<TimeFilter>("all");
   const [sort, setSort] = useState<SortOption>("relevance");
 
   const toggleRestriction = (r: RecipeRestriction) => {
