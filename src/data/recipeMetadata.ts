@@ -189,9 +189,13 @@ function deriveMetadata(recipe: (typeof receitas)[number]): RecipeMetadata {
 /** Metadata enriquecido para cada receita (mesmo índice de `receitas`) */
 export const recipeMetadata: RecipeMetadata[] = receitas.map(deriveMetadata);
 
+export type RecipeDifficulty = "facil" | "medio" | "dificil";
+
 export interface EnrichedRecipe {
   id: number;
+  slug: string;
   nome: string;
+  description: string;
   image: string;
   time: string;
   timeMinutes: number;
@@ -200,10 +204,22 @@ export interface EnrichedRecipe {
   rating: number;
   tags: string[];
   category: RecipeCategory;
+  categoryTags: string[]; // slugs de CATEGORIES às quais a receita pertence
   goals: RecipeGoal[];
   restrictions: RecipeRestriction[];
   servings: number;
+  yieldLabel: string;
+  difficulty: RecipeDifficulty;
+  proteins: number;
+  carbs: number;
+  fats: number;
+  fibers: number;
+  costTotal: number;
+  costPerServing: number;
   ingredientes: string[];
   modo_preparo: string[];
   dicas: string[];
+  substituicoes: string[];
+  conservacao: string;
+  congelamento: string;
 }
