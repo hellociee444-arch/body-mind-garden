@@ -57,6 +57,8 @@ const Recipes = () => {
     setCategory("all");
     setGoal("all");
     setRestrictions([]);
+    setCost("all");
+    setTime("all");
     setSort("relevance");
   };
 
@@ -64,15 +66,21 @@ const Recipes = () => {
     (query ? 1 : 0) +
     (category !== "all" ? 1 : 0) +
     (goal !== "all" ? 1 : 0) +
+    (cost !== "all" ? 1 : 0) +
+    (time !== "all" ? 1 : 0) +
     restrictions.length;
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
+    const costCap = cost === "all" ? Infinity : parseInt(cost, 10);
+    const timeCap = time === "all" ? Infinity : parseInt(time, 10);
     const list = enrichedRecipes.filter((r) => {
       if (category !== "all" && r.category !== category) return false;
       if (goal !== "all" && !r.goals.includes(goal)) return false;
       if (restrictions.length && !restrictions.every((x) => r.restrictions.includes(x)))
         return false;
+      if (r.costTotal > costCap) return false;
+      if (r.timeMinutes > timeCap) return false;
       if (q) {
         const haystack = [
           r.nome,
@@ -91,6 +99,9 @@ const Recipes = () => {
       case "time-asc":
         sorted.sort((a, b) => a.timeMinutes - b.timeMinutes);
         break;
+      case "cost-asc":
+        sorted.sort((a, b) => a.costPerServing - b.costPerServing);
+        break;
       case "calories-asc":
         sorted.sort((a, b) => a.caloriesNum - b.caloriesNum);
         break;
@@ -102,7 +113,7 @@ const Recipes = () => {
         break;
     }
     return sorted;
-  }, [query, category, goal, restrictions, sort]);
+  }, [query, category, goal, restrictions, cost, time, sort]);
 
   return (
     <div className="min-h-screen flex flex-col">
