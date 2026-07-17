@@ -5,6 +5,7 @@ import RecipeCard from "@/components/RecipeCard";
 import { SEO } from "@/components/SEO";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import {
   Select,
