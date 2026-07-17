@@ -326,6 +326,8 @@ const Recipes = () => {
                     calories={r.calories}
                     rating={r.rating}
                     tags={r.tags}
+                    costPerServing={r.costPerServing}
+                    servings={r.servings}
                   />
                 ))}
               </div>
