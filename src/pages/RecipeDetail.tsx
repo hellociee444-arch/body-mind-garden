@@ -17,6 +17,11 @@ import {
   Sparkles,
   CheckCircle2,
   Heart,
+  Wallet,
+  Users,
+  ChefHat,
+  Snowflake,
+  Refrigerator,
 } from "lucide-react";
 import { nutricao } from "@/data/content";
 import { getRecipeById, getRelatedRecipes } from "@/data/enrichedRecipes";
