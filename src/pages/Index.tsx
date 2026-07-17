@@ -10,7 +10,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Heart, Brain, Dumbbell, Moon, Sparkles, ArrowRight, Clock, Flame, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { enrichedRecipes, getFeaturedRecipe } from "@/data/enrichedRecipes";
+import { enrichedRecipes, getFeaturedRecipe, getPopularRecipes, getRecentRecipes } from "@/data/enrichedRecipes";
+import { CATEGORIES } from "@/data/categories";
 import { CATEGORY_LABELS } from "@/data/recipeMetadata";
 
 const Index = () => {
