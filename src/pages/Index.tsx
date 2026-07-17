@@ -16,7 +16,10 @@ import { CATEGORY_LABELS } from "@/data/recipeMetadata";
 
 const Index = () => {
   const featuredRecipes = enrichedRecipes.slice(0, 6);
+  const popular = getPopularRecipes(6);
+  const recent = getRecentRecipes(6);
   const weekly = getFeaturedRecipe();
+  const featuredCategories = CATEGORIES.slice(0, 12);
 
   const wellnessTips = [
     {
