@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Clock, Star, Heart } from "lucide-react";
+import { Clock, Star, Heart, Wallet, Users } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useFavorites } from "@/hooks/useFavorites";
@@ -13,6 +13,8 @@ interface RecipeCardProps {
   rating: number;
   tags: string[];
   recipeId: number;
+  costPerServing?: number;
+  servings?: number;
 }
 
 const RecipeCard = ({
@@ -23,6 +25,8 @@ const RecipeCard = ({
   rating,
   tags,
   recipeId,
+  costPerServing,
+  servings,
 }: RecipeCardProps) => {
   const { isFavorite, toggle } = useFavorites();
   const favorited = isFavorite(recipeId);
@@ -90,7 +94,7 @@ const RecipeCard = ({
             {title}
           </h3>
 
-          <div className="flex items-center gap-4 text-sm text-muted-foreground transition-colors duration-500 group-hover:text-foreground">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm text-muted-foreground transition-colors duration-500 group-hover:text-foreground">
             <div className="flex items-center gap-1.5">
               <Clock className="h-4 w-4" aria-hidden="true" />
               <span>{time}</span>
@@ -99,6 +103,18 @@ const RecipeCard = ({
               <span className="font-medium">{calories}</span>
               <span>kcal</span>
             </div>
+            {typeof costPerServing === "number" && (
+              <div className="flex items-center gap-1.5" title="Custo por porção">
+                <Wallet className="h-4 w-4" aria-hidden="true" />
+                <span>R$ {costPerServing.toFixed(2).replace(".", ",")}</span>
+              </div>
+            )}
+            {typeof servings === "number" && servings > 0 && (
+              <div className="flex items-center gap-1.5" title="Rendimento">
+                <Users className="h-4 w-4" aria-hidden="true" />
+                <span>{servings}</span>
+              </div>
+            )}
           </div>
 
           <div className="flex flex-wrap gap-2">

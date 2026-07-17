@@ -10,12 +10,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Heart, Brain, Dumbbell, Moon, Sparkles, ArrowRight, Clock, Flame, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { enrichedRecipes, getFeaturedRecipe } from "@/data/enrichedRecipes";
+import { enrichedRecipes, getFeaturedRecipe, getPopularRecipes, getRecentRecipes } from "@/data/enrichedRecipes";
+import { CATEGORIES } from "@/data/categories";
 import { CATEGORY_LABELS } from "@/data/recipeMetadata";
 
 const Index = () => {
   const featuredRecipes = enrichedRecipes.slice(0, 6);
+  const popular = getPopularRecipes(6);
+  const recent = getRecentRecipes(6);
   const weekly = getFeaturedRecipe();
+  const featuredCategories = CATEGORIES.slice(0, 12);
 
   const wellnessTips = [
     {
@@ -81,6 +85,106 @@ const Index = () => {
                   calories={r.calories}
                   rating={r.rating}
                   tags={r.tags}
+                  costPerServing={r.costPerServing}
+                  servings={r.servings}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Categorias */}
+        <section className="py-16 bg-background">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-10 space-y-2">
+              <h2 className="font-heading text-3xl md:text-4xl font-bold">
+                Explore por categoria
+              </h2>
+              <p className="text-muted-foreground text-lg">
+                Do café da manhã à marmita, do Air Fryer ao Low Carb.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+              {featuredCategories.map((c) => (
+                <Link
+                  key={c.slug}
+                  to={`/categoria/${c.slug}`}
+                  className="group rounded-2xl border border-border bg-card p-4 text-center shadow-sm hover:shadow-hover hover:-translate-y-1 hover:border-primary/40 transition-all"
+                >
+                  <p className="font-heading font-semibold text-foreground group-hover:text-primary transition-colors">
+                    {c.short}
+                  </p>
+                </Link>
+              ))}
+            </div>
+            <div className="text-center mt-8">
+              <Button variant="outline" asChild className="gap-2">
+                <Link to="/receitas">
+                  Ver todas as categorias <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* Populares */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
+              <div>
+                <h2 className="font-heading text-3xl md:text-4xl font-bold mb-2">
+                  Receitas populares
+                </h2>
+                <p className="text-muted-foreground text-lg">
+                  As melhores avaliadas pela nossa comunidade.
+                </p>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {popular.map((r) => (
+                <RecipeCard
+                  key={r.id}
+                  recipeId={r.id}
+                  title={r.nome}
+                  image={r.image}
+                  time={r.time}
+                  calories={r.calories}
+                  rating={r.rating}
+                  tags={r.tags}
+                  costPerServing={r.costPerServing}
+                  servings={r.servings}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Recentes */}
+        <section className="py-16 bg-accent/10">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
+              <div>
+                <h2 className="font-heading text-3xl md:text-4xl font-bold mb-2">
+                  Adicionadas recentemente
+                </h2>
+                <p className="text-muted-foreground text-lg">
+                  Novidades fresquinhas no portal.
+                </p>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {recent.map((r) => (
+                <RecipeCard
+                  key={r.id}
+                  recipeId={r.id}
+                  title={r.nome}
+                  image={r.image}
+                  time={r.time}
+                  calories={r.calories}
+                  rating={r.rating}
+                  tags={r.tags}
+                  costPerServing={r.costPerServing}
+                  servings={r.servings}
                 />
               ))}
             </div>

@@ -6,6 +6,7 @@ import { SEO } from "@/components/SEO";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import {
   Select,
   SelectContent,
@@ -15,6 +16,7 @@ import {
 } from "@/components/ui/select";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { enrichedRecipes } from "@/data/enrichedRecipes";
+import { CATEGORIES } from "@/data/categories";
 import {
   CATEGORY_LABELS,
   GOAL_LABELS,
@@ -24,13 +26,24 @@ import {
   type RecipeRestriction,
 } from "@/data/recipeMetadata";
 
-type SortOption = "relevance" | "time-asc" | "calories-asc" | "calories-desc" | "rating-desc";
+type SortOption =
+  | "relevance"
+  | "time-asc"
+  | "calories-asc"
+  | "calories-desc"
+  | "rating-desc"
+  | "cost-asc";
+
+type CostFilter = "all" | "10" | "20" | "30";
+type TimeFilter = "all" | "20" | "30" | "45";
 
 const Recipes = () => {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<RecipeCategory | "all">("all");
   const [goal, setGoal] = useState<RecipeGoal | "all">("all");
   const [restrictions, setRestrictions] = useState<RecipeRestriction[]>([]);
+  const [cost, setCost] = useState<CostFilter>("all");
+  const [time, setTime] = useState<TimeFilter>("all");
   const [sort, setSort] = useState<SortOption>("relevance");
 
   const toggleRestriction = (r: RecipeRestriction) => {
@@ -44,6 +57,8 @@ const Recipes = () => {
     setCategory("all");
     setGoal("all");
     setRestrictions([]);
+    setCost("all");
+    setTime("all");
     setSort("relevance");
   };
 
@@ -51,15 +66,21 @@ const Recipes = () => {
     (query ? 1 : 0) +
     (category !== "all" ? 1 : 0) +
     (goal !== "all" ? 1 : 0) +
+    (cost !== "all" ? 1 : 0) +
+    (time !== "all" ? 1 : 0) +
     restrictions.length;
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
+    const costCap = cost === "all" ? Infinity : parseInt(cost, 10);
+    const timeCap = time === "all" ? Infinity : parseInt(time, 10);
     const list = enrichedRecipes.filter((r) => {
       if (category !== "all" && r.category !== category) return false;
       if (goal !== "all" && !r.goals.includes(goal)) return false;
       if (restrictions.length && !restrictions.every((x) => r.restrictions.includes(x)))
         return false;
+      if (r.costTotal > costCap) return false;
+      if (r.timeMinutes > timeCap) return false;
       if (q) {
         const haystack = [
           r.nome,
@@ -78,6 +99,9 @@ const Recipes = () => {
       case "time-asc":
         sorted.sort((a, b) => a.timeMinutes - b.timeMinutes);
         break;
+      case "cost-asc":
+        sorted.sort((a, b) => a.costPerServing - b.costPerServing);
+        break;
       case "calories-asc":
         sorted.sort((a, b) => a.caloriesNum - b.caloriesNum);
         break;
@@ -89,7 +113,7 @@ const Recipes = () => {
         break;
     }
     return sorted;
-  }, [query, category, goal, restrictions, sort]);
+  }, [query, category, goal, restrictions, cost, time, sort]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -170,6 +194,30 @@ const Recipes = () => {
                 </SelectContent>
               </Select>
 
+              <Select value={cost} onValueChange={(v) => setCost(v as CostFilter)}>
+                <SelectTrigger className="w-[160px]" aria-label="Filtrar por custo">
+                  <SelectValue placeholder="Custo total" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Qualquer custo</SelectItem>
+                  <SelectItem value="10">Até R$ 10</SelectItem>
+                  <SelectItem value="20">Até R$ 20</SelectItem>
+                  <SelectItem value="30">Até R$ 30</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select value={time} onValueChange={(v) => setTime(v as TimeFilter)}>
+                <SelectTrigger className="w-[160px]" aria-label="Filtrar por tempo">
+                  <SelectValue placeholder="Tempo" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Qualquer tempo</SelectItem>
+                  <SelectItem value="20">Até 20 min</SelectItem>
+                  <SelectItem value="30">Até 30 min</SelectItem>
+                  <SelectItem value="45">Até 45 min</SelectItem>
+                </SelectContent>
+              </Select>
+
               <Select value={sort} onValueChange={(v) => setSort(v as SortOption)}>
                 <SelectTrigger className="w-[200px] ml-auto" aria-label="Ordenar">
                   <SelectValue placeholder="Ordenar" />
@@ -177,6 +225,7 @@ const Recipes = () => {
                 <SelectContent>
                   <SelectItem value="relevance">Mais relevantes</SelectItem>
                   <SelectItem value="time-asc">Mais rápidas</SelectItem>
+                  <SelectItem value="cost-asc">Mais baratas</SelectItem>
                   <SelectItem value="calories-asc">Menos calorias</SelectItem>
                   <SelectItem value="calories-desc">Mais calorias</SelectItem>
                   <SelectItem value="rating-desc">Melhor avaliadas</SelectItem>
@@ -221,6 +270,31 @@ const Recipes = () => {
           </div>
         </section>
 
+        {/* Coleções / categorias */}
+        <section className="border-b border-border bg-background">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex flex-wrap gap-2">
+              <span className="text-sm font-medium text-muted-foreground mr-2 self-center">
+                Coleções:
+              </span>
+              {CATEGORIES.map((c) => (
+                <Link
+                  key={c.slug}
+                  to={`/categoria/${c.slug}`}
+                  className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-full"
+                >
+                  <Badge
+                    variant="outline"
+                    className="cursor-pointer text-xs hover:bg-accent transition-all hover:scale-105"
+                  >
+                    {c.short}
+                  </Badge>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Results */}
         <section className="py-12">
           <div className="container mx-auto px-4">
@@ -252,6 +326,8 @@ const Recipes = () => {
                     calories={r.calories}
                     rating={r.rating}
                     tags={r.tags}
+                    costPerServing={r.costPerServing}
+                    servings={r.servings}
                   />
                 ))}
               </div>
