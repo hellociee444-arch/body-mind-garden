@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Menu, X, Leaf, Heart } from "lucide-react";
+import { Menu, X, Leaf, Heart, LogIn, LogOut, User as UserIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useFavorites } from "@/hooks/useFavorites";
+import { useAuth } from "@/contexts/AuthContext";
 import { cn } from "@/lib/utils";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { favorites } = useFavorites();
+  const { user, signOut } = useAuth();
 
   const navItems = [
     { name: "Início", path: "/" },
@@ -85,6 +87,29 @@ const Header = () => {
             </Button>
 
             <ThemeToggle />
+
+            {user ? (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => signOut()}
+                aria-label="Sair"
+                className="rounded-full hover:scale-110 transition-transform"
+                title={user.email ?? "Sair"}
+              >
+                <LogOut className="h-5 w-5" />
+              </Button>
+            ) : (
+              <Button
+                asChild
+                variant="ghost"
+                size="icon"
+                aria-label="Entrar"
+                className="rounded-full hover:scale-110 transition-transform"
+              >
+                <Link to="/auth"><LogIn className="h-5 w-5" /></Link>
+              </Button>
+            )}
 
             <Button
               variant="ghost"
