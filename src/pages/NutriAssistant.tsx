@@ -164,7 +164,21 @@ export default function NutriAssistant() {
         </section>
 
         <section className="container mx-auto px-4 py-10 max-w-3xl">
-          {!plan ? (
+          {!user && !authLoading && (
+            <Card className="mb-6 border-primary/40 bg-primary/5">
+              <CardContent className="p-4 flex flex-col sm:flex-row gap-3 items-center justify-between">
+                <p className="text-sm">
+                  <strong>Crie uma conta grátis</strong> para salvar seu plano e continuar de onde parou na próxima vez.
+                </p>
+                <Button asChild size="sm" variant="outline">
+                  <Link to="/auth"><LogIn className="h-4 w-4 mr-1" /> Entrar / Cadastrar</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+          {loadingSaved ? (
+            <Card><CardContent className="p-10 flex justify-center"><Loader2 className="h-6 w-6 animate-spin text-primary" /></CardContent></Card>
+          ) : !plan ? (
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between mb-2">
