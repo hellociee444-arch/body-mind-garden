@@ -376,7 +376,7 @@ export default function NutriAssistant() {
 
               <div className="text-center">
                 <Button variant="outline" onClick={reset}>
-                  <RefreshCw className="h-4 w-4 mr-1" /> Refazer questionário
+                  <RefreshCw className="h-4 w-4 mr-1" /> Atualizar avaliação
                 </Button>
               </div>
             </div>
