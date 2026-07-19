@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
 import Recipes from "./pages/Recipes";
 import RecipeDetail from "./pages/RecipeDetail";
@@ -19,6 +20,7 @@ import Contact from "./pages/Contact";
 import Favorites from "./pages/Favorites";
 import Tools from "./pages/Tools";
 import NutriAssistant from "./pages/NutriAssistant";
+import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,25 +33,28 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/receitas" element={<Recipes />} />
-              <Route path="/receita/:id" element={<RecipeDetail />} />
-              <Route path="/categoria/:slug" element={<Category />} />
-              <Route path="/categorias" element={<Category />} />
-              <Route path="/favoritos" element={<Favorites />} />
-              <Route path="/nutricao" element={<Nutrition />} />
-              <Route path="/fitness" element={<Fitness />} />
-              <Route path="/bem-estar" element={<Wellness />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:id" element={<BlogPost />} />
-              <Route path="/sobre" element={<About />} />
-              <Route path="/contato" element={<Contact />} />
-              <Route path="/ferramentas" element={<Tools />} />
-              <Route path="/nutri-assistente" element={<NutriAssistant />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <AuthProvider>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/receitas" element={<Recipes />} />
+                <Route path="/receita/:id" element={<RecipeDetail />} />
+                <Route path="/categoria/:slug" element={<Category />} />
+                <Route path="/categorias" element={<Category />} />
+                <Route path="/favoritos" element={<Favorites />} />
+                <Route path="/nutricao" element={<Nutrition />} />
+                <Route path="/fitness" element={<Fitness />} />
+                <Route path="/bem-estar" element={<Wellness />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/blog/:id" element={<BlogPost />} />
+                <Route path="/sobre" element={<About />} />
+                <Route path="/contato" element={<Contact />} />
+                <Route path="/ferramentas" element={<Tools />} />
+                <Route path="/nutri-assistente" element={<NutriAssistant />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </AuthProvider>
           </BrowserRouter>
         </TooltipProvider>
       </ThemeProvider>
