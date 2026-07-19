@@ -121,8 +121,8 @@ export default function NutriAssistant() {
           {
             user_id: user.id,
             objetivo: form.objetivo,
-            form_data: form as unknown as Record<string, unknown>,
-            plan: generatedPlan as unknown as Record<string, unknown>,
+            form_data: form as never,
+            plan: generatedPlan as never,
           },
           { onConflict: "user_id" },
         );
