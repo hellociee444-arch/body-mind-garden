@@ -524,6 +524,271 @@ export const receitas = [
     calories: "280",
     rating: 4.8,
     tags: ["Vegano", "Proteico", "Completo"]
+  },
+  {
+    nome: "Bolo Saudável de Cenoura com Aveia",
+    ingredientes: [
+      "2 cenouras médias raladas",
+      "3 ovos",
+      "1 xícara de aveia em flocos",
+      "1/2 xícara de óleo de coco",
+      "1/2 xícara de mel ou açúcar demerara",
+      "1 colher de sopa de fermento",
+      "1 colher de chá de canela"
+    ],
+    modo_preparo: [
+      "Bata no liquidificador as cenouras, ovos, óleo e mel.",
+      "Misture a aveia, canela e fermento em uma tigela.",
+      "Una as duas misturas e despeje em forma untada.",
+      "Asse em forno preaquecido a 180°C por 35 minutos."
+    ],
+    dicas: [
+      "Pode substituir a aveia por farinha de arroz para versão sem glúten.",
+      "Cobertura de cacau 70% deixa ainda mais saudável."
+    ],
+    image: "/src/assets/recipe-bolo-saudavel.jpg",
+    time: "45 min",
+    calories: "180",
+    rating: 4.9,
+    tags: ["Sobremesa", "Sem glúten opcional", "Integral"]
+  },
+  {
+    nome: "Pão Caseiro Integral Saudável",
+    ingredientes: [
+      "3 xícaras de farinha integral",
+      "1 colher de sopa de fermento biológico seco",
+      "1 colher de chá de sal",
+      "1 colher de sopa de mel",
+      "1 e 1/2 xícara de água morna",
+      "2 colheres de sopa de azeite",
+      "Sementes de girassol a gosto"
+    ],
+    modo_preparo: [
+      "Dissolva o fermento e o mel na água morna.",
+      "Misture a farinha, o sal e adicione a mistura líquida.",
+      "Sove por 8 minutos e deixe descansar 1 hora.",
+      "Modele o pão, salpique sementes e asse a 200°C por 30 minutos."
+    ],
+    dicas: [
+      "Guarde em saco de pano para manter a casca crocante.",
+      "Adicione linhaça ou chia à massa para mais fibras."
+    ],
+    image: "/src/assets/recipe-pao-saudavel.jpg",
+    time: "1h30",
+    calories: "150",
+    rating: 4.8,
+    tags: ["Integral", "Sem lactose", "Rico em fibras"]
+  },
+  {
+    nome: "Panqueca Proteica de Banana",
+    ingredientes: [
+      "1 banana madura",
+      "2 ovos",
+      "3 colheres de sopa de aveia",
+      "1 scoop de whey protein (opcional)",
+      "1 colher de chá de canela"
+    ],
+    modo_preparo: [
+      "Amasse a banana e misture com os ovos.",
+      "Adicione a aveia, o whey e a canela.",
+      "Frite pequenas porções em frigideira antiaderente.",
+      "Sirva com frutas ou pasta de amendoim."
+    ],
+    dicas: [
+      "Sem whey, use apenas aveia e mais uma clara.",
+      "Ótima para pré ou pós-treino."
+    ],
+    image: "/src/assets/recipe-panqueca-proteica.jpg",
+    time: "15 min",
+    calories: "260",
+    rating: 4.9,
+    tags: ["Proteico", "Café da manhã", "Pré-treino"]
+  },
+  {
+    nome: "Escondidinho Fit de Frango com Batata Doce",
+    ingredientes: [
+      "500g de peito de frango desfiado",
+      "600g de batata doce cozida",
+      "1 cebola picada",
+      "2 dentes de alho",
+      "2 tomates picados",
+      "Sal, pimenta e cheiro-verde",
+      "Queijo cottage para gratinar"
+    ],
+    modo_preparo: [
+      "Refogue cebola, alho, tomate e o frango temperado.",
+      "Amasse a batata doce cozida com um fio de azeite.",
+      "Em refratário, coloque o frango e cubra com o purê.",
+      "Cubra com cottage e leve ao forno por 15 minutos a 200°C."
+    ],
+    dicas: [
+      "Pode ser congelado em porções individuais.",
+      "Ótima marmita fitness."
+    ],
+    image: "/src/assets/recipe-escondidinho-fit.jpg",
+    time: "50 min",
+    calories: "340",
+    rating: 4.9,
+    tags: ["Fit", "Marmita", "Proteico"]
+  },
+  {
+    nome: "Torta de Frango Integral",
+    ingredientes: [
+      "2 xícaras de farinha integral",
+      "1/2 xícara de azeite",
+      "3 ovos",
+      "1 xícara de leite",
+      "1 colher de sopa de fermento",
+      "300g de peito de frango desfiado refogado",
+      "Milho, tomate e cheiro-verde"
+    ],
+    modo_preparo: [
+      "Bata no liquidificador ovos, leite, azeite e farinha.",
+      "Adicione o fermento por último.",
+      "Despeje metade da massa em forma untada, distribua o recheio e cubra com o restante.",
+      "Asse a 180°C por 40 minutos."
+    ],
+    dicas: [
+      "Sirva com salada verde.",
+      "Congela muito bem em fatias."
+    ],
+    image: "/src/assets/recipe-torta-frango.jpg",
+    time: "1h",
+    calories: "290",
+    rating: 4.7,
+    tags: ["Integral", "Prático", "Família"]
+  },
+  {
+    nome: "Arroz de Forno Saudável",
+    ingredientes: [
+      "3 xícaras de arroz integral cozido",
+      "1 xícara de brócolis picado",
+      "1 cenoura ralada",
+      "2 ovos",
+      "1 xícara de leite desnatado",
+      "1 xícara de queijo minas ralado",
+      "Sal, alho e cebolinha"
+    ],
+    modo_preparo: [
+      "Misture o arroz cozido com os legumes.",
+      "Bata os ovos com o leite e tempere.",
+      "Coloque tudo em refratário e cubra com queijo.",
+      "Leve ao forno a 200°C por 25 minutos até dourar."
+    ],
+    dicas: [
+      "Aproveite arroz do dia anterior.",
+      "Adicione frango desfiado para mais proteína."
+    ],
+    image: "/src/assets/recipe-arroz-forno.jpg",
+    time: "35 min",
+    calories: "310",
+    rating: 4.8,
+    tags: ["Reaproveitamento", "Família", "Prático"]
+  },
+  {
+    nome: "Frango Cremoso com Iogurte",
+    ingredientes: [
+      "2 filés de peito de frango",
+      "1 pote de iogurte natural desnatado",
+      "1 colher de sopa de mostarda",
+      "1 dente de alho amassado",
+      "Salsinha, sal e pimenta",
+      "Suco de 1/2 limão"
+    ],
+    modo_preparo: [
+      "Tempere o frango com limão, sal, pimenta e alho.",
+      "Grelhe em frigideira antiaderente até dourar.",
+      "Misture o iogurte com a mostarda e a salsinha.",
+      "Cubra os filés com o molho e sirva quente."
+    ],
+    dicas: [
+      "Combina com arroz integral e legumes no vapor.",
+      "Substitua mostarda por curry para variar."
+    ],
+    image: "/src/assets/recipe-frango-cremoso.jpg",
+    time: "20 min",
+    calories: "230",
+    rating: 4.8,
+    tags: ["Proteico", "Rápido", "Low Carb"]
+  },
+  {
+    nome: "Macarrão Saudável ao Sugo",
+    ingredientes: [
+      "250g de macarrão integral",
+      "4 tomates maduros picados",
+      "1 cebola picada",
+      "2 dentes de alho",
+      "Manjericão fresco",
+      "Azeite, sal e pimenta"
+    ],
+    modo_preparo: [
+      "Cozinhe o macarrão al dente em água com sal.",
+      "Refogue cebola e alho no azeite.",
+      "Adicione os tomates e cozinhe 10 minutos.",
+      "Misture o macarrão ao molho e finalize com manjericão."
+    ],
+    dicas: [
+      "Pode acrescentar frango desfiado ou lentilha para mais proteína.",
+      "Prefira macarrão integral ou de grão-de-bico."
+    ],
+    image: "/src/assets/recipe-macarrao-saudavel.jpg",
+    time: "25 min",
+    calories: "310",
+    rating: 4.7,
+    tags: ["Integral", "Vegetariano", "Rápido"]
+  },
+  {
+    nome: "Sopa Nutritiva de Legumes e Grãos",
+    ingredientes: [
+      "1 xícara de abóbora em cubos",
+      "1 cenoura em cubos",
+      "1/2 xícara de lentilha",
+      "1 punhado de espinafre",
+      "1 cebola picada",
+      "2 dentes de alho",
+      "1,2 litro de água ou caldo caseiro",
+      "Sal, cominho e azeite"
+    ],
+    modo_preparo: [
+      "Refogue cebola e alho no azeite.",
+      "Adicione a lentilha, abóbora e cenoura, cubra com a água.",
+      "Cozinhe por 25 minutos até ficar macio.",
+      "Finalize com espinafre e tempere a gosto."
+    ],
+    dicas: [
+      "Congele em potes individuais.",
+      "Sirva com torradas integrais."
+    ],
+    image: "/src/assets/recipe-sopa-nutritiva.jpg",
+    time: "40 min",
+    calories: "220",
+    rating: 4.9,
+    tags: ["Vegana", "Rico em fibras", "Reconfortante"]
+  },
+  {
+    nome: "Smoothie Energético de Frutas",
+    ingredientes: [
+      "1 banana congelada",
+      "1/2 xícara de frutas vermelhas",
+      "1 colher de sopa de aveia",
+      "200 ml de leite vegetal",
+      "1 colher de chá de mel",
+      "Folhas de hortelã"
+    ],
+    modo_preparo: [
+      "Coloque todos os ingredientes no liquidificador.",
+      "Bata até ficar homogêneo e cremoso.",
+      "Sirva imediatamente com hortelã por cima."
+    ],
+    dicas: [
+      "Adicione whey ou pasta de amendoim para mais proteína.",
+      "Ideal para café da manhã ou pós-treino."
+    ],
+    image: "/src/assets/recipe-smoothie-frutas.jpg",
+    time: "5 min",
+    calories: "190",
+    rating: 4.8,
+    tags: ["Bebida", "Café da manhã", "Energético"]
   }
 ];
 

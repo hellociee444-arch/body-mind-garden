@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
@@ -14,7 +15,8 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { ArrowLeft, ArrowRight, Sparkles, Loader2, RefreshCw, Droplets, Flame } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { ArrowLeft, ArrowRight, Sparkles, Loader2, RefreshCw, Droplets, Flame, LogIn } from "lucide-react";
 
 interface Form {
   idade: string;
@@ -51,12 +53,32 @@ const initial: Form = {
 };
 
 export default function NutriAssistant() {
+  const { user, loading: authLoading } = useAuth();
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<Form>(initial);
   const [loading, setLoading] = useState(false);
   const [plan, setPlan] = useState<Plan | null>(null);
+  const [loadingSaved, setLoadingSaved] = useState(false);
 
   const steps = ["Perfil", "Objetivo", "Preferências", "Saúde"];
+
+  // Load user's saved plan on mount
+  useEffect(() => {
+    if (!user) return;
+    setLoadingSaved(true);
+    supabase
+      .from("nutri_plans")
+      .select("form_data, plan")
+      .eq("user_id", user.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data) {
+          setForm(data.form_data as unknown as Form);
+          setPlan(data.plan as unknown as Plan);
+        }
+        setLoadingSaved(false);
+      });
+  }, [user]);
 
   const canNext = () => {
     if (step === 0) return form.idade && form.sexo && form.altura && form.peso;
@@ -90,7 +112,21 @@ export default function NutriAssistant() {
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
-      setPlan(data as Plan);
+      const generatedPlan = data as Plan;
+      setPlan(generatedPlan);
+
+      // Persist for the user
+      if (user) {
+        await supabase.from("nutri_plans").upsert(
+          {
+            user_id: user.id,
+            objetivo: form.objetivo,
+            form_data: form as never,
+            plan: generatedPlan as never,
+          },
+          { onConflict: "user_id" },
+        );
+      }
       toast.success("Seu plano está pronto!");
     } catch (e) {
       toast.error((e as Error).message || "Não foi possível gerar o plano.");
@@ -128,7 +164,21 @@ export default function NutriAssistant() {
         </section>
 
         <section className="container mx-auto px-4 py-10 max-w-3xl">
-          {!plan ? (
+          {!user && !authLoading && (
+            <Card className="mb-6 border-primary/40 bg-primary/5">
+              <CardContent className="p-4 flex flex-col sm:flex-row gap-3 items-center justify-between">
+                <p className="text-sm">
+                  <strong>Crie uma conta grátis</strong> para salvar seu plano e continuar de onde parou na próxima vez.
+                </p>
+                <Button asChild size="sm" variant="outline">
+                  <Link to="/auth"><LogIn className="h-4 w-4 mr-1" /> Entrar / Cadastrar</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+          {loadingSaved ? (
+            <Card><CardContent className="p-10 flex justify-center"><Loader2 className="h-6 w-6 animate-spin text-primary" /></CardContent></Card>
+          ) : !plan ? (
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between mb-2">
@@ -326,7 +376,7 @@ export default function NutriAssistant() {
 
               <div className="text-center">
                 <Button variant="outline" onClick={reset}>
-                  <RefreshCw className="h-4 w-4 mr-1" /> Refazer questionário
+                  <RefreshCw className="h-4 w-4 mr-1" /> Atualizar avaliação
                 </Button>
               </div>
             </div>

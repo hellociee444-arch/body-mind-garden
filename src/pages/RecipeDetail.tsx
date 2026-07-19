@@ -1,4 +1,7 @@
+import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import RecipeCard from "@/components/RecipeCard";
@@ -38,6 +41,13 @@ const RecipeDetail = () => {
     : undefined;
   const related = recipe ? getRelatedRecipes(recipe.id, 3) : [];
   const { isFavorite, toggle } = useFavorites();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user && recipe) {
+      supabase.from("recipe_views").insert({ user_id: user.id, recipe_id: recipe.id });
+    }
+  }, [user, recipe?.id]);
 
   if (!recipe) {
     return (
