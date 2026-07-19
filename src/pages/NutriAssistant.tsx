@@ -53,12 +53,32 @@ const initial: Form = {
 };
 
 export default function NutriAssistant() {
+  const { user, loading: authLoading } = useAuth();
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<Form>(initial);
   const [loading, setLoading] = useState(false);
   const [plan, setPlan] = useState<Plan | null>(null);
+  const [loadingSaved, setLoadingSaved] = useState(false);
 
   const steps = ["Perfil", "Objetivo", "Preferências", "Saúde"];
+
+  // Load user's saved plan on mount
+  useEffect(() => {
+    if (!user) return;
+    setLoadingSaved(true);
+    supabase
+      .from("nutri_plans")
+      .select("form_data, plan")
+      .eq("user_id", user.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data) {
+          setForm(data.form_data as unknown as Form);
+          setPlan(data.plan as unknown as Plan);
+        }
+        setLoadingSaved(false);
+      });
+  }, [user]);
 
   const canNext = () => {
     if (step === 0) return form.idade && form.sexo && form.altura && form.peso;
@@ -92,7 +112,21 @@ export default function NutriAssistant() {
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
-      setPlan(data as Plan);
+      const generatedPlan = data as Plan;
+      setPlan(generatedPlan);
+
+      // Persist for the user
+      if (user) {
+        await supabase.from("nutri_plans").upsert(
+          {
+            user_id: user.id,
+            objetivo: form.objetivo,
+            form_data: form as unknown as Record<string, unknown>,
+            plan: generatedPlan as unknown as Record<string, unknown>,
+          },
+          { onConflict: "user_id" },
+        );
+      }
       toast.success("Seu plano está pronto!");
     } catch (e) {
       toast.error((e as Error).message || "Não foi possível gerar o plano.");
