@@ -15,7 +15,8 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { ArrowLeft, ArrowRight, Sparkles, Loader2, RefreshCw, Droplets, Flame } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { ArrowLeft, ArrowRight, Sparkles, Loader2, RefreshCw, Droplets, Flame, LogIn } from "lucide-react";
 
 interface Form {
   idade: string;
