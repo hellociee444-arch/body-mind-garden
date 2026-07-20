@@ -25,7 +25,9 @@ import {
   ChefHat,
   Snowflake,
   Refrigerator,
+  Download,
 } from "lucide-react";
+import { downloadRecipePdf } from "@/lib/pdf";
 import { nutricao } from "@/data/content";
 import { getRecipeById, getRelatedRecipes } from "@/data/enrichedRecipes";
 import { CATEGORY_LABELS } from "@/data/recipeMetadata";
@@ -207,15 +209,25 @@ const RecipeDetail = () => {
                   </div>
                 </div>
 
-                <Button
-                  onClick={() => toggle(recipe.id)}
-                  variant={favorited ? "default" : "outline"}
-                  className="gap-2"
-                  aria-pressed={favorited}
-                >
-                  <Heart className={cn("h-4 w-4", favorited && "fill-current")} />
-                  {favorited ? "Salvo nos favoritos" : "Salvar nos favoritos"}
-                </Button>
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    onClick={() => toggle(recipe.id)}
+                    variant={favorited ? "default" : "outline"}
+                    className="gap-2"
+                    aria-pressed={favorited}
+                  >
+                    <Heart className={cn("h-4 w-4", favorited && "fill-current")} />
+                    {favorited ? "Salvo nos favoritos" : "Salvar nos favoritos"}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="gap-2"
+                    onClick={() => downloadRecipePdf(recipe)}
+                  >
+                    <Download className="h-4 w-4" />
+                    Baixar receita em PDF
+                  </Button>
+                </div>
 
                 {nutritionInfo && (
                   <Card className="border-none shadow-card bg-accent/20">

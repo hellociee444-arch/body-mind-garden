@@ -89,16 +89,27 @@ const Header = () => {
             <ThemeToggle />
 
             {user ? (
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => signOut()}
-                aria-label="Sair"
-                className="rounded-full hover:scale-110 transition-transform"
-                title={user.email ?? "Sair"}
-              >
-                <LogOut className="h-5 w-5" />
-              </Button>
+              <>
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="icon"
+                  aria-label="Minha conta"
+                  className="rounded-full hover:scale-110 transition-transform"
+                  title={user.email ?? "Minha conta"}
+                >
+                  <Link to="/minha-conta"><UserIcon className="h-5 w-5" /></Link>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => signOut()}
+                  aria-label="Sair"
+                  className="rounded-full hover:scale-110 transition-transform"
+                >
+                  <LogOut className="h-5 w-5" />
+                </Button>
+              </>
             ) : (
               <Button
                 asChild
