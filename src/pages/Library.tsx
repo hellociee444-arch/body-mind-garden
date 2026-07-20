@@ -46,7 +46,7 @@ type Cat = {
   desc: string;
   icon: React.ComponentType<{ className?: string }>;
   needsAuth?: boolean;
-  action: (ctx: LibCtx) => Promise<void> | void;
+  action: (ctx: LibCtx) => Promise<unknown> | unknown;
 };
 
 interface LibCtx {
