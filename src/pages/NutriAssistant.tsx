@@ -16,7 +16,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
-import { ArrowLeft, ArrowRight, Sparkles, Loader2, RefreshCw, Droplets, Flame, LogIn } from "lucide-react";
+import { ArrowLeft, ArrowRight, Sparkles, Loader2, RefreshCw, Droplets, Flame, LogIn, Download } from "lucide-react";
+import { downloadNutriReport, downloadWeeklyMenu, downloadShoppingList } from "@/lib/pdf";
+import { enrichedRecipes } from "@/data/enrichedRecipes";
 
 interface Form {
   idade: string;
@@ -374,7 +376,16 @@ export default function NutriAssistant() {
                 </TabsContent>
               </Tabs>
 
-              <div className="text-center">
+              <div className="flex flex-wrap gap-2 justify-center">
+                <Button variant="outline" onClick={() => downloadNutriReport(form, plan, enrichedRecipes.slice(0, 8))}>
+                  <Download className="h-4 w-4 mr-1" /> Baixar meu relatório
+                </Button>
+                <Button variant="outline" onClick={() => downloadWeeklyMenu(plan)}>
+                  <Download className="h-4 w-4 mr-1" /> Baixar meu cardápio semanal
+                </Button>
+                <Button variant="outline" onClick={() => downloadShoppingList(plan)}>
+                  <Download className="h-4 w-4 mr-1" /> Baixar lista de compras
+                </Button>
                 <Button variant="outline" onClick={reset}>
                   <RefreshCw className="h-4 w-4 mr-1" /> Atualizar avaliação
                 </Button>
