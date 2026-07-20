@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X, Leaf, Heart, LogIn, LogOut, User as UserIcon } from "lucide-react";
-import { Link as RouterLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useFavorites } from "@/hooks/useFavorites";
@@ -99,7 +98,7 @@ const Header = () => {
                   className="rounded-full hover:scale-110 transition-transform"
                   title={user.email ?? "Minha conta"}
                 >
-                  <RouterLink to="/minha-conta"><UserIcon className="h-5 w-5" /></RouterLink>
+                  <Link to="/minha-conta"><UserIcon className="h-5 w-5" /></Link>
                 </Button>
                 <Button
                   variant="ghost"
