@@ -5,23 +5,23 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const footerLinks = {
-    "Navegação": [
+    Navegação: [
       { name: "Início", path: "/" },
       { name: "Receitas", path: "/receitas" },
       { name: "Blog", path: "/blog" },
       { name: "Sobre", path: "/sobre" },
     ],
-    "Categorias": [
+    Categorias: [
       { name: "Nutrição", path: "/nutricao" },
       { name: "Fitness", path: "/fitness" },
       { name: "Bem-Estar", path: "/bem-estar" },
-      { name: "Guias", path: "/guias" },
+      { name: "Ferramentas", path: "/ferramentas" },
     ],
-    "Recursos": [
-      { name: "E-books Grátis", path: "/ebooks" },
-      { name: "Planos Premium", path: "/premium" },
-      { name: "Parceiros", path: "/parceiros" },
-      { name: "Newsletter", path: "#newsletter" },
+    Ferramentas: [
+      { name: "Nutri Assistente", path: "/nutri-assistente" },
+      { name: "Biblioteca Viva Leve", path: "/biblioteca" },
+      { name: "Minha Conta", path: "/minha-conta" },
+      { name: "Favoritos", path: "/favoritos" },
     ],
   };
 
@@ -29,7 +29,6 @@ const Footer = () => {
     <footer className="bg-secondary/50 border-t">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
-          {/* Brand */}
           <div className="lg:col-span-2 space-y-4">
             <Link to="/" className="flex items-center gap-2 w-fit">
               <div className="rounded-full bg-primary p-2">
@@ -41,22 +40,21 @@ const Footer = () => {
               Coma bem. Viva leve. Cuide do corpo e da mente. Descubra o equilíbrio perfeito entre alimentação saudável e bem-estar.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="#" aria-label="Instagram" className="text-muted-foreground hover:text-primary transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="#" aria-label="Facebook" className="text-muted-foreground hover:text-primary transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="#" aria-label="Youtube" className="text-muted-foreground hover:text-primary transition-colors">
                 <Youtube className="h-5 w-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="#" aria-label="Twitter" className="text-muted-foreground hover:text-primary transition-colors">
                 <Twitter className="h-5 w-5" />
               </a>
             </div>
           </div>
 
-          {/* Links */}
           {Object.entries(footerLinks).map(([title, links]) => (
             <div key={title} className="space-y-4">
               <h3 className="font-heading font-semibold">{title}</h3>
@@ -76,19 +74,13 @@ const Footer = () => {
           ))}
         </div>
 
-        {/* Bottom */}
         <div className="border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
             © {currentYear} Viva Leve. Todos os direitos reservados.
           </p>
-          <div className="flex gap-6 text-sm">
-            <Link to="/privacidade" className="text-muted-foreground hover:text-primary transition-colors">
-              Privacidade
-            </Link>
-            <Link to="/termos" className="text-muted-foreground hover:text-primary transition-colors">
-              Termos de Uso
-            </Link>
-          </div>
+          <p className="text-sm text-muted-foreground">
+            Feito com carinho para quem cuida do corpo e da mente.
+          </p>
         </div>
       </div>
     </footer>
