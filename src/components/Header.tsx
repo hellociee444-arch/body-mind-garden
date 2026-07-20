@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X, Leaf, Heart, LogIn, LogOut, User as UserIcon } from "lucide-react";
+import { Link as RouterLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useFavorites } from "@/hooks/useFavorites";
@@ -89,16 +90,27 @@ const Header = () => {
             <ThemeToggle />
 
             {user ? (
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => signOut()}
-                aria-label="Sair"
-                className="rounded-full hover:scale-110 transition-transform"
-                title={user.email ?? "Sair"}
-              >
-                <LogOut className="h-5 w-5" />
-              </Button>
+              <>
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="icon"
+                  aria-label="Minha conta"
+                  className="rounded-full hover:scale-110 transition-transform"
+                  title={user.email ?? "Minha conta"}
+                >
+                  <RouterLink to="/minha-conta"><UserIcon className="h-5 w-5" /></RouterLink>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => signOut()}
+                  aria-label="Sair"
+                  className="rounded-full hover:scale-110 transition-transform"
+                >
+                  <LogOut className="h-5 w-5" />
+                </Button>
+              </>
             ) : (
               <Button
                 asChild

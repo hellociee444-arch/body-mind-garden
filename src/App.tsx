@@ -21,6 +21,8 @@ import Favorites from "./pages/Favorites";
 import Tools from "./pages/Tools";
 import NutriAssistant from "./pages/NutriAssistant";
 import Auth from "./pages/Auth";
+import Library from "./pages/Library";
+import MyAccount from "./pages/MyAccount";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -51,6 +53,8 @@ const App = () => (
                 <Route path="/contato" element={<Contact />} />
                 <Route path="/ferramentas" element={<Tools />} />
                 <Route path="/nutri-assistente" element={<NutriAssistant />} />
+                <Route path="/biblioteca" element={<Library />} />
+                <Route path="/minha-conta" element={<MyAccount />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

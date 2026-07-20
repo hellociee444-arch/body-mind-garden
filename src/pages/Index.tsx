@@ -276,22 +276,22 @@ const Index = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
+        {/* CTA — Biblioteca Viva Leve */}
         <section className="py-16">
           <div className="container mx-auto px-4">
             <div className="bg-gradient-hero rounded-3xl p-8 md:p-12 text-center space-y-6 shadow-soft">
               <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-foreground">
-                Comece sua Jornada de Transformação
+                Biblioteca Viva Leve
               </h2>
               <p className="text-lg text-primary-foreground/90 max-w-2xl mx-auto">
-                Baixe gratuitamente nosso guia "21 Dias de Rotina Saudável" e dê o primeiro passo para uma vida mais equilibrada e feliz.
+                Baixe em PDF seu relatório nutricional, cardápio semanal, lista de compras e coleções de receitas para levar para a cozinha e o mercado.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" variant="secondary" className="shadow-soft">
-                  Baixar e-book grátis
+                <Button asChild size="lg" variant="secondary" className="shadow-soft">
+                  <Link to="/biblioteca">Abrir Biblioteca</Link>
                 </Button>
-                <Button size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20">
-                  Explorar planos
+                <Button asChild size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20">
+                  <Link to="/nutri-assistente">Fazer minha avaliação</Link>
                 </Button>
               </div>
             </div>
