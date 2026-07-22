@@ -270,30 +270,6 @@ const Recipes = () => {
           </div>
         </section>
 
-        {/* Coleções / categorias */}
-        <section className="border-b border-border bg-background">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex flex-wrap gap-2">
-              <span className="text-sm font-medium text-muted-foreground mr-2 self-center">
-                Coleções:
-              </span>
-              {CATEGORIES.map((c) => (
-                <Link
-                  key={c.slug}
-                  to={`/categoria/${c.slug}`}
-                  className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-full"
-                >
-                  <Badge
-                    variant="outline"
-                    className="cursor-pointer text-xs hover:bg-accent transition-all hover:scale-105"
-                  >
-                    {c.short}
-                  </Badge>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* Results */}
         <section className="py-12">
