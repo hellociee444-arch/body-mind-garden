@@ -13,11 +13,25 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
 export default function Auth() {
-  const { signIn, signUp, user } = useAuth();
+  const { signIn, signUp, resetPassword, user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [signupData, setSignupData] = useState({ name: "", email: "", password: "" });
+  const [showForgot, setShowForgot] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState("");
+
+  const handleForgot = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    const { error } = await resetPassword(forgotEmail);
+    setLoading(false);
+    if (error) toast.error(error);
+    else {
+      toast.success("Enviamos um link de recuperação para seu e-mail.");
+      setShowForgot(false);
+    }
+  };
 
   useEffect(() => {
     if (user) navigate("/nutri-assistente", { replace: true });
@@ -83,6 +97,23 @@ export default function Auth() {
                   <Button type="submit" className="w-full" disabled={loading}>
                     {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Entrar"}
                   </Button>
+                  <button
+                    type="button"
+                    onClick={() => { setShowForgot((v) => !v); setForgotEmail(loginData.email); }}
+                    className="text-xs text-muted-foreground hover:text-primary underline underline-offset-2 block mx-auto"
+                  >
+                    Esqueci minha senha
+                  </button>
+                  {showForgot && (
+                    <form onSubmit={handleForgot} className="space-y-2 pt-2 border-t">
+                      <Label htmlFor="f-email">E-mail para recuperação</Label>
+                      <Input id="f-email" type="email" required value={forgotEmail}
+                        onChange={(e) => setForgotEmail(e.target.value)} />
+                      <Button type="submit" variant="outline" className="w-full" disabled={loading}>
+                        {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Enviar link de recuperação"}
+                      </Button>
+                    </form>
+                  )}
                 </form>
               </TabsContent>
 

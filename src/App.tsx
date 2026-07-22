@@ -21,6 +21,7 @@ import Favorites from "./pages/Favorites";
 import Tools from "./pages/Tools";
 import NutriAssistant from "./pages/NutriAssistant";
 import Auth from "./pages/Auth";
+import ResetPassword from "./pages/ResetPassword";
 import Library from "./pages/Library";
 import MyAccount from "./pages/MyAccount";
 import NotFound from "./pages/NotFound";
@@ -39,6 +40,7 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/auth" element={<Auth />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/receitas" element={<Recipes />} />
                 <Route path="/receita/:id" element={<RecipeDetail />} />
                 <Route path="/categoria/:slug" element={<Category />} />
