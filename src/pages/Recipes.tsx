@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/select";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { enrichedRecipes } from "@/data/enrichedRecipes";
-import { CATEGORIES } from "@/data/categories";
 import {
   CATEGORY_LABELS,
   GOAL_LABELS,
