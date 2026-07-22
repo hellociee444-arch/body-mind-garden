@@ -9,6 +9,8 @@ interface AuthContextValue {
   signIn: (email: string, password: string) => Promise<{ error?: string }>;
   signUp: (name: string, email: string, password: string) => Promise<{ error?: string }>;
   signOut: () => Promise<void>;
+  resetPassword: (email: string) => Promise<{ error?: string }>;
+  updatePassword: (password: string) => Promise<{ error?: string }>;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
