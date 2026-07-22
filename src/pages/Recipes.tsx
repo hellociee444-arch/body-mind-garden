@@ -6,7 +6,7 @@ import { SEO } from "@/components/SEO";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+
 import {
   Select,
   SelectContent,
@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/select";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { enrichedRecipes } from "@/data/enrichedRecipes";
-import { CATEGORIES } from "@/data/categories";
 import {
   CATEGORY_LABELS,
   GOAL_LABELS,
@@ -270,30 +269,6 @@ const Recipes = () => {
           </div>
         </section>
 
-        {/* Coleções / categorias */}
-        <section className="border-b border-border bg-background">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex flex-wrap gap-2">
-              <span className="text-sm font-medium text-muted-foreground mr-2 self-center">
-                Coleções:
-              </span>
-              {CATEGORIES.map((c) => (
-                <Link
-                  key={c.slug}
-                  to={`/categoria/${c.slug}`}
-                  className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-full"
-                >
-                  <Badge
-                    variant="outline"
-                    className="cursor-pointer text-xs hover:bg-accent transition-all hover:scale-105"
-                  >
-                    {c.short}
-                  </Badge>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* Results */}
         <section className="py-12">
