@@ -78,7 +78,7 @@ function deriveMetadata(recipe: (typeof receitas)[number]): RecipeMetadata {
     nome.includes("muffin") ||
     nome.includes("toast") ||
     nome.includes("omelete") ||
-    tags.some((t) => t.includes("café"))
+    tags.some((t) => t.includes("café")) ||
     nome.includes("cuscuz") ||
     nome.includes("mingau") ||
     nome.includes("crepioca")
