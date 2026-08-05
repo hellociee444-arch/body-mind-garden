@@ -29,6 +29,37 @@ import macarraoSaudavel from "@/assets/recipe-macarrao-saudavel.jpg";
 import sopaNutritiva from "@/assets/recipe-sopa-nutritiva.jpg";
 import smoothieFrutas from "@/assets/recipe-smoothie-frutas.jpg";
 
+import nAlmondegasFrango from "@/assets/recipe-almondegas-frango.jpg";
+import nBaiaoDeDois from "@/assets/recipe-baiao-de-dois.jpg";
+import nBatataDoceAirfryer from "@/assets/recipe-batata-doce-airfryer.jpg";
+import nBerinjelaRecheada from "@/assets/recipe-berinjela-recheada.jpg";
+import nBoloCacauBeterraba from "@/assets/recipe-bolo-cacau-beterraba.jpg";
+import nBoloMilho from "@/assets/recipe-bolo-milho.jpg";
+import nCafeProteico from "@/assets/recipe-cafe-proteico.jpg";
+import nCaldoFeijaoCouve from "@/assets/recipe-caldo-feijao-couve.jpg";
+import nCarneMoidaAbobrinha from "@/assets/recipe-carne-moida-abobrinha.jpg";
+import nChaHibisco from "@/assets/recipe-cha-hibisco.jpg";
+import nChipsCouve from "@/assets/recipe-chips-couve.jpg";
+import nCrepiocaEspinafre from "@/assets/recipe-crepioca-espinafre.jpg";
+import nCuscuzOvo from "@/assets/recipe-cuscuz-ovo.jpg";
+import nFeijoadaLegumes from "@/assets/recipe-feijoada-legumes.jpg";
+import nFrangoEmpanadoAirfryer from "@/assets/recipe-frango-empanado-airfryer.jpg";
+import nFrangoXadrez from "@/assets/recipe-frango-xadrez.jpg";
+import nHamburguerLentilha from "@/assets/recipe-hamburguer-lentilha.jpg";
+import nMacarraoAtumBrocolis from "@/assets/recipe-macarrao-atum-brocolis.jpg";
+import nMingauAveiaMaca from "@/assets/recipe-mingau-aveia-maca.jpg";
+import nMoquecaTilapia from "@/assets/recipe-moqueca-tilapia.jpg";
+import nMousseMaracuja from "@/assets/recipe-mousse-maracuja.jpg";
+import nPaoQueijoBatataDoce from "@/assets/recipe-pao-queijo-batata-doce.jpg";
+import nPicoleBananaCacau from "@/assets/recipe-picole-banana-cacau.jpg";
+import nPudimChia from "@/assets/recipe-pudim-chia.jpg";
+import nQuibeAssado from "@/assets/recipe-quibe-assado.jpg";
+import nSardinhaRefogada from "@/assets/recipe-sardinha-refogada.jpg";
+import nSopaAboboraGengibre from "@/assets/recipe-sopa-abobora-gengibre.jpg";
+import nStrogonoffGraoBico from "@/assets/recipe-strogonoff-grao-bico.jpg";
+import nSucoAbacaxiHortela from "@/assets/recipe-suco-abacaxi-hortela.jpg";
+import nVitaminaMamao from "@/assets/recipe-vitamina-mamao.jpg";
+
 export const recipeImageMap: Record<string, string> = {
   "/src/assets/recipe-salad-bowl.jpg": saladBowl,
   "/src/assets/recipe-smoothie.jpg": smoothie,
@@ -60,6 +91,36 @@ export const recipeImageMap: Record<string, string> = {
   "/src/assets/recipe-macarrao-saudavel.jpg": macarraoSaudavel,
   "/src/assets/recipe-sopa-nutritiva.jpg": sopaNutritiva,
   "/src/assets/recipe-smoothie-frutas.jpg": smoothieFrutas,
+  "/src/assets/recipe-almondegas-frango.jpg": nAlmondegasFrango,
+  "/src/assets/recipe-baiao-de-dois.jpg": nBaiaoDeDois,
+  "/src/assets/recipe-batata-doce-airfryer.jpg": nBatataDoceAirfryer,
+  "/src/assets/recipe-berinjela-recheada.jpg": nBerinjelaRecheada,
+  "/src/assets/recipe-bolo-cacau-beterraba.jpg": nBoloCacauBeterraba,
+  "/src/assets/recipe-bolo-milho.jpg": nBoloMilho,
+  "/src/assets/recipe-cafe-proteico.jpg": nCafeProteico,
+  "/src/assets/recipe-caldo-feijao-couve.jpg": nCaldoFeijaoCouve,
+  "/src/assets/recipe-carne-moida-abobrinha.jpg": nCarneMoidaAbobrinha,
+  "/src/assets/recipe-cha-hibisco.jpg": nChaHibisco,
+  "/src/assets/recipe-chips-couve.jpg": nChipsCouve,
+  "/src/assets/recipe-crepioca-espinafre.jpg": nCrepiocaEspinafre,
+  "/src/assets/recipe-cuscuz-ovo.jpg": nCuscuzOvo,
+  "/src/assets/recipe-feijoada-legumes.jpg": nFeijoadaLegumes,
+  "/src/assets/recipe-frango-empanado-airfryer.jpg": nFrangoEmpanadoAirfryer,
+  "/src/assets/recipe-frango-xadrez.jpg": nFrangoXadrez,
+  "/src/assets/recipe-hamburguer-lentilha.jpg": nHamburguerLentilha,
+  "/src/assets/recipe-macarrao-atum-brocolis.jpg": nMacarraoAtumBrocolis,
+  "/src/assets/recipe-mingau-aveia-maca.jpg": nMingauAveiaMaca,
+  "/src/assets/recipe-moqueca-tilapia.jpg": nMoquecaTilapia,
+  "/src/assets/recipe-mousse-maracuja.jpg": nMousseMaracuja,
+  "/src/assets/recipe-pao-queijo-batata-doce.jpg": nPaoQueijoBatataDoce,
+  "/src/assets/recipe-picole-banana-cacau.jpg": nPicoleBananaCacau,
+  "/src/assets/recipe-pudim-chia.jpg": nPudimChia,
+  "/src/assets/recipe-quibe-assado.jpg": nQuibeAssado,
+  "/src/assets/recipe-sardinha-refogada.jpg": nSardinhaRefogada,
+  "/src/assets/recipe-sopa-abobora-gengibre.jpg": nSopaAboboraGengibre,
+  "/src/assets/recipe-strogonoff-grao-bico.jpg": nStrogonoffGraoBico,
+  "/src/assets/recipe-suco-abacaxi-hortela.jpg": nSucoAbacaxiHortela,
+  "/src/assets/recipe-vitamina-mamao.jpg": nVitaminaMamao,
 };
 
 export const getRecipeImage = (path: string): string =>
