@@ -1,4 +1,6 @@
-export const receitas = [
+import { novasReceitas, novaNutricao } from "./newRecipes";
+
+const receitasBase = [
   {
     nome: "Bowl de Quinoa com Abacate e Vegetais Coloridos",
     ingredientes: [
@@ -792,7 +794,9 @@ export const receitas = [
   }
 ];
 
-export const nutricao = [
+export const receitas = [...receitasBase, ...novasReceitas];
+
+const nutricaoBase = [
   {
     receita: "Bowl de Quinoa com Abacate e Vegetais Coloridos",
     porcao: "1 bowl",
@@ -1014,6 +1018,8 @@ export const nutricao = [
     beneficios: "Combinação completa de proteínas vegetais; rico em fibras e ferro; vegano e nutritivo."
   }
 ];
+
+export const nutricao = [...nutricaoBase, ...novaNutricao];
 
 export const fitness = [
   {
