@@ -79,11 +79,29 @@ function deriveMetadata(recipe: (typeof receitas)[number]): RecipeMetadata {
     nome.includes("toast") ||
     nome.includes("omelete") ||
     tags.some((t) => t.includes("café"))
+    nome.includes("cuscuz") ||
+    nome.includes("mingau") ||
+    nome.includes("crepioca")
   ) {
     category = "cafe-da-manha";
-  } else if (nome.includes("smoothie") || nome.includes("suco")) {
+  } else if (
+    nome.includes("smoothie") ||
+    nome.includes("suco") ||
+    nome.includes("vitamina") ||
+    nome.includes("chá") ||
+    nome.includes("café proteico")
+  ) {
     category = "bebida";
-  } else if (nome.includes("sopa")) {
+  } else if (
+    nome.includes("mousse") ||
+    nome.includes("pudim") ||
+    nome.includes("picolé") ||
+    nome.startsWith("bolo")
+  ) {
+    category = "sobremesa";
+  } else if (nome.includes("chips") || nome.includes("pão de queijo")) {
+    category = "lanche";
+  } else if (nome.includes("sopa") || nome.includes("caldo")) {
     category = "sopa";
   } else if (
     nome.includes("brigadeiro") ||
