@@ -10,6 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useFavorites } from "@/hooks/useFavorites";
+import { useMadeRecipes } from "@/hooks/useMadeRecipes";
+
 import { enrichedRecipes, getRecipeById } from "@/data/enrichedRecipes";
 import RecipeCard from "@/components/RecipeCard";
 import { Loader2, LogOut, Sparkles, Download, RefreshCw, User as UserIcon } from "lucide-react";
