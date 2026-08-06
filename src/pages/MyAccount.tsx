@@ -110,8 +110,11 @@ export default function MyAccount() {
               <TabsTrigger value="plano">Plano</TabsTrigger>
               <TabsTrigger value="cardapio">Cardápio</TabsTrigger>
               <TabsTrigger value="favoritos">Favoritos</TabsTrigger>
+              <TabsTrigger value="jafiz">Já feitas</TabsTrigger>
+              <TabsTrigger value="compras">Lista de compras</TabsTrigger>
               <TabsTrigger value="historico">Histórico</TabsTrigger>
-              <TabsTrigger value="downloads">Downloads</TabsTrigger>
+              <TabsTrigger value="downloads">Biblioteca</TabsTrigger>
+
             </TabsList>
 
             <TabsContent value="perfil" className="mt-4">
