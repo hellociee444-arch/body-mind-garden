@@ -64,6 +64,8 @@ export default function MyAccount() {
   }, [user]);
 
   const favoriteRecipes = enrichedRecipes.filter((r) => favorites.includes(r.id));
+  const madeRecipes = enrichedRecipes.filter((r) => made.includes(r.id));
+
   const historyRecipes = history.map((id) => getRecipeById(id)).filter(Boolean) as ReturnType<typeof getRecipeById>[];
 
   if (authLoading || loading) {
