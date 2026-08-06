@@ -73,6 +73,8 @@ const RecipeDetail = () => {
   }
 
   const favorited = isFavorite(recipe.id);
+  const alreadyMade = isMade(recipe.id);
+
 
   const jsonLd = {
     "@context": "https://schema.org",
