@@ -220,6 +220,15 @@ const RecipeDetail = () => {
                     {favorited ? "Salvo nos favoritos" : "Salvar nos favoritos"}
                   </Button>
                   <Button
+                    onClick={() => toggleMade(recipe.id)}
+                    variant={alreadyMade ? "default" : "outline"}
+                    className="gap-2"
+                    aria-pressed={alreadyMade}
+                  >
+                    <CheckCircle2 className={cn("h-4 w-4", alreadyMade && "fill-current")} />
+                    {alreadyMade ? "Já fiz esta receita" : "Marcar como “Já fiz”"}
+                  </Button>
+                  <Button
                     variant="outline"
                     className="gap-2"
                     onClick={() => downloadRecipePdf(recipe)}
@@ -228,6 +237,7 @@ const RecipeDetail = () => {
                     Baixar receita em PDF
                   </Button>
                 </div>
+
 
                 {nutritionInfo && (
                   <Card className="border-none shadow-card bg-accent/20">
