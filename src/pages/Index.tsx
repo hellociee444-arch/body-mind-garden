@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import ContinueWhereYouLeft from "@/components/ContinueWhereYouLeft";
 import RecipeCard from "@/components/RecipeCard";
+
 import WellnessTip from "@/components/WellnessTip";
 import Newsletter from "@/components/Newsletter";
 import Footer from "@/components/Footer";
@@ -53,6 +55,8 @@ const Index = () => {
       <Header />
       <main className="flex-1">
         <Hero />
+        <ContinueWhereYouLeft />
+
 
         {/* Featured Recipes Section */}
         <section className="py-16">

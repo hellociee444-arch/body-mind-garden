@@ -32,6 +32,8 @@ import { nutricao } from "@/data/content";
 import { getRecipeById, getRelatedRecipes } from "@/data/enrichedRecipes";
 import { CATEGORY_LABELS } from "@/data/recipeMetadata";
 import { useFavorites } from "@/hooks/useFavorites";
+import { useMadeRecipes } from "@/hooks/useMadeRecipes";
+
 import { cn } from "@/lib/utils";
 
 const RecipeDetail = () => {
@@ -43,6 +45,8 @@ const RecipeDetail = () => {
     : undefined;
   const related = recipe ? getRelatedRecipes(recipe.id, 3) : [];
   const { isFavorite, toggle } = useFavorites();
+  const { isMade, toggleMade } = useMadeRecipes();
+
   const { user } = useAuth();
 
   useEffect(() => {
@@ -69,6 +73,8 @@ const RecipeDetail = () => {
   }
 
   const favorited = isFavorite(recipe.id);
+  const alreadyMade = isMade(recipe.id);
+
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -220,6 +226,15 @@ const RecipeDetail = () => {
                     {favorited ? "Salvo nos favoritos" : "Salvar nos favoritos"}
                   </Button>
                   <Button
+                    onClick={() => toggleMade(recipe.id)}
+                    variant={alreadyMade ? "default" : "outline"}
+                    className="gap-2"
+                    aria-pressed={alreadyMade}
+                  >
+                    <CheckCircle2 className={cn("h-4 w-4", alreadyMade && "fill-current")} />
+                    {alreadyMade ? "Já fiz esta receita" : "Marcar como “Já fiz”"}
+                  </Button>
+                  <Button
                     variant="outline"
                     className="gap-2"
                     onClick={() => downloadRecipePdf(recipe)}
@@ -228,6 +243,7 @@ const RecipeDetail = () => {
                     Baixar receita em PDF
                   </Button>
                 </div>
+
 
                 {nutritionInfo && (
                   <Card className="border-none shadow-card bg-accent/20">

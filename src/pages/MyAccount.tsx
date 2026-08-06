@@ -10,6 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useFavorites } from "@/hooks/useFavorites";
+import { useMadeRecipes } from "@/hooks/useMadeRecipes";
+
 import { enrichedRecipes, getRecipeById } from "@/data/enrichedRecipes";
 import RecipeCard from "@/components/RecipeCard";
 import { Loader2, LogOut, Sparkles, Download, RefreshCw, User as UserIcon } from "lucide-react";
@@ -29,6 +31,8 @@ export default function MyAccount() {
   const { user, loading: authLoading, signOut } = useAuth();
   const navigate = useNavigate();
   const { favorites } = useFavorites();
+  const { made } = useMadeRecipes();
+
 
   const [profile, setProfile] = useState<Profile | null>(null);
   const [form, setForm] = useState<NutriForm | null>(null);
@@ -64,6 +68,8 @@ export default function MyAccount() {
   }, [user]);
 
   const favoriteRecipes = enrichedRecipes.filter((r) => favorites.includes(r.id));
+  const madeRecipes = enrichedRecipes.filter((r) => made.includes(r.id));
+
   const historyRecipes = history.map((id) => getRecipeById(id)).filter(Boolean) as ReturnType<typeof getRecipeById>[];
 
   if (authLoading || loading) {
@@ -110,8 +116,11 @@ export default function MyAccount() {
               <TabsTrigger value="plano">Plano</TabsTrigger>
               <TabsTrigger value="cardapio">Cardápio</TabsTrigger>
               <TabsTrigger value="favoritos">Favoritos</TabsTrigger>
+              <TabsTrigger value="jafiz">Já feitas</TabsTrigger>
+              <TabsTrigger value="compras">Lista de compras</TabsTrigger>
               <TabsTrigger value="historico">Histórico</TabsTrigger>
-              <TabsTrigger value="downloads">Downloads</TabsTrigger>
+              <TabsTrigger value="downloads">Biblioteca</TabsTrigger>
+
             </TabsList>
 
             <TabsContent value="perfil" className="mt-4">
@@ -216,7 +225,49 @@ export default function MyAccount() {
               )}
             </TabsContent>
 
+            <TabsContent value="jafiz" className="mt-4">
+              {madeRecipes.length ? (
+                <>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {madeRecipes.map((r) => (
+                      <RecipeCard key={r.id} recipeId={r.id} title={r.nome} image={r.image} time={r.time} calories={r.calories} rating={r.rating} tags={r.tags} costPerServing={r.costPerServing} servings={r.servings} />
+                    ))}
+                  </div>
+                  <Button
+                    variant="outline"
+                    className="mt-4"
+                    onClick={() => downloadRecipesCollection("Receitas que eu já fiz", "Suas receitas preparadas", madeRecipes)}
+                  >
+                    <Download className="h-4 w-4 mr-1" /> Baixar em PDF
+                  </Button>
+                </>
+              ) : (
+                <p className="text-sm text-muted-foreground">Marque receitas como “Já fiz” na página da receita para vê-las aqui.</p>
+              )}
+            </TabsContent>
+
+            <TabsContent value="compras" className="mt-4">
+              <Card>
+                <CardHeader><CardTitle>Minha Lista de Compras</CardTitle></CardHeader>
+                <CardContent className="space-y-3">
+                  {plan?.lista_compras?.length ? (
+                    <>
+                      <ul className="text-sm text-muted-foreground list-disc pl-5 grid sm:grid-cols-2 gap-x-6">
+                        {plan.lista_compras.map((item, i) => (<li key={i}>{item}</li>))}
+                      </ul>
+                      <Button variant="outline" onClick={() => downloadShoppingList(plan)}>
+                        <Download className="h-4 w-4 mr-1" /> Baixar lista de compras
+                      </Button>
+                    </>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">Nenhuma lista salva. <Link to="/nutri-assistente" className="text-primary underline">Gerar cardápio</Link>.</p>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+
             <TabsContent value="historico" className="mt-4">
+
               {historyRecipes.length ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {historyRecipes.map((r) => r && (

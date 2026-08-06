@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useFavorites } from "@/hooks/useFavorites";
+import { useMadeRecipes } from "@/hooks/useMadeRecipes";
 import { toast } from "sonner";
 import {
   Download,
@@ -51,6 +52,7 @@ type Cat = {
 
 interface LibCtx {
   favorites: EnrichedRecipe[];
+  made: EnrichedRecipe[];
   loadPlan: () => Promise<{ form: NutriForm; plan: NutriPlan } | null>;
 }
 
@@ -103,6 +105,16 @@ const CATS: Cat[] = [
     action: async (ctx) => {
       if (!ctx.favorites.length) return toast.error("Você ainda não salvou receitas.");
       await downloadRecipesCollection("Receitas Favoritas", "Suas receitas salvas", ctx.favorites);
+    },
+  },
+  {
+    id: "jafiz",
+    title: "Receitas Já Feitas",
+    desc: "As receitas que você marcou como “Já fiz”.",
+    icon: ChefHat,
+    action: async (ctx) => {
+      if (!ctx.made.length) return toast.error("Você ainda não marcou receitas como “Já fiz”.");
+      await downloadRecipesCollection("Receitas que eu já fiz", "Suas receitas preparadas", ctx.made);
     },
   },
   {
@@ -180,11 +192,17 @@ const CATS: Cat[] = [
 export default function Library() {
   const { user } = useAuth();
   const { favorites } = useFavorites();
+  const { made } = useMadeRecipes();
   const [busy, setBusy] = useState<string | null>(null);
 
   const favoriteRecipes = useMemo(
     () => enrichedRecipes.filter((r) => favorites.includes(r.id)),
     [favorites],
+  );
+
+  const madeRecipes = useMemo(
+    () => enrichedRecipes.filter((r) => made.includes(r.id)),
+    [made],
   );
 
   const loadPlan = async () => {
@@ -208,7 +226,7 @@ export default function Library() {
     }
     setBusy(c.id);
     try {
-      await c.action({ favorites: favoriteRecipes, loadPlan });
+      await c.action({ favorites: favoriteRecipes, made: madeRecipes, loadPlan });
     } catch (e) {
       toast.error((e as Error).message || "Não foi possível gerar o PDF.");
     } finally {
