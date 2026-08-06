@@ -219,7 +219,49 @@ export default function MyAccount() {
               )}
             </TabsContent>
 
+            <TabsContent value="jafiz" className="mt-4">
+              {madeRecipes.length ? (
+                <>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {madeRecipes.map((r) => (
+                      <RecipeCard key={r.id} recipeId={r.id} title={r.nome} image={r.image} time={r.time} calories={r.calories} rating={r.rating} tags={r.tags} costPerServing={r.costPerServing} servings={r.servings} />
+                    ))}
+                  </div>
+                  <Button
+                    variant="outline"
+                    className="mt-4"
+                    onClick={() => downloadRecipesCollection("Receitas que eu já fiz", "Suas receitas preparadas", madeRecipes)}
+                  >
+                    <Download className="h-4 w-4 mr-1" /> Baixar em PDF
+                  </Button>
+                </>
+              ) : (
+                <p className="text-sm text-muted-foreground">Marque receitas como “Já fiz” na página da receita para vê-las aqui.</p>
+              )}
+            </TabsContent>
+
+            <TabsContent value="compras" className="mt-4">
+              <Card>
+                <CardHeader><CardTitle>Minha Lista de Compras</CardTitle></CardHeader>
+                <CardContent className="space-y-3">
+                  {plan?.lista_compras?.length ? (
+                    <>
+                      <ul className="text-sm text-muted-foreground list-disc pl-5 grid sm:grid-cols-2 gap-x-6">
+                        {plan.lista_compras.map((item, i) => (<li key={i}>{item}</li>))}
+                      </ul>
+                      <Button variant="outline" onClick={() => downloadShoppingList(plan)}>
+                        <Download className="h-4 w-4 mr-1" /> Baixar lista de compras
+                      </Button>
+                    </>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">Nenhuma lista salva. <Link to="/nutri-assistente" className="text-primary underline">Gerar cardápio</Link>.</p>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+
             <TabsContent value="historico" className="mt-4">
+
               {historyRecipes.length ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {historyRecipes.map((r) => r && (
