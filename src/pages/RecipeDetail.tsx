@@ -45,6 +45,8 @@ const RecipeDetail = () => {
     : undefined;
   const related = recipe ? getRelatedRecipes(recipe.id, 3) : [];
   const { isFavorite, toggle } = useFavorites();
+  const { isMade, toggleMade } = useMadeRecipes();
+
   const { user } = useAuth();
 
   useEffect(() => {
