@@ -55,6 +55,8 @@ const Index = () => {
       <Header />
       <main className="flex-1">
         <Hero />
+        <ContinueWhereYouLeft />
+
 
         {/* Featured Recipes Section */}
         <section className="py-16">
