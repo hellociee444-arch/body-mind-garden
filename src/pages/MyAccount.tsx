@@ -29,6 +29,8 @@ export default function MyAccount() {
   const { user, loading: authLoading, signOut } = useAuth();
   const navigate = useNavigate();
   const { favorites } = useFavorites();
+  const { made } = useMadeRecipes();
+
 
   const [profile, setProfile] = useState<Profile | null>(null);
   const [form, setForm] = useState<NutriForm | null>(null);
