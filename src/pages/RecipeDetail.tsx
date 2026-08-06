@@ -32,6 +32,8 @@ import { nutricao } from "@/data/content";
 import { getRecipeById, getRelatedRecipes } from "@/data/enrichedRecipes";
 import { CATEGORY_LABELS } from "@/data/recipeMetadata";
 import { useFavorites } from "@/hooks/useFavorites";
+import { useMadeRecipes } from "@/hooks/useMadeRecipes";
+
 import { cn } from "@/lib/utils";
 
 const RecipeDetail = () => {
