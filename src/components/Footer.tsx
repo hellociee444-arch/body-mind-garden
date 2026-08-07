@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Leaf, Instagram, Facebook, Youtube, Twitter } from "lucide-react";
+import { Leaf } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
