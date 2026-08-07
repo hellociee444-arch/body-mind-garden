@@ -23,7 +23,14 @@ import {
   type RecipeCategory,
   type RecipeGoal,
   type RecipeRestriction,
+  type RecipeDifficulty,
 } from "@/data/recipeMetadata";
+
+const DIFFICULTY_LABELS: Record<RecipeDifficulty, string> = {
+  facil: "Fácil",
+  medio: "Médio",
+  dificil: "Difícil",
+};
 
 type SortOption =
   | "relevance"
@@ -31,10 +38,13 @@ type SortOption =
   | "calories-asc"
   | "calories-desc"
   | "rating-desc"
-  | "cost-asc";
+  | "cost-asc"
+  | "protein-desc";
 
 type CostFilter = "all" | "10" | "20" | "30";
 type TimeFilter = "all" | "20" | "30" | "45";
+type CalorieFilter = "all" | "200" | "350" | "500";
+type ProteinFilter = "all" | "10" | "20" | "30";
 
 const Recipes = () => {
   const [query, setQuery] = useState("");
@@ -43,6 +53,9 @@ const Recipes = () => {
   const [restrictions, setRestrictions] = useState<RecipeRestriction[]>([]);
   const [cost, setCost] = useState<CostFilter>("all");
   const [time, setTime] = useState<TimeFilter>("all");
+  const [calories, setCalories] = useState<CalorieFilter>("all");
+  const [protein, setProtein] = useState<ProteinFilter>("all");
+  const [difficulty, setDifficulty] = useState<RecipeDifficulty | "all">("all");
   const [sort, setSort] = useState<SortOption>("relevance");
 
   const toggleRestriction = (r: RecipeRestriction) => {
@@ -58,6 +71,9 @@ const Recipes = () => {
     setRestrictions([]);
     setCost("all");
     setTime("all");
+    setCalories("all");
+    setProtein("all");
+    setDifficulty("all");
     setSort("relevance");
   };
 
@@ -67,12 +83,17 @@ const Recipes = () => {
     (goal !== "all" ? 1 : 0) +
     (cost !== "all" ? 1 : 0) +
     (time !== "all" ? 1 : 0) +
+    (calories !== "all" ? 1 : 0) +
+    (protein !== "all" ? 1 : 0) +
+    (difficulty !== "all" ? 1 : 0) +
     restrictions.length;
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     const costCap = cost === "all" ? Infinity : parseInt(cost, 10);
     const timeCap = time === "all" ? Infinity : parseInt(time, 10);
+    const calorieCap = calories === "all" ? Infinity : parseInt(calories, 10);
+    const proteinMin = protein === "all" ? 0 : parseInt(protein, 10);
     const list = enrichedRecipes.filter((r) => {
       if (category !== "all" && r.category !== category) return false;
       if (goal !== "all" && !r.goals.includes(goal)) return false;
@@ -80,6 +101,9 @@ const Recipes = () => {
         return false;
       if (r.costTotal > costCap) return false;
       if (r.timeMinutes > timeCap) return false;
+      if (r.caloriesNum > calorieCap) return false;
+      if (r.proteins < proteinMin) return false;
+      if (difficulty !== "all" && r.difficulty !== difficulty) return false;
       if (q) {
         const haystack = [
           r.nome,
@@ -107,12 +131,15 @@ const Recipes = () => {
       case "calories-desc":
         sorted.sort((a, b) => b.caloriesNum - a.caloriesNum);
         break;
+      case "protein-desc":
+        sorted.sort((a, b) => b.proteins - a.proteins);
+        break;
       case "rating-desc":
         sorted.sort((a, b) => b.rating - a.rating);
         break;
     }
     return sorted;
-  }, [query, category, goal, restrictions, cost, time, sort]);
+  }, [query, category, goal, restrictions, cost, time, calories, protein, difficulty, sort]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -217,6 +244,53 @@ const Recipes = () => {
                 </SelectContent>
               </Select>
 
+              <Select
+                value={calories}
+                onValueChange={(v) => setCalories(v as CalorieFilter)}
+              >
+                <SelectTrigger className="w-[180px]" aria-label="Filtrar por calorias">
+                  <SelectValue placeholder="Calorias" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Qualquer caloria</SelectItem>
+                  <SelectItem value="200">Até 200 kcal</SelectItem>
+                  <SelectItem value="350">Até 350 kcal</SelectItem>
+                  <SelectItem value="500">Até 500 kcal</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select
+                value={protein}
+                onValueChange={(v) => setProtein(v as ProteinFilter)}
+              >
+                <SelectTrigger className="w-[190px]" aria-label="Filtrar por proteína">
+                  <SelectValue placeholder="Proteína" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Qualquer proteína</SelectItem>
+                  <SelectItem value="10">10 g ou mais</SelectItem>
+                  <SelectItem value="20">20 g ou mais</SelectItem>
+                  <SelectItem value="30">30 g ou mais</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select
+                value={difficulty}
+                onValueChange={(v) => setDifficulty(v as RecipeDifficulty | "all")}
+              >
+                <SelectTrigger className="w-[200px]" aria-label="Filtrar por dificuldade">
+                  <SelectValue placeholder="Dificuldade" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Qualquer dificuldade</SelectItem>
+                  {(Object.keys(DIFFICULTY_LABELS) as RecipeDifficulty[]).map((d) => (
+                    <SelectItem key={d} value={d}>
+                      {DIFFICULTY_LABELS[d]}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
               <Select value={sort} onValueChange={(v) => setSort(v as SortOption)}>
                 <SelectTrigger className="w-[200px] ml-auto" aria-label="Ordenar">
                   <SelectValue placeholder="Ordenar" />
@@ -227,6 +301,7 @@ const Recipes = () => {
                   <SelectItem value="cost-asc">Mais baratas</SelectItem>
                   <SelectItem value="calories-asc">Menos calorias</SelectItem>
                   <SelectItem value="calories-desc">Mais calorias</SelectItem>
+                  <SelectItem value="protein-desc">Mais proteicas</SelectItem>
                   <SelectItem value="rating-desc">Melhor avaliadas</SelectItem>
                 </SelectContent>
               </Select>

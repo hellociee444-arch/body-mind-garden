@@ -59,6 +59,30 @@ import nSopaAboboraGengibre from "@/assets/recipe-sopa-abobora-gengibre.jpg";
 import nStrogonoffGraoBico from "@/assets/recipe-strogonoff-grao-bico.jpg";
 import nSucoAbacaxiHortela from "@/assets/recipe-suco-abacaxi-hortela.jpg";
 import nVitaminaMamao from "@/assets/recipe-vitamina-mamao.jpg";
+import cOvosMexidosTomate from "@/assets/recipe-ovos-mexidos-tomate.jpg";
+import cPaoRicotaTomate from "@/assets/recipe-pao-ricota-tomate.jpg";
+import cIogurteGranolaCaseira from "@/assets/recipe-iogurte-granola-caseira.jpg";
+import cPratoFeitoFrango from "@/assets/recipe-prato-feito-frango.jpg";
+import cBifeAceboladoPure from "@/assets/recipe-bife-acebolado-pure.jpg";
+import cPeixeAssadoBatatas from "@/assets/recipe-peixe-assado-batatas.jpg";
+import cFrangoEnsopadoBatata from "@/assets/recipe-frango-ensopado-batata.jpg";
+import cOmeleteFornoLegumes from "@/assets/recipe-omelete-forno-legumes.jpg";
+import cSopaLegumesMacarrao from "@/assets/recipe-sopa-legumes-macarrao.jpg";
+import cCanjaGalinha from "@/assets/recipe-canja-galinha.jpg";
+import cSaladaGraoDeBico from "@/assets/recipe-salada-grao-de-bico.jpg";
+import cSaladaRepolhoCenoura from "@/assets/recipe-salada-repolho-cenoura.jpg";
+import cMarmitaCarneBrocolis from "@/assets/recipe-marmita-carne-brocolis.jpg";
+import cMarmitaFrangoLegumesAssados from "@/assets/recipe-marmita-frango-legumes-assados.jpg";
+import cEscondidinhoAboboraCarne from "@/assets/recipe-escondidinho-abobora-carne.jpg";
+import cTortaLegumesLiquidificador from "@/assets/recipe-torta-legumes-liquidificador.jpg";
+import cMacarraoBolonhesaCenoura from "@/assets/recipe-macarrao-bolonhesa-cenoura.jpg";
+import cNhoqueBatataMolho from "@/assets/recipe-nhoque-batata-molho.jpg";
+import cAbobrinhaRecheadaRicota from "@/assets/recipe-abobrinha-recheada-ricota.jpg";
+import cPipocaAzeiteOregano from "@/assets/recipe-pipoca-azeite-oregano.jpg";
+import cBoloFubaErvaDoce from "@/assets/recipe-bolo-fuba-erva-doce.jpg";
+import cBoloBananaAveiaSemAcucar from "@/assets/recipe-bolo-banana-aveia-sem-acucar.jpg";
+import cArrozDoceCanela from "@/assets/recipe-arroz-doce-canela.jpg";
+import cBananaAssadaCanela from "@/assets/recipe-banana-assada-canela.jpg";
 
 export const recipeImageMap: Record<string, string> = {
   "/src/assets/recipe-salad-bowl.jpg": saladBowl,
@@ -121,6 +145,30 @@ export const recipeImageMap: Record<string, string> = {
   "/src/assets/recipe-strogonoff-grao-bico.jpg": nStrogonoffGraoBico,
   "/src/assets/recipe-suco-abacaxi-hortela.jpg": nSucoAbacaxiHortela,
   "/src/assets/recipe-vitamina-mamao.jpg": nVitaminaMamao,
+  "/src/assets/recipe-ovos-mexidos-tomate.jpg": cOvosMexidosTomate,
+  "/src/assets/recipe-pao-ricota-tomate.jpg": cPaoRicotaTomate,
+  "/src/assets/recipe-iogurte-granola-caseira.jpg": cIogurteGranolaCaseira,
+  "/src/assets/recipe-prato-feito-frango.jpg": cPratoFeitoFrango,
+  "/src/assets/recipe-bife-acebolado-pure.jpg": cBifeAceboladoPure,
+  "/src/assets/recipe-peixe-assado-batatas.jpg": cPeixeAssadoBatatas,
+  "/src/assets/recipe-frango-ensopado-batata.jpg": cFrangoEnsopadoBatata,
+  "/src/assets/recipe-omelete-forno-legumes.jpg": cOmeleteFornoLegumes,
+  "/src/assets/recipe-sopa-legumes-macarrao.jpg": cSopaLegumesMacarrao,
+  "/src/assets/recipe-canja-galinha.jpg": cCanjaGalinha,
+  "/src/assets/recipe-salada-grao-de-bico.jpg": cSaladaGraoDeBico,
+  "/src/assets/recipe-salada-repolho-cenoura.jpg": cSaladaRepolhoCenoura,
+  "/src/assets/recipe-marmita-carne-brocolis.jpg": cMarmitaCarneBrocolis,
+  "/src/assets/recipe-marmita-frango-legumes-assados.jpg": cMarmitaFrangoLegumesAssados,
+  "/src/assets/recipe-escondidinho-abobora-carne.jpg": cEscondidinhoAboboraCarne,
+  "/src/assets/recipe-torta-legumes-liquidificador.jpg": cTortaLegumesLiquidificador,
+  "/src/assets/recipe-macarrao-bolonhesa-cenoura.jpg": cMacarraoBolonhesaCenoura,
+  "/src/assets/recipe-nhoque-batata-molho.jpg": cNhoqueBatataMolho,
+  "/src/assets/recipe-abobrinha-recheada-ricota.jpg": cAbobrinhaRecheadaRicota,
+  "/src/assets/recipe-pipoca-azeite-oregano.jpg": cPipocaAzeiteOregano,
+  "/src/assets/recipe-bolo-fuba-erva-doce.jpg": cBoloFubaErvaDoce,
+  "/src/assets/recipe-bolo-banana-aveia-sem-acucar.jpg": cBoloBananaAveiaSemAcucar,
+  "/src/assets/recipe-arroz-doce-canela.jpg": cArrozDoceCanela,
+  "/src/assets/recipe-banana-assada-canela.jpg": cBananaAssadaCanela,
 };
 
 export const getRecipeImage = (path: string): string =>

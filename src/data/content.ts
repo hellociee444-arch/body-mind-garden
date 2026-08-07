@@ -1,4 +1,5 @@
 import { novasReceitas, novaNutricao } from "./newRecipes";
+import { receitasCaseiras, nutricaoCaseira } from "./homeRecipes";
 
 const receitasBase = [
   {
@@ -794,7 +795,7 @@ const receitasBase = [
   }
 ];
 
-export const receitas = [...receitasBase, ...novasReceitas];
+export const receitas = [...receitasBase, ...novasReceitas, ...receitasCaseiras];
 
 const nutricaoBase = [
   {
@@ -1019,7 +1020,7 @@ const nutricaoBase = [
   }
 ];
 
-export const nutricao = [...nutricaoBase, ...novaNutricao];
+export const nutricao = [...nutricaoBase, ...novaNutricao, ...nutricaoCaseira];
 
 export const fitness = [
   {

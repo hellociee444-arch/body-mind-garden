@@ -15,17 +15,17 @@ const Hero = () => {
               Coma bem. Viva leve. Cuide do corpo e da mente.
             </h1>
             <p className="text-lg md:text-xl text-primary-foreground/90 max-w-2xl mx-auto lg:mx-0">
-              Descubra receitas saudáveis, dicas de fitness e guias de bem-estar para transformar sua vida com equilíbrio e naturalidade.
+              Receitas caseiras com comida de verdade, ingredientes acessíveis e orientação nutricional baseada em evidências para toda a família.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button asChild size="lg" variant="secondary" className="gap-2 shadow-soft">
                 <Link to="/biblioteca">
                   <Download className="h-5 w-5" />
-                  Baixe o e-book grátis
+                  Biblioteca Viva Leve
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20">
-                <Link to="/receitas">Comece agora</Link>
+                <Link to="/receitas">Ver receitas</Link>
               </Button>
 
             </div>
