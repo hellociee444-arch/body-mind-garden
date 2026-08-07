@@ -71,7 +71,43 @@ function deriveMetadata(recipe: (typeof receitas)[number]): RecipeMetadata {
 
   // Category
   let category: RecipeCategory = "almoco";
-  if (
+  if (nome.includes("sopa") || nome.includes("caldo") || nome.includes("canja")) {
+    category = "sopa";
+  } else if (
+    nome.includes("salada") ||
+    nome.includes("marmita") ||
+    nome.includes("prato feito") ||
+    nome.includes("nhoque") ||
+    nome.includes("bife") ||
+    nome.includes("peixe assado") ||
+    nome.includes("ensopado") ||
+    nome.includes("escondidinho")
+  ) {
+    category = "almoco";
+  } else if (
+    nome.includes("pipoca") ||
+    nome.includes("torta salgada") ||
+    nome.includes("pão integral com ricota")
+  ) {
+    category = nome.includes("pão integral") ? "cafe-da-manha" : "lanche";
+  } else if (
+    nome.includes("arroz doce") ||
+    nome.includes("banana assada") ||
+    nome.startsWith("bolo")
+  ) {
+    category = "sobremesa";
+  } else if (
+    nome.includes("ovos mexidos") ||
+    nome.includes("iogurte natural")
+  ) {
+    category = "cafe-da-manha";
+  } else if (
+    nome.includes("omelete de forno") ||
+    nome.includes("abobrinha recheada")
+  ) {
+    category = "jantar";
+  } else if (
+
     nome.includes("panqueca") ||
     nome.includes("overnight") ||
     nome.includes("tapioca") ||
