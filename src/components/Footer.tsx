@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Leaf, Instagram, Facebook, Youtube, Twitter } from "lucide-react";
+import { Leaf } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -39,20 +39,8 @@ const Footer = () => {
             <p className="text-muted-foreground max-w-sm">
               Coma bem. Viva leve. Cuide do corpo e da mente. Descubra o equilíbrio perfeito entre alimentação saudável e bem-estar.
             </p>
-            <div className="flex gap-4">
-              <a href="#" aria-label="Instagram" className="text-muted-foreground hover:text-primary transition-colors">
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a href="#" aria-label="Facebook" className="text-muted-foreground hover:text-primary transition-colors">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="#" aria-label="Youtube" className="text-muted-foreground hover:text-primary transition-colors">
-                <Youtube className="h-5 w-5" />
-              </a>
-              <a href="#" aria-label="Twitter" className="text-muted-foreground hover:text-primary transition-colors">
-                <Twitter className="h-5 w-5" />
-              </a>
-            </div>
+            {/* Redes sociais ocultas até que os perfis oficiais estejam disponíveis */}
+
           </div>
 
           {Object.entries(footerLinks).map(([title, links]) => (

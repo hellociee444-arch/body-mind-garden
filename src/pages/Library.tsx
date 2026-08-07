@@ -59,6 +59,14 @@ interface LibCtx {
 const filterByCat = (fn: (r: EnrichedRecipe) => boolean) =>
   enrichedRecipes.filter(fn);
 
+const collection = (title: string, desc: string, list: EnrichedRecipe[]) => {
+  if (!list.length) {
+    toast.info("Este conteúdo estará disponível em breve.");
+    return;
+  }
+  return downloadRecipesCollection(title, desc, list);
+};
+
 const CATS: Cat[] = [
   {
     id: "relatorio",
@@ -122,70 +130,91 @@ const CATS: Cat[] = [
     title: "Receitas Fitness",
     desc: "Receitas proteicas para treinar e evoluir.",
     icon: Dumbbell,
-    action: () => downloadRecipesCollection("Receitas Fitness", "Ricas em proteína e leves", filterByCat((r) => r.proteins >= 18 || r.tags.some((t) => /fit|proteic/i.test(t)))),
+    action: () => collection("Receitas Fitness", "Ricas em proteína e leves", filterByCat((r) => r.proteins >= 18 || r.tags.some((t) => /fit|proteic/i.test(t)))),
   },
   {
     id: "economicas",
     title: "Receitas Econômicas",
     desc: "Cabem no bolso e no seu tempo.",
     icon: Wallet,
-    action: () => downloadRecipesCollection("Receitas Econômicas", "Custo baixo por porção", filterByCat((r) => r.costPerServing <= 8)),
+    action: () => collection("Receitas Econômicas", "Custo baixo por porção", filterByCat((r) => r.costPerServing <= 8)),
   },
   {
     id: "emagrecimento",
     title: "Receitas para Emagrecimento",
     desc: "Baixas em calorias, cheias de sabor.",
     icon: Scale,
-    action: () => downloadRecipesCollection("Receitas para Emagrecimento", "Leves e nutritivas", filterByCat((r) => r.caloriesNum <= 350 || r.goals.includes("emagrecimento"))),
+    action: () => collection("Receitas para Emagrecimento", "Leves e nutritivas", filterByCat((r) => r.caloriesNum <= 350 || r.goals.includes("emagrecimento"))),
   },
   {
     id: "massa",
     title: "Receitas para Ganho de Massa",
     desc: "Alta densidade calórica e proteica.",
     icon: Flame,
-    action: () => downloadRecipesCollection("Receitas para Ganho de Massa", "Densidade calórica e proteica", filterByCat((r) => r.caloriesNum >= 450 || r.goals.includes("ganho-massa"))),
+    action: () => collection("Receitas para Ganho de Massa", "Densidade calórica e proteica", filterByCat((r) => r.caloriesNum >= 450 || r.goals.includes("ganho-massa"))),
   },
   {
     id: "vegetarianas",
     title: "Receitas Vegetarianas",
     desc: "Pratos sem carne, ricos em sabor.",
     icon: Leaf,
-    action: () => downloadRecipesCollection("Receitas Vegetarianas", "Sem carne", filterByCat((r) => r.restrictions.includes("vegetariana") || r.restrictions.includes("vegana"))),
+    action: () => collection("Receitas Vegetarianas", "Sem carne", filterByCat((r) => r.restrictions.includes("vegetariana") || r.restrictions.includes("vegana"))),
   },
   {
     id: "lowcarb",
     title: "Receitas Low Carb",
     desc: "Menos carboidratos, mais nutrientes.",
     icon: Salad,
-    action: () => downloadRecipesCollection("Receitas Low Carb", "Baixo carboidrato", filterByCat((r) => r.restrictions.includes("low-carb") || r.carbs <= 20)),
+    action: () => collection("Receitas Low Carb", "Baixo carboidrato", filterByCat((r) => r.restrictions.includes("low-carb") || r.carbs <= 20)),
   },
   {
     id: "airfryer",
     title: "Receitas para Air Fryer",
     desc: "Crocantes com pouco óleo.",
     icon: ChefHat,
-    action: () => downloadRecipesCollection("Receitas para Air Fryer", "Preparo em airfryer", filterByCat((r) => r.tags.some((t) => /air ?fryer/i.test(t)) || /air ?fryer/i.test(r.nome))),
+    action: () => collection("Receitas para Air Fryer", "Preparo em airfryer", filterByCat((r) => r.tags.some((t) => /air ?fryer/i.test(t)) || /air ?fryer/i.test(r.nome))),
   },
   {
     id: "sobremesas",
     title: "Sobremesas Saudáveis",
     desc: "Doces sem culpa.",
     icon: Cookie,
-    action: () => downloadRecipesCollection("Sobremesas Saudáveis", "Doces fit e leves", filterByCat((r) => r.category === "sobremesa")),
+    action: () => collection("Sobremesas Saudáveis", "Doces fit e leves", filterByCat((r) => r.category === "sobremesa")),
   },
   {
     id: "cafe",
     title: "Café da Manhã Saudável",
     desc: "Comece o dia com energia.",
     icon: Sun,
-    action: () => downloadRecipesCollection("Café da Manhã Saudável", "Para começar bem o dia", filterByCat((r) => r.category === "cafe-da-manha")),
+    action: () => collection("Café da Manhã Saudável", "Para começar bem o dia", filterByCat((r) => r.category === "cafe-da-manha")),
+  },
+  {
+    id: "almoco",
+    title: "Almoço Saudável",
+    desc: "Pratos completos para o meio do dia.",
+    icon: Utensils,
+    action: () => collection("Almoço Saudável", "Pratos principais equilibrados", filterByCat((r) => r.category === "almoco")),
+  },
+  {
+    id: "jantar",
+    title: "Jantar Leve",
+    desc: "Refeições leves para a noite.",
+    icon: Salad,
+    action: () => collection("Jantar Leve", "Refeições leves para a noite", filterByCat((r) => r.category === "jantar")),
+  },
+  {
+    id: "proteicas",
+    title: "Receitas Proteicas",
+    desc: "Alto teor de proteína por porção.",
+    icon: Dumbbell,
+    action: () => collection("Receitas Proteicas", "Alto teor de proteína", filterByCat((r) => r.proteins >= 20)),
   },
   {
     id: "marmitas",
     title: "Marmitas Fit",
     desc: "Práticas para levar para o trabalho.",
     icon: Utensils,
-    action: () => downloadRecipesCollection("Marmitas Fit", "Fáceis de transportar e reaquecer", filterByCat((r) => r.category === "almoco" && r.timeMinutes <= 45)),
+    action: () => collection("Marmitas Fit", "Fáceis de transportar e reaquecer", filterByCat((r) => r.category === "almoco" && r.timeMinutes <= 45)),
   },
 ];
 
