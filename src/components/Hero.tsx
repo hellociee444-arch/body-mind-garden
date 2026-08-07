@@ -16,13 +16,16 @@ const Hero = () => {
               Descubra receitas saudáveis, dicas de fitness e guias de bem-estar para transformar sua vida com equilíbrio e naturalidade.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button size="lg" variant="secondary" className="gap-2 shadow-soft">
-                <Download className="h-5 w-5" />
-                Baixe o e-book grátis
+              <Button asChild size="lg" variant="secondary" className="gap-2 shadow-soft">
+                <Link to="/biblioteca">
+                  <Download className="h-5 w-5" />
+                  Baixe o e-book grátis
+                </Link>
               </Button>
-              <Button size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20">
-                Comece agora
+              <Button asChild size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20">
+                <Link to="/receitas">Comece agora</Link>
               </Button>
+
             </div>
           </div>
 
