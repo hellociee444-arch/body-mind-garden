@@ -248,7 +248,7 @@ const Recipes = () => {
                 value={calories}
                 onValueChange={(v) => setCalories(v as CalorieFilter)}
               >
-                <SelectTrigger className="w-[160px]" aria-label="Filtrar por calorias">
+                <SelectTrigger className="w-[180px]" aria-label="Filtrar por calorias">
                   <SelectValue placeholder="Calorias" />
                 </SelectTrigger>
                 <SelectContent>
@@ -263,7 +263,7 @@ const Recipes = () => {
                 value={protein}
                 onValueChange={(v) => setProtein(v as ProteinFilter)}
               >
-                <SelectTrigger className="w-[170px]" aria-label="Filtrar por proteína">
+                <SelectTrigger className="w-[190px]" aria-label="Filtrar por proteína">
                   <SelectValue placeholder="Proteína" />
                 </SelectTrigger>
                 <SelectContent>
@@ -278,7 +278,7 @@ const Recipes = () => {
                 value={difficulty}
                 onValueChange={(v) => setDifficulty(v as RecipeDifficulty | "all")}
               >
-                <SelectTrigger className="w-[160px]" aria-label="Filtrar por dificuldade">
+                <SelectTrigger className="w-[200px]" aria-label="Filtrar por dificuldade">
                   <SelectValue placeholder="Dificuldade" />
                 </SelectTrigger>
                 <SelectContent>
