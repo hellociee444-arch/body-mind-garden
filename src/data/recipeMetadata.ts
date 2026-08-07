@@ -63,6 +63,16 @@ const parseTime = (time: string): number => {
   return match ? parseInt(match[1], 10) : 15;
 };
 
+/** Rendimento estimado por tipo de preparação */
+const deriveServings = (nome: string, category: RecipeCategory): number => {
+  if (nome.includes("bolo") || nome.includes("torta") || nome.includes("pão caseiro")) return 8;
+  if (nome.includes("marmita")) return 2;
+  if (category === "sopa") return 4;
+  if (nome.includes("macarrão") || nome.includes("nhoque") || nome.includes("ensopado") || nome.includes("escondidinho") || nome.includes("assado")) return 3;
+  if (nome.includes("salada") || nome.includes("pipoca") || nome.includes("arroz doce")) return 2;
+  return 1;
+};
+
 /** Deriva categoria/objetivos/restrições dos nomes/tags/ingredientes existentes */
 function deriveMetadata(recipe: (typeof receitas)[number]): RecipeMetadata {
   const nome = recipe.nome.toLowerCase();
@@ -235,7 +245,7 @@ function deriveMetadata(recipe: (typeof receitas)[number]): RecipeMetadata {
     category,
     goals,
     restrictions,
-    servings: 1,
+    servings: deriveServings(nome, category),
     timeMinutes: parseTime(recipe.time),
   };
 }
