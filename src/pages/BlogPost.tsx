@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, Clock, Share2 } from "lucide-react";
+import { toast } from "sonner";
 import wellnessImage from "@/assets/wellness-yoga.jpg";
 
 const BlogPost = () => {
@@ -145,6 +146,20 @@ const BlogPost = () => {
     );
   }
 
+  const handleShare = async () => {
+    const url = window.location.href;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: post.title, text: post.excerpt, url });
+        return;
+      }
+      await navigator.clipboard.writeText(url);
+      toast.success("Link copiado para a área de transferência!");
+    } catch {
+      toast.info("Não foi possível compartilhar agora.");
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -198,7 +213,7 @@ const BlogPost = () => {
 
               {/* Share Button */}
               <div className="flex gap-3 pt-4 border-t">
-                <Button variant="outline" size="sm" className="gap-2">
+                <Button variant="outline" size="sm" className="gap-2" onClick={handleShare}>
                   <Share2 className="h-4 w-4" />
                   Compartilhar
                 </Button>
