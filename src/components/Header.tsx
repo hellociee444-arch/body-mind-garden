@@ -16,6 +16,9 @@ const Header = () => {
     { name: "Início", path: "/" },
     { name: "Receitas", path: "/receitas" },
     { name: "Nutri IA", path: "/nutri-assistente" },
+    { name: "Cardápio", path: "/meu-cardapio" },
+    { name: "Educação", path: "/educacao-alimentar" },
+    { name: "Treino", path: "/alimentacao-e-treino" },
     { name: "Ferramentas", path: "/ferramentas" },
     { name: "Nutrição", path: "/nutricao" },
     { name: "Fitness", path: "/fitness" },
@@ -94,11 +97,11 @@ const Header = () => {
                   asChild
                   variant="ghost"
                   size="icon"
-                  aria-label="Minha conta"
+                  aria-label="Meu Viva Leve"
                   className="rounded-full hover:scale-110 transition-transform"
                   title={user.email ?? "Minha conta"}
                 >
-                  <Link to="/minha-conta"><UserIcon className="h-5 w-5" /></Link>
+                  <Link to="/meu-viva-leve"><UserIcon className="h-5 w-5" /></Link>
                 </Button>
                 <Button
                   variant="ghost"

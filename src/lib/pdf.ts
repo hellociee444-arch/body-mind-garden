@@ -455,3 +455,166 @@ export function downloadShoppingList(plan: NutriPlan) {
   drawFooter(doc);
   doc.save("viva-leve-lista-de-compras.pdf");
 }
+
+// ---------- Educational guides ----------
+
+export interface GuideSection {
+  heading: string;
+  paragraphs?: string[];
+  bullets?: string[];
+}
+
+export function downloadGuidePdf(title: string, subtitle: string, sections: GuideSection[]) {
+  const doc = newDoc(title);
+  const c: Cursor = { y: drawHeader(doc, title, subtitle) };
+  for (const s of sections) {
+    heading(doc, c, s.heading);
+    for (const p of s.paragraphs || []) { paragraph(doc, c, p); c.y += 2; }
+    for (const b of s.bullets || []) bullet(doc, c, b);
+    c.y += 4;
+  }
+  c.y += 4;
+  paragraph(
+    doc,
+    c,
+    "Conteúdo educativo de caráter informativo. Valores nutricionais são estimativas e não substituem o acompanhamento individual de um nutricionista.",
+    9,
+  );
+  drawFooter(doc);
+  doc.save(`viva-leve-${slug(title)}.pdf`);
+}
+
+// ---------- Personal shopping list (saved items) ----------
+
+export interface ShoppingItemLike {
+  name: string;
+  quantity?: string | null;
+  category: string;
+  bought: boolean;
+}
+
+export function downloadPersonalShoppingList(items: ShoppingItemLike[]) {
+  const groups: Record<string, ShoppingItemLike[]> = {};
+  for (const it of items) (groups[it.category || "Outros"] ||= []).push(it);
+
+  const doc = newDoc("Minha Lista de Compras");
+  const c: Cursor = { y: drawHeader(doc, "Minha Lista de Compras", "Itens organizados por categoria") };
+
+  for (const cat of Object.keys(groups).sort()) {
+    heading(doc, c, cat);
+    for (const item of groups[cat]) {
+      ensureSpace(doc, c, 6);
+      doc.setDrawColor(BRAND);
+      doc.rect(MARGIN, c.y - 3.2, 3.5, 3.5);
+      if (item.bought) {
+        doc.setDrawColor(BRAND);
+        doc.line(MARGIN + 0.6, c.y - 1.6, MARGIN + 3, c.y - 3);
+        doc.line(MARGIN + 0.6, c.y - 1.6, MARGIN + 1.6, c.y - 0.4);
+      }
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.setTextColor(TEXT);
+      const label = item.quantity ? `${item.name} — ${item.quantity}` : item.name;
+      const lines = doc.splitTextToSize(label, CONTENT_W - 8);
+      doc.text(lines, MARGIN + 6, c.y);
+      c.y += lines.length * 4.5 + 1;
+    }
+    c.y += 3;
+  }
+
+  drawFooter(doc);
+  doc.save("viva-leve-lista-de-compras.pdf");
+}
+
+// ---------- Progress / follow-up report ----------
+
+export interface MeasurementLike {
+  measured_at: string;
+  weight?: number | null;
+  waist?: number | null;
+  hip?: number | null;
+  arm?: number | null;
+  notes?: string | null;
+}
+
+export interface MealLogLike {
+  log_date: string;
+  meal_type: string;
+  done: boolean;
+  eaten?: string | null;
+}
+
+export function downloadProgressReport(opts: {
+  name: string;
+  form?: NutriForm | null;
+  plan?: NutriPlan | null;
+  measurements: MeasurementLike[];
+  logs: MealLogLike[];
+  notes: Array<{ title?: string | null; content: string; created_at?: string }>;
+}) {
+  const { name, form, plan, measurements, logs, notes } = opts;
+  const doc = newDoc("Meu Relatório Viva Leve");
+  const c: Cursor = { y: drawHeader(doc, "Meu Relatório Viva Leve", name) };
+
+  if (form) {
+    heading(doc, c, "Meus dados");
+    kv(doc, c, "Objetivo", form.objetivo || "—");
+    kv(doc, c, "Idade", form.idade || "—");
+    kv(doc, c, "Altura", form.altura ? `${form.altura} cm` : "—");
+    kv(doc, c, "Peso informado", form.peso ? `${form.peso} kg` : "—");
+    kv(doc, c, "Nível de atividade", form.atividade || "—");
+    c.y += 4;
+  }
+
+  if (plan) {
+    heading(doc, c, "Orientações do meu plano");
+    if (plan.resumo) paragraph(doc, c, plan.resumo);
+    kv(doc, c, "Meta calórica", `${plan.calorias_alvo} kcal/dia (estimativa)`);
+    kv(doc, c, "Hidratação", `${(plan.hidratacao_ml / 1000).toFixed(1)} L/dia`);
+    c.y += 4;
+  }
+
+  if (measurements.length) {
+    heading(doc, c, "Medidas registradas");
+    for (const m of measurements) {
+      const parts: string[] = [];
+      if (m.weight != null) parts.push(`peso ${m.weight} kg`);
+      if (m.waist != null) parts.push(`cintura ${m.waist} cm`);
+      if (m.hip != null) parts.push(`quadril ${m.hip} cm`);
+      if (m.arm != null) parts.push(`braço ${m.arm} cm`);
+      bullet(doc, c, `${new Date(`${m.measured_at}T12:00:00`).toLocaleDateString("pt-BR")} — ${parts.join(", ") || "sem valores"}${m.notes ? ` (${m.notes})` : ""}`);
+    }
+    c.y += 4;
+  }
+
+  if (logs.length) {
+    heading(doc, c, "Acompanhamento das refeições");
+    const byDate: Record<string, MealLogLike[]> = {};
+    for (const l of logs) (byDate[l.log_date] ||= []).push(l);
+    for (const date of Object.keys(byDate).sort().reverse().slice(0, 14)) {
+      const done = byDate[date].filter((l) => l.done).length;
+      bullet(
+        doc,
+        c,
+        `${new Date(`${date}T12:00:00`).toLocaleDateString("pt-BR")} — ${done} de ${byDate[date].length} refeições registradas como realizadas`,
+      );
+    }
+    c.y += 4;
+  }
+
+  if (notes.length) {
+    heading(doc, c, "Minhas observações");
+    for (const n of notes) bullet(doc, c, `${n.title ? `${n.title}: ` : ""}${n.content}`);
+    c.y += 4;
+  }
+
+  paragraph(
+    doc,
+    c,
+    "Este relatório reúne apenas as informações que você registrou. Os valores nutricionais são estimativas e não substituem a avaliação individual de um nutricionista.",
+    9,
+  );
+
+  drawFooter(doc);
+  doc.save("viva-leve-meu-relatorio.pdf");
+}

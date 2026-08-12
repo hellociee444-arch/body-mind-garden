@@ -24,6 +24,13 @@ import Auth from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
 import Library from "./pages/Library";
 import MyAccount from "./pages/MyAccount";
+import MyVivaLeve from "./pages/MyVivaLeve";
+import Tracking from "./pages/Tracking";
+import MyMenu from "./pages/MyMenu";
+import ShoppingList from "./pages/ShoppingList";
+import Progress from "./pages/Progress";
+import Education from "./pages/Education";
+import TrainingFood from "./pages/TrainingFood";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -57,6 +64,13 @@ const App = () => (
                 <Route path="/nutri-assistente" element={<NutriAssistant />} />
                 <Route path="/biblioteca" element={<Library />} />
                 <Route path="/minha-conta" element={<MyAccount />} />
+                <Route path="/meu-viva-leve" element={<MyVivaLeve />} />
+                <Route path="/acompanhamento" element={<Tracking />} />
+                <Route path="/meu-cardapio" element={<MyMenu />} />
+                <Route path="/lista-de-compras" element={<ShoppingList />} />
+                <Route path="/medidas" element={<Progress />} />
+                <Route path="/educacao-alimentar" element={<Education />} />
+                <Route path="/alimentacao-e-treino" element={<TrainingFood />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
