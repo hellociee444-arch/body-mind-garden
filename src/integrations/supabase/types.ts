@@ -32,6 +32,81 @@ export type Database = {
         }
         Relationships: []
       }
+      meal_logs: {
+        Row: {
+          created_at: string
+          done: boolean
+          eaten: string | null
+          id: string
+          log_date: string
+          meal_type: string
+          planned: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          done?: boolean
+          eaten?: string | null
+          id?: string
+          log_date?: string
+          meal_type: string
+          planned?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          done?: boolean
+          eaten?: string | null
+          id?: string
+          log_date?: string
+          meal_type?: string
+          planned?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      measurements: {
+        Row: {
+          arm: number | null
+          created_at: string
+          hip: number | null
+          id: string
+          measured_at: string
+          notes: string | null
+          updated_at: string
+          user_id: string
+          waist: number | null
+          weight: number | null
+        }
+        Insert: {
+          arm?: number | null
+          created_at?: string
+          hip?: number | null
+          id?: string
+          measured_at?: string
+          notes?: string | null
+          updated_at?: string
+          user_id: string
+          waist?: number | null
+          weight?: number | null
+        }
+        Update: {
+          arm?: number | null
+          created_at?: string
+          hip?: number | null
+          id?: string
+          measured_at?: string
+          notes?: string | null
+          updated_at?: string
+          user_id?: string
+          waist?: number | null
+          weight?: number | null
+        }
+        Relationships: []
+      }
       nutri_plans: {
         Row: {
           created_at: string
@@ -121,6 +196,66 @@ export type Database = {
         Update: {
           created_at?: string
           recipe_id?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      shopping_items: {
+        Row: {
+          bought: boolean
+          category: string
+          created_at: string
+          id: string
+          name: string
+          quantity: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          bought?: boolean
+          category?: string
+          created_at?: string
+          id?: string
+          name: string
+          quantity?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          bought?: boolean
+          category?: string
+          created_at?: string
+          id?: string
+          name?: string
+          quantity?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_notes: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          title: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          title?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          title?: string | null
+          updated_at?: string
           user_id?: string
         }
         Relationships: []
