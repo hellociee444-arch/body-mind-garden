@@ -42,6 +42,8 @@ export default function ShoppingList() {
   }, [items]);
 
   const pending = items.filter((i) => !i.bought).length;
+  const bought = items.length - pending;
+  const percent = items.length ? Math.round((bought / items.length) * 100) : 0;
 
   const handleAdd = async () => {
     if (!name.trim()) return;
