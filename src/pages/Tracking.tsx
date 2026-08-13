@@ -25,6 +25,16 @@ const WEEKDAYS = [
   "Sábado",
 ];
 
+/** Hábitos simples do dia, salvos junto aos registros de refeições. */
+const HABITS = [
+  "Bebi água ao longo do dia",
+  "Incluí verduras ou legumes",
+  "Incluí frutas",
+  "Me movimentei (caminhada ou treino)",
+  "Comi com calma, sem pressa",
+  "Dormi bem na noite anterior",
+];
+
 const formatLong = (d: Date) =>
   d.toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" });
 
