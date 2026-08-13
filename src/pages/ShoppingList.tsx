@@ -151,9 +151,22 @@ export default function ShoppingList() {
           </Card>
 
           {items.length > 0 && (
-            <p className="text-sm text-muted-foreground">
-              {pending > 0 ? `${pending} itens ainda para comprar.` : "Tudo comprado. Boas refeições!"}
-            </p>
+            <Card>
+              <CardContent className="p-4 space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-medium">
+                    {bought} de {items.length} itens comprados
+                  </span>
+                  <span className="text-muted-foreground">{percent}%</span>
+                </div>
+                <Progress value={percent} aria-label="Progresso das compras" />
+                <p className="text-xs text-muted-foreground">
+                  {pending > 0
+                    ? `${pending} ${pending === 1 ? "item ainda para comprar" : "itens ainda para comprar"}.`
+                    : "Tudo comprado. Boas refeições!"}
+                </p>
+              </CardContent>
+            </Card>
           )}
 
           {items.length === 0 ? (
