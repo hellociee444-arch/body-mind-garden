@@ -137,6 +137,18 @@ const Fitness = () => {
                   </CardContent>
                 </Card>
               </div>
+
+              <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <Button asChild variant="outline">
+                  <Link to="/alimentacao-e-treino">Alimentação e treino</Link>
+                </Button>
+                <Button asChild variant="outline">
+                  <Link to="/bem-estar">Bem-estar e mente</Link>
+                </Button>
+                <Button asChild variant="outline">
+                  <Link to="/receitas">Receitas para o treino</Link>
+                </Button>
+              </div>
             </div>
           </div>
         </section>
