@@ -29,8 +29,6 @@ const Header = () => {
   ];
 
   const moreItems = [
-    { name: "Treino", path: "/alimentacao-e-treino" },
-    { name: "Nutrição", path: "/nutricao" },
     { name: "Fitness", path: "/fitness" },
     { name: "Bem-Estar", path: "/bem-estar" },
     { name: "Ferramentas", path: "/ferramentas" },

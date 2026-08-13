@@ -25,12 +25,12 @@ import {
 } from "@/hooks/useShoppingList";
 import { useNutriPlan } from "@/hooks/useNutriPlan";
 import { downloadPersonalShoppingList } from "@/lib/pdf";
-import { Download, Plus, Trash2, ShoppingBasket, Sparkles, Printer } from "lucide-react";
+import { Download, Plus, Trash2, ShoppingBasket, Sparkles, Printer, CheckCheck, Square } from "lucide-react";
 import { toast } from "sonner";
 
 export default function ShoppingList() {
   const { user } = useAuth();
-  const { items, addItem, addMany, toggle, remove, clearBought } = useShoppingList();
+  const { items, addItem, addMany, toggle, toggleAll, remove, clearBought } = useShoppingList();
   const { plan } = useNutriPlan();
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -147,6 +147,12 @@ export default function ShoppingList() {
                     </Button>
                     <Button variant="outline" size="sm" onClick={() => window.print()}>
                       <Printer className="h-4 w-4 mr-1" /> Imprimir
+                    </Button>
+                    <Button variant="outline" size="sm" disabled={!user} onClick={() => toggleAll(true)}>
+                      <CheckCheck className="h-4 w-4 mr-1" /> Marcar todos
+                    </Button>
+                    <Button variant="outline" size="sm" disabled={!user} onClick={() => toggleAll(false)}>
+                      <Square className="h-4 w-4 mr-1" /> Desmarcar todos
                     </Button>
                     {items.some((i) => i.bought) && (
                       <Button variant="ghost" size="sm" onClick={clearBought}>

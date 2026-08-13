@@ -160,8 +160,28 @@ export default function NutriAssistant() {
               Nutri Assistente
             </h1>
             <p className="text-muted-foreground">
-              Um cardápio semanal criado para você, respeitando suas restrições, rotina e objetivos.
+              Um cardápio semanal criado para você, respeitando suas restrições, rotina e objetivos. É apoio
+              educativo — não substitui a consulta com nutricionista.
             </p>
+            <div className="mt-5 flex flex-wrap gap-2 justify-center">
+              {plan && (
+                <Button
+                  className="bg-gradient-accent"
+                  onClick={() => downloadNutriReport(form, plan, enrichedRecipes.slice(0, 8))}
+                >
+                  <Download className="h-4 w-4 mr-1" /> Baixar meu relatório
+                </Button>
+              )}
+              <Button asChild variant="outline">
+                <Link to="/meu-cardapio">Meu cardápio</Link>
+              </Button>
+              <Button asChild variant="outline">
+                <Link to="/acompanhamento">Acompanhamento</Link>
+              </Button>
+              <Button asChild variant="outline">
+                <Link to="/ferramentas">Ferramentas</Link>
+              </Button>
+            </div>
           </div>
         </section>
 

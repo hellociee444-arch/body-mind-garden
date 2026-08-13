@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
@@ -22,6 +23,16 @@ const WEEKDAYS = [
   "Quinta-feira",
   "Sexta-feira",
   "Sábado",
+];
+
+/** Hábitos simples do dia, salvos junto aos registros de refeições. */
+const HABITS = [
+  "Bebi água ao longo do dia",
+  "Incluí verduras ou legumes",
+  "Incluí frutas",
+  "Me movimentei (caminhada ou treino)",
+  "Comi com calma, sem pressa",
+  "Dormi bem na noite anterior",
 ];
 
 const formatLong = (d: Date) =>
@@ -112,6 +123,42 @@ export default function Tracking() {
                 : "Tudo bem. Registre o que você comeu e continue sua rotina."}
             </p>
           )}
+
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base">Hábitos do dia</CardTitle>
+            </CardHeader>
+            <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {HABITS.map((h) => {
+                const key = `Hábito: ${h}`;
+                const log = getMeal(key);
+                return (
+                  <label key={h} className="flex items-center gap-2 text-sm cursor-pointer">
+                    <Checkbox
+                      checked={!!log?.done}
+                      disabled={!user}
+                      onCheckedChange={(v) => saveMeal(key, { done: !!v })}
+                      aria-label={h}
+                    />
+                    <span className="text-muted-foreground">{h}</span>
+                  </label>
+                );
+              })}
+            </CardContent>
+          </Card>
+
+          <div className="flex flex-wrap gap-2">
+            <Button asChild variant="outline" size="sm">
+              <Link to="/medidas">Registrar peso e medidas</Link>
+            </Button>
+            <Button asChild variant="outline" size="sm">
+              <Link to="/meu-cardapio">Ver meu cardápio</Link>
+            </Button>
+            <Button asChild variant="ghost" size="sm">
+              <Link to="/lista-de-compras">Lista de compras</Link>
+            </Button>
+          </div>
+
 
           <div className="space-y-3">
             {MEAL_TYPES.map((meal) => {

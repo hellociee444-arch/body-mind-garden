@@ -21,7 +21,7 @@ const Hero = () => {
               <Button asChild size="lg" variant="secondary" className="gap-2 shadow-soft">
                 <Link to="/biblioteca">
                   <Download className="h-5 w-5" />
-                  Biblioteca Viva Leve
+                  Explorar materiais gratuitos
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20">

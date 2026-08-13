@@ -119,5 +119,15 @@ export function useShoppingList() {
     await load();
   }, [user, load]);
 
-  return { items, loading, addItem, addMany, toggle, remove, clearBought, reload: load };
+  /** Marca ou desmarca todos os itens da lista de uma vez. */
+  const toggleAll = useCallback(
+    async (bought: boolean) => {
+      if (!user) return;
+      setItems((cur) => cur.map((i) => ({ ...i, bought })));
+      await supabase.from("shopping_items").update({ bought }).eq("user_id", user.id);
+    },
+    [user],
+  );
+
+  return { items, loading, addItem, addMany, toggle, toggleAll, remove, clearBought, reload: load };
 }

@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Apple, Flame, Activity, Wheat, Droplet, Sparkles } from "lucide-react";
 import { nutricao } from "@/data/content";
@@ -166,6 +168,18 @@ const Nutrition = () => {
                     </p>
                   </CardContent>
                 </Card>
+              </div>
+
+              <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <Button asChild variant="outline">
+                  <Link to="/receitas">Ver receitas relacionadas</Link>
+                </Button>
+                <Button asChild variant="outline">
+                  <Link to="/educacao-alimentar">Educação alimentar</Link>
+                </Button>
+                <Button asChild variant="outline">
+                  <Link to="/meu-cardapio">Meu cardápio</Link>
+                </Button>
               </div>
             </div>
           </div>

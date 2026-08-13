@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import RecipeCard from "@/components/RecipeCard";
@@ -175,6 +176,18 @@ const Recipes = () => {
                   className="pl-12 h-12 bg-card border-none shadow-soft"
                   aria-label="Buscar receitas"
                 />
+              </div>
+
+              <div className="flex flex-wrap gap-2 justify-center">
+                <Button asChild size="sm" variant="secondary">
+                  <Link to="/nutricao">Orientação nutricional</Link>
+                </Button>
+                <Button asChild size="sm" variant="secondary">
+                  <Link to="/meu-cardapio">Meu cardápio</Link>
+                </Button>
+                <Button asChild size="sm" variant="secondary">
+                  <Link to="/lista-de-compras">Lista de compras</Link>
+                </Button>
               </div>
             </div>
           </div>

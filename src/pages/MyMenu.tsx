@@ -207,7 +207,15 @@ export default function MyMenu() {
                   Gerar lista de compras
                 </Button>
                 <Button asChild variant="outline">
+                  <Link to="/lista-de-compras">
+                    <ShoppingBasket className="h-4 w-4 mr-1" /> Abrir minha lista de compras
+                  </Link>
+                </Button>
+                <Button asChild variant="outline">
                   <Link to="/acompanhamento">Registrar refeições de hoje</Link>
+                </Button>
+                <Button asChild variant="ghost">
+                  <Link to="/receitas">Buscar receitas</Link>
                 </Button>
               </div>
 
