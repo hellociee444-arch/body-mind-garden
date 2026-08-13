@@ -52,6 +52,12 @@ export default function ShoppingList() {
       toast.error("Use um nome mais curto para o item.");
       return;
     }
+    if (items.some((i) => i.name.trim().toLowerCase() === name.trim().toLowerCase())) {
+      toast.info("Esse item já está na sua lista.");
+      setName("");
+      setQuantity("");
+      return;
+    }
     await addItem(name, quantity, category === "auto" ? undefined : category);
     setName("");
     setQuantity("");
