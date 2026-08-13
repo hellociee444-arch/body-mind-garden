@@ -113,6 +113,42 @@ export default function Tracking() {
             </p>
           )}
 
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base">Hábitos do dia</CardTitle>
+            </CardHeader>
+            <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {HABITS.map((h) => {
+                const key = `Hábito: ${h}`;
+                const log = getMeal(key);
+                return (
+                  <label key={h} className="flex items-center gap-2 text-sm cursor-pointer">
+                    <Checkbox
+                      checked={!!log?.done}
+                      disabled={!user}
+                      onCheckedChange={(v) => saveMeal(key, { done: !!v })}
+                      aria-label={h}
+                    />
+                    <span className="text-muted-foreground">{h}</span>
+                  </label>
+                );
+              })}
+            </CardContent>
+          </Card>
+
+          <div className="flex flex-wrap gap-2">
+            <Button asChild variant="outline" size="sm">
+              <Link to="/medidas">Registrar peso e medidas</Link>
+            </Button>
+            <Button asChild variant="outline" size="sm">
+              <Link to="/meu-cardapio">Ver meu cardápio</Link>
+            </Button>
+            <Button asChild variant="ghost" size="sm">
+              <Link to="/lista-de-compras">Lista de compras</Link>
+            </Button>
+          </div>
+
+
           <div className="space-y-3">
             {MEAL_TYPES.map((meal) => {
               const log = getMeal(meal);
