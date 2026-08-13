@@ -185,7 +185,7 @@ const Header = () => {
             className="lg:hidden border-t border-border py-4 space-y-1 animate-fade-in"
             aria-label="Navegação móvel"
           >
-            {navItems.map((item) => (
+            {allMobileItems.map((item) => (
               <NavLink
                 key={item.name}
                 to={item.path}
