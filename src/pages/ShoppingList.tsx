@@ -148,6 +148,12 @@ export default function ShoppingList() {
                     <Button variant="outline" size="sm" onClick={() => window.print()}>
                       <Printer className="h-4 w-4 mr-1" /> Imprimir
                     </Button>
+                    <Button variant="outline" size="sm" disabled={!user} onClick={() => toggleAll(true)}>
+                      <CheckCheck className="h-4 w-4 mr-1" /> Marcar todos
+                    </Button>
+                    <Button variant="outline" size="sm" disabled={!user} onClick={() => toggleAll(false)}>
+                      <Square className="h-4 w-4 mr-1" /> Desmarcar todos
+                    </Button>
                     {items.some((i) => i.bought) && (
                       <Button variant="ghost" size="sm" onClick={clearBought}>
                         Limpar comprados
