@@ -30,7 +30,7 @@ import { toast } from "sonner";
 
 export default function ShoppingList() {
   const { user } = useAuth();
-  const { items, addItem, addMany, toggle, remove, clearBought } = useShoppingList();
+  const { items, addItem, addMany, toggle, toggleAll, remove, clearBought } = useShoppingList();
   const { plan } = useNutriPlan();
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState("");
