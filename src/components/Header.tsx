@@ -79,6 +79,33 @@ const Header = () => {
                 {item.name}
               </NavLink>
             ))}
+
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                className={cn(
+                  "inline-flex items-center gap-1 text-sm font-medium transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm data-[state=open]:text-primary",
+                  isMoreActive ? "text-primary" : "text-muted-foreground hover:text-primary",
+                )}
+              >
+                Mais
+                <ChevronDown className="h-4 w-4 transition-transform duration-300" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48 bg-card">
+                {moreItems.map((item) => (
+                  <DropdownMenuItem key={item.name} asChild>
+                    <Link
+                      to={item.path}
+                      className={cn(
+                        "cursor-pointer text-sm",
+                        location.pathname.startsWith(item.path) && "text-primary font-medium",
+                      )}
+                    >
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </nav>
 
           {/* Right controls */}
