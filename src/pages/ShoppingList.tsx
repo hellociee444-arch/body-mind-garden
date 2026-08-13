@@ -25,7 +25,7 @@ import {
 } from "@/hooks/useShoppingList";
 import { useNutriPlan } from "@/hooks/useNutriPlan";
 import { downloadPersonalShoppingList } from "@/lib/pdf";
-import { Download, Plus, Trash2, ShoppingBasket, Sparkles, Printer } from "lucide-react";
+import { Download, Plus, Trash2, ShoppingBasket, Sparkles, Printer, CheckCheck, Square } from "lucide-react";
 import { toast } from "sonner";
 
 export default function ShoppingList() {
