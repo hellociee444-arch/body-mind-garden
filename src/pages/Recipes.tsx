@@ -176,6 +176,18 @@ const Recipes = () => {
                   aria-label="Buscar receitas"
                 />
               </div>
+
+              <div className="flex flex-wrap gap-2 justify-center">
+                <Button asChild size="sm" variant="secondary">
+                  <Link to="/nutricao">Orientação nutricional</Link>
+                </Button>
+                <Button asChild size="sm" variant="secondary">
+                  <Link to="/meu-cardapio">Meu cardápio</Link>
+                </Button>
+                <Button asChild size="sm" variant="secondary">
+                  <Link to="/lista-de-compras">Lista de compras</Link>
+                </Button>
+              </div>
             </div>
           </div>
         </section>
