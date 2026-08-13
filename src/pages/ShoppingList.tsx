@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 import {
   Select,
   SelectContent,
@@ -42,11 +43,19 @@ export default function ShoppingList() {
   }, [items]);
 
   const pending = items.filter((i) => !i.bought).length;
+  const bought = items.length - pending;
+  const percent = items.length ? Math.round((bought / items.length) * 100) : 0;
 
   const handleAdd = async () => {
     if (!name.trim()) return;
     if (name.trim().length > 80) {
       toast.error("Use um nome mais curto para o item.");
+      return;
+    }
+    if (items.some((i) => i.name.trim().toLowerCase() === name.trim().toLowerCase())) {
+      toast.info("Esse item já está na sua lista.");
+      setName("");
+      setQuantity("");
       return;
     }
     await addItem(name, quantity, category === "auto" ? undefined : category);
@@ -151,9 +160,22 @@ export default function ShoppingList() {
           </Card>
 
           {items.length > 0 && (
-            <p className="text-sm text-muted-foreground">
-              {pending > 0 ? `${pending} itens ainda para comprar.` : "Tudo comprado. Boas refeições!"}
-            </p>
+            <Card>
+              <CardContent className="p-4 space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-medium">
+                    {bought} de {items.length} itens comprados
+                  </span>
+                  <span className="text-muted-foreground">{percent}%</span>
+                </div>
+                <Progress value={percent} aria-label="Progresso das compras" />
+                <p className="text-xs text-muted-foreground">
+                  {pending > 0
+                    ? `${pending} ${pending === 1 ? "item ainda para comprar" : "itens ainda para comprar"}.`
+                    : "Tudo comprado. Boas refeições!"}
+                </p>
+              </CardContent>
+            </Card>
           )}
 
           {items.length === 0 ? (

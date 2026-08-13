@@ -1,8 +1,14 @@
 import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { Menu, X, Leaf, Heart, LogIn, LogOut, User as UserIcon } from "lucide-react";
+import { Link, NavLink, useLocation } from "react-router-dom";
+import { Menu, X, Leaf, Heart, LogIn, LogOut, User as UserIcon, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useAuth } from "@/contexts/AuthContext";
 import { cn } from "@/lib/utils";
@@ -11,22 +17,30 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { favorites } = useFavorites();
   const { user, signOut } = useAuth();
+  const location = useLocation();
 
   const navItems = [
     { name: "Início", path: "/" },
     { name: "Receitas", path: "/receitas" },
     { name: "Nutri IA", path: "/nutri-assistente" },
     { name: "Cardápio", path: "/meu-cardapio" },
+    { name: "Acompanhamento", path: "/acompanhamento" },
     { name: "Educação", path: "/educacao-alimentar" },
+  ];
+
+  const moreItems = [
     { name: "Treino", path: "/alimentacao-e-treino" },
-    { name: "Ferramentas", path: "/ferramentas" },
     { name: "Nutrição", path: "/nutricao" },
     { name: "Fitness", path: "/fitness" },
     { name: "Bem-Estar", path: "/bem-estar" },
+    { name: "Ferramentas", path: "/ferramentas" },
     { name: "Blog", path: "/blog" },
     { name: "Sobre", path: "/sobre" },
     { name: "Contato", path: "/contato" },
   ];
+
+  const isMoreActive = moreItems.some((i) => location.pathname.startsWith(i.path));
+  const allMobileItems = [...navItems, ...moreItems];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-card/80 backdrop-blur-md supports-[backdrop-filter]:bg-card/70 shadow-sm">
@@ -65,6 +79,33 @@ const Header = () => {
                 {item.name}
               </NavLink>
             ))}
+
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                className={cn(
+                  "inline-flex items-center gap-1 text-sm font-medium transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm data-[state=open]:text-primary",
+                  isMoreActive ? "text-primary" : "text-muted-foreground hover:text-primary",
+                )}
+              >
+                Mais
+                <ChevronDown className="h-4 w-4 transition-transform duration-300" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48 bg-card">
+                {moreItems.map((item) => (
+                  <DropdownMenuItem key={item.name} asChild>
+                    <Link
+                      to={item.path}
+                      className={cn(
+                        "cursor-pointer text-sm",
+                        location.pathname.startsWith(item.path) && "text-primary font-medium",
+                      )}
+                    >
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </nav>
 
           {/* Right controls */}
@@ -144,7 +185,7 @@ const Header = () => {
             className="lg:hidden border-t border-border py-4 space-y-1 animate-fade-in"
             aria-label="Navegação móvel"
           >
-            {navItems.map((item) => (
+            {allMobileItems.map((item) => (
               <NavLink
                 key={item.name}
                 to={item.path}
