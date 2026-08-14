@@ -21,7 +21,7 @@ import { useNutriPlan } from "@/hooks/useNutriPlan";
 import { useMealLogs, MEAL_TYPES, toISODate } from "@/hooks/useMealLogs";
 import { useShoppingList } from "@/hooks/useShoppingList";
 import { enrichedRecipes } from "@/data/enrichedRecipes";
-import { downloadWeeklyMenu } from "@/lib/pdf";
+import { downloadWeeklyMenu, downloadShoppingList, downloadPersonalShoppingList } from "@/lib/pdf";
 import { Download, Utensils, ShoppingBasket, Repeat, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
