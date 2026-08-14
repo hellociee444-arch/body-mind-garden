@@ -10,7 +10,9 @@ const readLocal = (): number[] => {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed.filter((x) => typeof x === "number") : [];
+    return Array.isArray(parsed)
+      ? Array.from(new Set(parsed.filter((x) => typeof x === "number")))
+      : [];
   } catch {
     return [];
   }
@@ -19,56 +21,98 @@ const readLocal = (): number[] => {
 const writeLocal = (ids: number[]) => {
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
-  } catch { /* no-op */ }
+  } catch {
+    /* no-op */
+  }
 };
+
+/* ------------------------------------------------------------------ *
+ * Store global compartilhado: garante que o card, a página da receita
+ * e a lista de favoritos sempre reflitam o mesmo estado.
+ * ------------------------------------------------------------------ */
+let state: number[] = readLocal();
+const listeners = new Set<(ids: number[]) => void>();
+
+const setState = (next: number[]) => {
+  state = Array.from(new Set(next));
+  writeLocal(state);
+  listeners.forEach((l) => l(state));
+};
+
+const subscribe = (l: (ids: number[]) => void) => {
+  listeners.add(l);
+  return () => listeners.delete(l);
+};
+
+let loadedForUser: string | null = null;
 
 /**
  * Favorites: syncs with DB when authenticated, otherwise falls back to localStorage.
  */
 export function useFavorites() {
   const { user } = useAuth();
-  const [favorites, setFavorites] = useState<number[]>(() => readLocal());
+  const [favorites, setFavorites] = useState<number[]>(state);
 
-  // Load favorites from DB when user signs in, and merge any local ones.
+  useEffect(() => subscribe(setFavorites), []);
+
+  // Carrega favoritos do banco ao entrar e mescla os locais (apenas uma vez por usuário).
   useEffect(() => {
     if (!user) {
-      setFavorites(readLocal());
+      loadedForUser = null;
       return;
     }
+    if (loadedForUser === user.id) return;
+    loadedForUser = user.id;
+
     (async () => {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("favorites")
         .select("recipe_id")
         .eq("user_id", user.id);
+      if (error) {
+        loadedForUser = null;
+        return;
+      }
       const dbIds = (data ?? []).map((r) => r.recipe_id as number);
       const localIds = readLocal();
       const toUpload = localIds.filter((id) => !dbIds.includes(id));
       if (toUpload.length > 0) {
-        await supabase.from("favorites").insert(
-          toUpload.map((recipe_id) => ({ user_id: user.id, recipe_id })),
-        );
+        await supabase
+          .from("favorites")
+          .upsert(
+            toUpload.map((recipe_id) => ({ user_id: user.id, recipe_id })),
+            { onConflict: "user_id,recipe_id", ignoreDuplicates: true },
+          );
       }
-      const merged = Array.from(new Set([...dbIds, ...localIds]));
-      setFavorites(merged);
-      writeLocal(merged);
+      setState([...dbIds, ...localIds]);
     })();
   }, [user]);
 
   const toggle = useCallback(
     async (id: number) => {
-      setFavorites((current) => {
-        const has = current.includes(id);
-        const next = has ? current.filter((x) => x !== id) : [...current, id];
-        writeLocal(next);
-        if (user) {
-          if (has) {
-            supabase.from("favorites").delete().eq("user_id", user.id).eq("recipe_id", id);
-          } else {
-            supabase.from("favorites").insert({ user_id: user.id, recipe_id: id });
-          }
-        }
-        return next;
-      });
+      const has = state.includes(id);
+      const next = has ? state.filter((x) => x !== id) : [...state, id];
+      // Atualização otimista e imediata na interface.
+      setState(next);
+
+      if (!user) return;
+
+      if (has) {
+        const { error } = await supabase
+          .from("favorites")
+          .delete()
+          .eq("user_id", user.id)
+          .eq("recipe_id", id);
+        if (error) setState([...state, id]); // rollback
+      } else {
+        const { error } = await supabase
+          .from("favorites")
+          .upsert(
+            { user_id: user.id, recipe_id: id },
+            { onConflict: "user_id,recipe_id", ignoreDuplicates: true },
+          );
+        if (error) setState(state.filter((x) => x !== id)); // rollback
+      }
     },
     [user],
   );
