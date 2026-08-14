@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Dialog,
@@ -21,7 +22,7 @@ import { useNutriPlan } from "@/hooks/useNutriPlan";
 import { useMealLogs, MEAL_TYPES, toISODate } from "@/hooks/useMealLogs";
 import { useShoppingList } from "@/hooks/useShoppingList";
 import { enrichedRecipes } from "@/data/enrichedRecipes";
-import { downloadWeeklyMenu } from "@/lib/pdf";
+import { downloadWeeklyMenu, downloadShoppingList, downloadPersonalShoppingList } from "@/lib/pdf";
 import { Download, Utensils, ShoppingBasket, Repeat, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -63,8 +64,8 @@ export default function MyMenu() {
   const today = new Date();
   const iso = toISODate(today);
   const { getMeal, saveMeal } = useMealLogs(iso);
-  const { addMany } = useShoppingList();
-  const [importing, setImporting] = useState(false);
+  const { items: shoppingItems } = useShoppingList();
+  const [drafts, setDrafts] = useState<Record<string, string>>({});
 
   const todayName = WEEKDAYS[today.getDay()];
 
@@ -80,19 +81,17 @@ export default function MyMenu() {
     MEAL_TYPES.find((m) => nome.toLowerCase().includes(m.toLowerCase().split(" ")[0])) ??
     "Outras refeições";
 
-  const handleGenerateList = async () => {
-    if (!plan?.lista_compras?.length) {
-      toast.info("Gere seu cardápio com a NutriA para criar a lista automaticamente.");
+  /** Baixa a lista de compras: usa a lista pessoal salva ou, se vazia, a do cardápio. */
+  const handleDownloadList = () => {
+    if (shoppingItems.length) {
+      downloadPersonalShoppingList(shoppingItems);
       return;
     }
-    setImporting(true);
-    const added = await addMany(plan.lista_compras);
-    setImporting(false);
-    toast.success(
-      added > 0
-        ? `${added} itens adicionados à sua lista de compras.`
-        : "Sua lista já contém esses itens.",
-    );
+    if (plan?.lista_compras?.length) {
+      downloadShoppingList(plan);
+      return;
+    }
+    toast.info("Gere seu cardápio com a NutriA para ter uma lista de compras.");
   };
 
   const MealRow = ({ nome, descricao, calorias }: { nome: string; descricao: string; calorias: number }) => {
@@ -198,21 +197,13 @@ export default function MyMenu() {
                 <Button variant="outline" onClick={() => downloadWeeklyMenu(plan)}>
                   <Download className="h-4 w-4 mr-1" /> Baixar cardápio em PDF
                 </Button>
-                <Button variant="outline" onClick={handleGenerateList} disabled={!user || importing}>
-                  {importing ? (
-                    <Loader2 className="h-4 w-4 mr-1 animate-spin" />
-                  ) : (
-                    <ShoppingBasket className="h-4 w-4 mr-1" />
-                  )}
-                  Gerar lista de compras
+                <Button variant="outline" onClick={handleDownloadList}>
+                  <Download className="h-4 w-4 mr-1" /> Baixar lista de compras em PDF
                 </Button>
                 <Button asChild variant="outline">
                   <Link to="/lista-de-compras">
                     <ShoppingBasket className="h-4 w-4 mr-1" /> Abrir minha lista de compras
                   </Link>
-                </Button>
-                <Button asChild variant="outline">
-                  <Link to="/acompanhamento">Registrar refeições de hoje</Link>
                 </Button>
                 <Button asChild variant="ghost">
                   <Link to="/receitas">Buscar receitas</Link>
@@ -224,7 +215,65 @@ export default function MyMenu() {
                   <TabsTrigger value="dia">Hoje</TabsTrigger>
                   <TabsTrigger value="semana">Semana</TabsTrigger>
                   <TabsTrigger value="refeicao">Por refeição</TabsTrigger>
+                  <TabsTrigger value="acompanhamento">Acompanhamento</TabsTrigger>
                 </TabsList>
+
+                <TabsContent value="acompanhamento" className="mt-4 space-y-3">
+                  <p className="text-sm text-muted-foreground">
+                    Registre o que você comeu de verdade hoje. Sem cobrança, sem culpa — só organização da rotina.
+                  </p>
+                  {MEAL_TYPES.map((mt) => {
+                    const log = getMeal(mt);
+                    const value = drafts[mt] ?? log?.eaten ?? "";
+                    return (
+                      <Card key={mt}>
+                        <CardHeader className="pb-2">
+                          <div className="flex items-center justify-between gap-3">
+                            <CardTitle className="text-base">{mt}</CardTitle>
+                            <label className="flex items-center gap-2 text-xs cursor-pointer">
+                              <Checkbox
+                                checked={!!log?.done}
+                                disabled={!user}
+                                onCheckedChange={(v) => saveMeal(mt, { done: !!v })}
+                                aria-label={`Marcar ${mt} como realizada`}
+                              />
+                              <span className="text-muted-foreground">Feita</span>
+                            </label>
+                          </div>
+                        </CardHeader>
+                        <CardContent className="space-y-2">
+                          <Textarea
+                            rows={2}
+                            placeholder="O que você comeu nesta refeição?"
+                            value={value}
+                            disabled={!user}
+                            onChange={(e) => setDrafts((d) => ({ ...d, [mt]: e.target.value }))}
+                          />
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            disabled={!user}
+                            onClick={async () => {
+                              await saveMeal(mt, { eaten: drafts[mt] ?? "" });
+                              toast.success("Registro salvo.");
+                            }}
+                          >
+                            Salvar registro
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                  <div className="flex flex-wrap gap-2">
+                    <Button asChild variant="outline" size="sm">
+                      <Link to="/acompanhamento">Ver acompanhamento completo</Link>
+                    </Button>
+                    <Button asChild variant="ghost" size="sm">
+                      <Link to="/medidas">Peso e medidas</Link>
+                    </Button>
+                  </div>
+                </TabsContent>
+
 
                 <TabsContent value="dia" className="mt-4">
                   <Card>

@@ -19,26 +19,50 @@ const Header = () => {
   const { user, signOut } = useAuth();
   const location = useLocation();
 
-  const navItems = [
+  type NavItem = { name: string; path: string; children?: { name: string; path: string }[] };
+
+  const navItems: NavItem[] = [
     { name: "Início", path: "/" },
     { name: "Receitas", path: "/receitas" },
-    { name: "Nutri IA", path: "/nutri-assistente" },
-    { name: "Cardápio", path: "/meu-cardapio" },
-    { name: "Acompanhamento", path: "/acompanhamento" },
-    { name: "Educação", path: "/educacao-alimentar" },
+    {
+      name: "Nutri IA",
+      path: "/nutri-assistente",
+      children: [
+        { name: "Nutri IA", path: "/nutri-assistente" },
+        { name: "Ferramentas", path: "/ferramentas" },
+      ],
+    },
+    {
+      name: "Cardápio",
+      path: "/meu-cardapio",
+      children: [
+        { name: "Meu Cardápio", path: "/meu-cardapio" },
+        { name: "Acompanhamento", path: "/acompanhamento" },
+        { name: "Lista de compras", path: "/lista-de-compras" },
+      ],
+    },
+    {
+      name: "Fitness",
+      path: "/fitness",
+      children: [
+        { name: "Fitness", path: "/fitness" },
+        { name: "Treino", path: "/alimentacao-e-treino" },
+        { name: "Bem-Estar", path: "/bem-estar" },
+        { name: "Educação", path: "/educacao-alimentar" },
+        { name: "Blog", path: "/blog" },
+      ],
+    },
+    {
+      name: "Contato",
+      path: "/contato",
+      children: [
+        { name: "Contato", path: "/contato" },
+        { name: "Sobre", path: "/sobre" },
+      ],
+    },
   ];
 
-  const moreItems = [
-    { name: "Fitness", path: "/fitness" },
-    { name: "Bem-Estar", path: "/bem-estar" },
-    { name: "Ferramentas", path: "/ferramentas" },
-    { name: "Blog", path: "/blog" },
-    { name: "Sobre", path: "/sobre" },
-    { name: "Contato", path: "/contato" },
-  ];
-
-  const isMoreActive = moreItems.some((i) => location.pathname.startsWith(i.path));
-  const allMobileItems = [...navItems, ...moreItems];
+  const allMobileItems = navItems.flatMap((i) => i.children ?? [i]);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-card/80 backdrop-blur-md supports-[backdrop-filter]:bg-card/70 shadow-sm">
@@ -60,51 +84,56 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-6" aria-label="Navegação principal">
-            {navItems.map((item) => (
-              <NavLink
-                key={item.name}
-                to={item.path}
-                end={item.path === "/"}
-                className={({ isActive }) =>
-                  cn(
-                    "text-sm font-medium transition-all duration-300 relative after:absolute after:bottom-[-4px] after:left-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300",
-                    isActive
-                      ? "text-primary after:w-full"
-                      : "text-muted-foreground hover:text-primary after:w-0 hover:after:w-full",
-                  )
-                }
-              >
-                {item.name}
-              </NavLink>
-            ))}
-
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                className={cn(
-                  "inline-flex items-center gap-1 text-sm font-medium transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm data-[state=open]:text-primary",
-                  isMoreActive ? "text-primary" : "text-muted-foreground hover:text-primary",
-                )}
-              >
-                Mais
-                <ChevronDown className="h-4 w-4 transition-transform duration-300" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48 bg-card">
-                {moreItems.map((item) => (
-                  <DropdownMenuItem key={item.name} asChild>
-                    <Link
-                      to={item.path}
-                      className={cn(
-                        "cursor-pointer text-sm",
-                        location.pathname.startsWith(item.path) && "text-primary font-medium",
-                      )}
-                    >
-                      {item.name}
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {navItems.map((item) =>
+              item.children ? (
+                <DropdownMenu key={item.name}>
+                  <DropdownMenuTrigger
+                    className={cn(
+                      "inline-flex items-center gap-1 text-sm font-medium transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm data-[state=open]:text-primary",
+                      item.children.some((c) => location.pathname.startsWith(c.path))
+                        ? "text-primary"
+                        : "text-muted-foreground hover:text-primary",
+                    )}
+                  >
+                    {item.name}
+                    <ChevronDown className="h-4 w-4 transition-transform duration-300" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-52 bg-card">
+                    {item.children.map((c) => (
+                      <DropdownMenuItem key={c.name} asChild>
+                        <Link
+                          to={c.path}
+                          className={cn(
+                            "cursor-pointer text-sm",
+                            location.pathname === c.path && "text-primary font-medium",
+                          )}
+                        >
+                          {c.name}
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <NavLink
+                  key={item.name}
+                  to={item.path}
+                  end={item.path === "/"}
+                  className={({ isActive }) =>
+                    cn(
+                      "text-sm font-medium transition-all duration-300 relative after:absolute after:bottom-[-4px] after:left-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300",
+                      isActive
+                        ? "text-primary after:w-full"
+                        : "text-muted-foreground hover:text-primary after:w-0 hover:after:w-full",
+                    )
+                  }
+                >
+                  {item.name}
+                </NavLink>
+              ),
+            )}
           </nav>
+
 
           {/* Right controls */}
           <div className="flex items-center gap-1 shrink-0">
