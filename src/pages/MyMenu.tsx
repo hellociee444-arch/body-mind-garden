@@ -63,7 +63,7 @@ export default function MyMenu() {
   const today = new Date();
   const iso = toISODate(today);
   const { getMeal, saveMeal } = useMealLogs(iso);
-  const { addMany } = useShoppingList();
+  const { items: shoppingItems } = useShoppingList();
   const [importing, setImporting] = useState(false);
 
   const todayName = WEEKDAYS[today.getDay()];
