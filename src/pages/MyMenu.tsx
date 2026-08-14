@@ -80,19 +80,17 @@ export default function MyMenu() {
     MEAL_TYPES.find((m) => nome.toLowerCase().includes(m.toLowerCase().split(" ")[0])) ??
     "Outras refeições";
 
-  const handleGenerateList = async () => {
-    if (!plan?.lista_compras?.length) {
-      toast.info("Gere seu cardápio com a NutriA para criar a lista automaticamente.");
+  /** Baixa a lista de compras: usa a lista pessoal salva ou, se vazia, a do cardápio. */
+  const handleDownloadList = () => {
+    if (shoppingItems.length) {
+      downloadPersonalShoppingList(shoppingItems);
       return;
     }
-    setImporting(true);
-    const added = await addMany(plan.lista_compras);
-    setImporting(false);
-    toast.success(
-      added > 0
-        ? `${added} itens adicionados à sua lista de compras.`
-        : "Sua lista já contém esses itens.",
-    );
+    if (plan?.lista_compras?.length) {
+      downloadShoppingList(plan);
+      return;
+    }
+    toast.info("Gere seu cardápio com a NutriA para ter uma lista de compras.");
   };
 
   const MealRow = ({ nome, descricao, calorias }: { nome: string; descricao: string; calorias: number }) => {
