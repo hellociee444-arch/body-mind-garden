@@ -198,21 +198,13 @@ export default function MyMenu() {
                 <Button variant="outline" onClick={() => downloadWeeklyMenu(plan)}>
                   <Download className="h-4 w-4 mr-1" /> Baixar cardápio em PDF
                 </Button>
-                <Button variant="outline" onClick={handleGenerateList} disabled={!user || importing}>
-                  {importing ? (
-                    <Loader2 className="h-4 w-4 mr-1 animate-spin" />
-                  ) : (
-                    <ShoppingBasket className="h-4 w-4 mr-1" />
-                  )}
-                  Gerar lista de compras
+                <Button variant="outline" onClick={handleDownloadList}>
+                  <Download className="h-4 w-4 mr-1" /> Baixar lista de compras em PDF
                 </Button>
                 <Button asChild variant="outline">
                   <Link to="/lista-de-compras">
                     <ShoppingBasket className="h-4 w-4 mr-1" /> Abrir minha lista de compras
                   </Link>
-                </Button>
-                <Button asChild variant="outline">
-                  <Link to="/acompanhamento">Registrar refeições de hoje</Link>
                 </Button>
                 <Button asChild variant="ghost">
                   <Link to="/receitas">Buscar receitas</Link>
