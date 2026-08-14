@@ -214,7 +214,65 @@ export default function MyMenu() {
                   <TabsTrigger value="dia">Hoje</TabsTrigger>
                   <TabsTrigger value="semana">Semana</TabsTrigger>
                   <TabsTrigger value="refeicao">Por refeição</TabsTrigger>
+                  <TabsTrigger value="acompanhamento">Acompanhamento</TabsTrigger>
                 </TabsList>
+
+                <TabsContent value="acompanhamento" className="mt-4 space-y-3">
+                  <p className="text-sm text-muted-foreground">
+                    Registre o que você comeu de verdade hoje. Sem cobrança, sem culpa — só organização da rotina.
+                  </p>
+                  {MEAL_TYPES.map((mt) => {
+                    const log = getMeal(mt);
+                    const value = drafts[mt] ?? log?.eaten ?? "";
+                    return (
+                      <Card key={mt}>
+                        <CardHeader className="pb-2">
+                          <div className="flex items-center justify-between gap-3">
+                            <CardTitle className="text-base">{mt}</CardTitle>
+                            <label className="flex items-center gap-2 text-xs cursor-pointer">
+                              <Checkbox
+                                checked={!!log?.done}
+                                disabled={!user}
+                                onCheckedChange={(v) => saveMeal(mt, { done: !!v })}
+                                aria-label={`Marcar ${mt} como realizada`}
+                              />
+                              <span className="text-muted-foreground">Feita</span>
+                            </label>
+                          </div>
+                        </CardHeader>
+                        <CardContent className="space-y-2">
+                          <Textarea
+                            rows={2}
+                            placeholder="O que você comeu nesta refeição?"
+                            value={value}
+                            disabled={!user}
+                            onChange={(e) => setDrafts((d) => ({ ...d, [mt]: e.target.value }))}
+                          />
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            disabled={!user}
+                            onClick={async () => {
+                              await saveMeal(mt, { eaten: drafts[mt] ?? "" });
+                              toast.success("Registro salvo.");
+                            }}
+                          >
+                            Salvar registro
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                  <div className="flex flex-wrap gap-2">
+                    <Button asChild variant="outline" size="sm">
+                      <Link to="/acompanhamento">Ver acompanhamento completo</Link>
+                    </Button>
+                    <Button asChild variant="ghost" size="sm">
+                      <Link to="/medidas">Peso e medidas</Link>
+                    </Button>
+                  </div>
+                </TabsContent>
+
 
                 <TabsContent value="dia" className="mt-4">
                   <Card>
