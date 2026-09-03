@@ -12,6 +12,7 @@ import { useMealHistory } from "@/hooks/useMealLogs";
 import { useNotes } from "@/hooks/useNotes";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useMadeRecipes } from "@/hooks/useMadeRecipes";
+import { useWorkoutLogs } from "@/hooks/useWorkoutLogs";
 import { downloadProgressReport } from "@/lib/pdf";
 import { toast } from "sonner";
 import {
@@ -42,6 +43,7 @@ const SHORTCUTS = [
   { to: "/biblioteca", title: "Biblioteca e PDFs", desc: "Materiais para baixar.", icon: FileText },
   { to: "/educacao-alimentar", title: "Educação alimentar", desc: "Conteúdos para escolher melhor.", icon: BookOpen },
   { to: "/alimentacao-e-treino", title: "Alimentação e treino", desc: "Pré, pós-treino e receitas práticas.", icon: Dumbbell },
+  { to: "/fitness", title: "Treinos e histórico", desc: "Gere treinos e acompanhe sua evolução.", icon: Dumbbell },
 ];
 
 export default function MyVivaLeve() {
@@ -52,6 +54,7 @@ export default function MyVivaLeve() {
   const { notes, add, remove } = useNotes();
   const { favorites } = useFavorites();
   const { made } = useMadeRecipes();
+  const { workouts } = useWorkoutLogs();
   const [note, setNote] = useState("");
 
   const handleReport = () => {
@@ -94,7 +97,8 @@ export default function MyVivaLeve() {
               <span>{favorites.length} favoritas</span>•
               <span>{made.length} já feitas</span>•
               <span>{measurements.length} medidas registradas</span>•
-              <span>{logs.filter((l) => l.done).length} refeições realizadas</span>
+              <span>{logs.filter((l) => l.done).length} refeições realizadas</span>•
+              <span>{workouts.length} treinos salvos</span>
             </div>
           )}
 

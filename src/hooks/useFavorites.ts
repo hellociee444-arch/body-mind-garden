@@ -26,44 +26,35 @@ const writeLocal = (ids: number[]) => {
   }
 };
 
-/* ------------------------------------------------------------------ *
- * Store global compartilhado: garante que o card, a página da receita
- * e a lista de favoritos sempre reflitam o mesmo estado.
- * ------------------------------------------------------------------ */
 let state: number[] = readLocal();
 const listeners = new Set<(ids: number[]) => void>();
+const pendingOperations = new Map<number, number>();
+let loadedForUser: string | null = null;
 
 const setState = (next: number[]) => {
   state = Array.from(new Set(next));
   writeLocal(state);
-  listeners.forEach((l) => l(state));
+  listeners.forEach((listener) => listener(state));
 };
 
-const subscribe = (l: (ids: number[]) => void) => {
-  listeners.add(l);
-  return () => listeners.delete(l);
+const subscribe = (listener: (ids: number[]) => void) => {
+  listeners.add(listener);
+  return () => {
+    listeners.delete(listener);
+  };
 };
 
-let loadedForUser: string | null = null;
-
-/**
- * Favorites: syncs with DB when authenticated, otherwise falls back to localStorage.
- */
+/** Favoritos sincronizados entre cards, detalhe, cabeçalho e lista. */
 export function useFavorites() {
   const { user } = useAuth();
   const [favorites, setFavorites] = useState<number[]>(state);
 
-  useEffect(() => {
-    const unsubscribe = subscribe(setFavorites);
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+  useEffect(() => subscribe(setFavorites), []);
 
-  // Carrega favoritos do banco ao entrar e mescla os locais (apenas uma vez por usuário).
   useEffect(() => {
     if (!user) {
       loadedForUser = null;
+      setState(readLocal());
       return;
     }
     if (loadedForUser === user.id) return;
@@ -78,16 +69,15 @@ export function useFavorites() {
         loadedForUser = null;
         return;
       }
-      const dbIds = (data ?? []).map((r) => r.recipe_id as number);
+
+      const dbIds = Array.from(new Set((data ?? []).map((row) => row.recipe_id as number)));
       const localIds = readLocal();
       const toUpload = localIds.filter((id) => !dbIds.includes(id));
       if (toUpload.length > 0) {
-        await supabase
-          .from("favorites")
-          .upsert(
-            toUpload.map((recipe_id) => ({ user_id: user.id, recipe_id })),
-            { onConflict: "user_id,recipe_id", ignoreDuplicates: true },
-          );
+        await supabase.from("favorites").upsert(
+          toUpload.map((recipe_id) => ({ user_id: user.id, recipe_id })),
+          { onConflict: "user_id,recipe_id", ignoreDuplicates: true },
+        );
       }
       setState([...dbIds, ...localIds]);
     })();
@@ -96,28 +86,25 @@ export function useFavorites() {
   const toggle = useCallback(
     async (id: number) => {
       const has = state.includes(id);
-      const next = has ? state.filter((x) => x !== id) : [...state, id];
-      // Atualização otimista e imediata na interface.
+      const next = has ? state.filter((item) => item !== id) : [...state, id];
+      const operation = (pendingOperations.get(id) ?? 0) + 1;
+      pendingOperations.set(id, operation);
       setState(next);
 
       if (!user) return;
 
-      if (has) {
-        const { error } = await supabase
-          .from("favorites")
-          .delete()
-          .eq("user_id", user.id)
-          .eq("recipe_id", id);
-        if (error) setState([...state, id]); // rollback
-      } else {
-        const { error } = await supabase
-          .from("favorites")
-          .upsert(
+      const result = has
+        ? await supabase.from("favorites").delete().eq("user_id", user.id).eq("recipe_id", id)
+        : await supabase.from("favorites").upsert(
             { user_id: user.id, recipe_id: id },
             { onConflict: "user_id,recipe_id", ignoreDuplicates: true },
           );
-        if (error) setState(state.filter((x) => x !== id)); // rollback
+
+      // Só desfaz a alteração se esta ainda for a última ação para a receita.
+      if (result.error && pendingOperations.get(id) === operation) {
+        setState(has ? [...state, id] : state.filter((item) => item !== id));
       }
+      if (pendingOperations.get(id) === operation) pendingOperations.delete(id);
     },
     [user],
   );

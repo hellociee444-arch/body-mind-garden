@@ -239,8 +239,9 @@ export default function NutriAssistant() {
                           <SelectItem value="emagrecer">Emagrecer</SelectItem>
                           <SelectItem value="manter">Manter o peso</SelectItem>
                           <SelectItem value="ganhar">Ganhar massa muscular</SelectItem>
-                          <SelectItem value="saude">Melhorar a saúde geral</SelectItem>
-                        </SelectContent>
+                           <SelectItem value="saude">Melhorar a saúde geral</SelectItem>
+                           <SelectItem value="intestinal">Funcionamento intestinal</SelectItem>
+                         </SelectContent>
                       </Select>
                     </div>
                     <div>
