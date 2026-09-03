@@ -53,7 +53,12 @@ export function useFavorites() {
   const { user } = useAuth();
   const [favorites, setFavorites] = useState<number[]>(state);
 
-  useEffect(() => subscribe(setFavorites), []);
+  useEffect(() => {
+    const unsubscribe = subscribe(setFavorites);
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   // Carrega favoritos do banco ao entrar e mescla os locais (apenas uma vez por usuário).
   useEffect(() => {
