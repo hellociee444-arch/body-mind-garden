@@ -61,6 +61,8 @@ export default function NutriAssistant() {
   const [loading, setLoading] = useState(false);
   const [plan, setPlan] = useState<Plan | null>(null);
   const [loadingSaved, setLoadingSaved] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+
 
   const steps = ["Perfil", "Objetivo", "Preferências", "Saúde"];
 
