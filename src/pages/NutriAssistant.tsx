@@ -16,7 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
-import { ArrowLeft, ArrowRight, Sparkles, Loader2, RefreshCw, Droplets, Flame, LogIn, Download } from "lucide-react";
+import { ArrowLeft, ArrowRight, Sparkles, Loader2, RefreshCw, Pencil, Droplets, Flame, LogIn, Download } from "lucide-react";
 import { downloadNutriReport, downloadWeeklyMenu, downloadShoppingList } from "@/lib/pdf";
 import { enrichedRecipes } from "@/data/enrichedRecipes";
 import { archiveNutriPlan } from "@/hooks/useNutriPlan";
