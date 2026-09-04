@@ -118,9 +118,12 @@ export default function NutriAssistant() {
       if (data?.error) throw new Error(data.error);
       const generatedPlan = data as Plan;
       setPlan(generatedPlan);
+      setShowForm(false);
 
       // Persist for the user
       if (user) {
+        // Preserva o planejamento anterior no histórico antes de substituir.
+        if (plan) await archiveNutriPlan(user.id, form as never, plan as never, form.objetivo);
         await supabase.from("nutri_plans").upsert(
           {
             user_id: user.id,
@@ -139,11 +142,19 @@ export default function NutriAssistant() {
     }
   };
 
+  /** Editar: mantém os dados já preenchidos e volta ao formulário. */
+  const editar = () => {
+    setShowForm(true);
+    setStep(0);
+  };
+
+  /** Refazer: começa uma nova elaboração sem os dados anteriores. */
   const reset = () => {
-    setPlan(null);
+    setShowForm(true);
     setForm(initial);
     setStep(0);
   };
+
 
   return (
     <div className="min-h-screen flex flex-col">
