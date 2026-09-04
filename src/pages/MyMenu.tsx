@@ -94,10 +94,52 @@ export default function MyMenu() {
     toast.info("Gere seu cardápio com a NutriA para ter uma lista de compras.");
   };
 
-  const MealRow = ({ nome, descricao, calorias }: { nome: string; descricao: string; calorias: number }) => {
+  /** Substitui a refeição do dia por uma receita do acervo. */
+  const replaceMeal = async (dia: string, index: number, recipeName: string, calories?: string | number) => {
+    if (!plan) return;
+    const kcal = parseInt(String(calories ?? "").replace(/[^0-9]/g, ""));
+    const next = {
+      ...plan,
+      cardapio: plan.cardapio.map((d) =>
+        d.dia !== dia
+          ? d
+          : {
+              ...d,
+              refeicoes: d.refeicoes.map((m, i) =>
+                i !== index ? m : { ...m, descricao: recipeName, calorias: kcal || m.calorias },
+              ),
+            },
+      ),
+    };
+    await savePlan(next);
+    toast.success("Refeição atualizada no seu planejamento.");
+  };
+
+  /** Remove a refeição do planejamento do dia. */
+  const removeMeal = async (dia: string, index: number) => {
+    if (!plan) return;
+    const next = {
+      ...plan,
+      cardapio: plan.cardapio.map((d) =>
+        d.dia !== dia ? d : { ...d, refeicoes: d.refeicoes.filter((_, i) => i !== index) },
+      ),
+    };
+    await savePlan(next);
+    toast.success("Refeição removida do seu planejamento.");
+  };
+
+  const MealRow = ({
+    nome,
+    descricao,
+    calorias,
+    dia,
+    index,
+  }: { nome: string; descricao: string; calorias: number; dia?: string; index?: number }) => {
     const mealType = mealTypeFor(nome);
     const log = getMeal(mealType);
     const options = equivalentRecipes(descricao);
+    const [open, setOpen] = useState(false);
+    const editable = user && dia !== undefined && index !== undefined;
     return (
       <div className="border-l-2 border-primary/40 pl-3 py-2 space-y-2">
         <div className="flex items-start justify-between gap-3">
@@ -117,39 +159,64 @@ export default function MyMenu() {
             </label>
           )}
         </div>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="ghost" size="sm" className="h-7 px-2 text-xs">
-              <Repeat className="h-3 w-3 mr-1" /> Trocar por opção equivalente
+        <div className="flex flex-wrap items-center gap-1">
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <Button variant="ghost" size="sm" className="h-7 px-2 text-xs">
+                <Repeat className="h-3 w-3 mr-1" /> Trocar por opção equivalente
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Opções equivalentes</DialogTitle>
+              </DialogHeader>
+              <p className="text-sm text-muted-foreground">
+                Escolha uma receita do acervo Viva Leve com perfil parecido para esta refeição.
+              </p>
+              <ul className="space-y-2">
+                {options.map((r) => (
+                  <li key={r.id} className="rounded-lg border p-2 hover:bg-accent/40 transition-colors">
+                    <div className="flex items-center justify-between gap-3">
+                      <Link to={`/receita/${r.id}`} className="text-sm">
+                        {r.nome}
+                      </Link>
+                      <Badge variant="outline" className="text-xs">
+                        {r.calories}
+                      </Badge>
+                    </div>
+                    {editable && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="mt-2 h-7 px-2 text-xs"
+                        onClick={async () => {
+                          await replaceMeal(dia!, index!, r.nome, r.calories);
+                          setOpen(false);
+                        }}
+                      >
+                        Usar esta receita nesta refeição
+                      </Button>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </DialogContent>
+          </Dialog>
+          {editable && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-7 px-2 text-xs text-muted-foreground"
+              onClick={() => removeMeal(dia!, index!)}
+            >
+              <Trash2 className="h-3 w-3 mr-1" /> Remover do planejamento
             </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Opções equivalentes</DialogTitle>
-            </DialogHeader>
-            <p className="text-sm text-muted-foreground">
-              Escolha uma receita do acervo Viva Leve com perfil parecido para esta refeição.
-            </p>
-            <ul className="space-y-2">
-              {options.map((r) => (
-                <li key={r.id}>
-                  <Link
-                    to={`/receita/${r.id}`}
-                    className="flex items-center justify-between gap-3 rounded-lg border p-2 hover:bg-accent/40 transition-colors"
-                  >
-                    <span className="text-sm">{r.nome}</span>
-                    <Badge variant="outline" className="text-xs">
-                      {r.calories}
-                    </Badge>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </DialogContent>
-        </Dialog>
+          )}
+        </div>
       </div>
     );
   };
+
 
   return (
     <div className="min-h-screen flex flex-col">
