@@ -213,7 +213,7 @@ export default function NutriAssistant() {
           )}
           {loadingSaved ? (
             <Card><CardContent className="p-10 flex justify-center"><Loader2 className="h-6 w-6 animate-spin text-primary" /></CardContent></Card>
-          ) : !plan ? (
+          ) : !plan || showForm ? (
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between mb-2">
