@@ -107,6 +107,33 @@ export type Database = {
         }
         Relationships: []
       }
+      nutri_plan_history: {
+        Row: {
+          created_at: string
+          form_data: Json
+          id: string
+          objetivo: string | null
+          plan: Json
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          form_data: Json
+          id?: string
+          objetivo?: string | null
+          plan: Json
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          form_data?: Json
+          id?: string
+          objetivo?: string | null
+          plan?: Json
+          user_id?: string
+        }
+        Relationships: []
+      }
       nutri_plans: {
         Row: {
           created_at: string

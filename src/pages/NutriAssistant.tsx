@@ -16,9 +16,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
-import { ArrowLeft, ArrowRight, Sparkles, Loader2, RefreshCw, Droplets, Flame, LogIn, Download } from "lucide-react";
+import { ArrowLeft, ArrowRight, Sparkles, Loader2, RefreshCw, Pencil, Droplets, Flame, LogIn, Download } from "lucide-react";
 import { downloadNutriReport, downloadWeeklyMenu, downloadShoppingList } from "@/lib/pdf";
 import { enrichedRecipes } from "@/data/enrichedRecipes";
+import { archiveNutriPlan } from "@/hooks/useNutriPlan";
+
 
 interface Form {
   idade: string;
@@ -61,6 +63,8 @@ export default function NutriAssistant() {
   const [loading, setLoading] = useState(false);
   const [plan, setPlan] = useState<Plan | null>(null);
   const [loadingSaved, setLoadingSaved] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+
 
   const steps = ["Perfil", "Objetivo", "Preferências", "Saúde"];
 
@@ -116,9 +120,12 @@ export default function NutriAssistant() {
       if (data?.error) throw new Error(data.error);
       const generatedPlan = data as Plan;
       setPlan(generatedPlan);
+      setShowForm(false);
 
       // Persist for the user
       if (user) {
+        // Preserva o planejamento anterior no histórico antes de substituir.
+        if (plan) await archiveNutriPlan(user.id, form as never, plan as never, form.objetivo);
         await supabase.from("nutri_plans").upsert(
           {
             user_id: user.id,
@@ -137,11 +144,19 @@ export default function NutriAssistant() {
     }
   };
 
+  /** Editar: mantém os dados já preenchidos e volta ao formulário. */
+  const editar = () => {
+    setShowForm(true);
+    setStep(0);
+  };
+
+  /** Refazer: começa uma nova elaboração sem os dados anteriores. */
   const reset = () => {
-    setPlan(null);
+    setShowForm(true);
     setForm(initial);
     setStep(0);
   };
+
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -200,7 +215,7 @@ export default function NutriAssistant() {
           )}
           {loadingSaved ? (
             <Card><CardContent className="p-10 flex justify-center"><Loader2 className="h-6 w-6 animate-spin text-primary" /></CardContent></Card>
-          ) : !plan ? (
+          ) : !plan || showForm ? (
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between mb-2">
@@ -208,7 +223,15 @@ export default function NutriAssistant() {
                   <span className="text-sm text-muted-foreground">Etapa {step + 1} de {steps.length}</span>
                 </div>
                 <Progress value={((step + 1) / steps.length) * 100} />
+                {plan && showForm && (
+                  <div className="pt-3">
+                    <Button variant="ghost" size="sm" onClick={() => setShowForm(false)}>
+                      <ArrowLeft className="h-4 w-4 mr-1" /> Ver meu plano atual
+                    </Button>
+                  </div>
+                )}
               </CardHeader>
+
               <CardContent className="space-y-4">
                 {step === 0 && (
                   <div className="grid grid-cols-2 gap-4 animate-fade-in">
@@ -407,9 +430,14 @@ export default function NutriAssistant() {
                 <Button variant="outline" onClick={() => downloadShoppingList(plan)}>
                   <Download className="h-4 w-4 mr-1" /> Baixar lista de compras
                 </Button>
+                <Button variant="outline" onClick={editar}>
+                  <Pencil className="h-4 w-4 mr-1" /> Editar minha dieta
+                </Button>
+
                 <Button variant="outline" onClick={reset}>
                   <RefreshCw className="h-4 w-4 mr-1" /> Atualizar avaliação
                 </Button>
+
               </div>
             </div>
           )}
