@@ -19,6 +19,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import { ArrowLeft, ArrowRight, Sparkles, Loader2, RefreshCw, Droplets, Flame, LogIn, Download } from "lucide-react";
 import { downloadNutriReport, downloadWeeklyMenu, downloadShoppingList } from "@/lib/pdf";
 import { enrichedRecipes } from "@/data/enrichedRecipes";
+import { archiveNutriPlan } from "@/hooks/useNutriPlan";
+
 
 interface Form {
   idade: string;
