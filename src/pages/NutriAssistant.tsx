@@ -223,7 +223,15 @@ export default function NutriAssistant() {
                   <span className="text-sm text-muted-foreground">Etapa {step + 1} de {steps.length}</span>
                 </div>
                 <Progress value={((step + 1) / steps.length) * 100} />
+                {plan && showForm && (
+                  <div className="pt-3">
+                    <Button variant="ghost" size="sm" onClick={() => setShowForm(false)}>
+                      <ArrowLeft className="h-4 w-4 mr-1" /> Ver meu plano atual
+                    </Button>
+                  </div>
+                )}
               </CardHeader>
+
               <CardContent className="space-y-4">
                 {step === 0 && (
                   <div className="grid grid-cols-2 gap-4 animate-fade-in">
