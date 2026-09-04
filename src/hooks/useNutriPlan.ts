@@ -37,5 +37,33 @@ export function useNutriPlan() {
     load();
   }, [load]);
 
-  return { form, plan, loading, reload: load };
+  /** Salva alterações feitas no cardápio atual (trocar/remover refeição). */
+  const savePlan = useCallback(
+    async (next: NutriPlan) => {
+      setPlan(next);
+      if (!user) return;
+      await supabase
+        .from("nutri_plans")
+        .update({ plan: next as never, updated_at: new Date().toISOString() })
+        .eq("user_id", user.id);
+    },
+    [user],
+  );
+
+  return { form, plan, loading, reload: load, savePlan };
+}
+
+/** Guarda uma cópia do planejamento atual no histórico do usuário. */
+export async function archiveNutriPlan(
+  userId: string,
+  form: NutriForm | Record<string, unknown>,
+  plan: NutriPlan | Record<string, unknown>,
+  objetivo?: string | null,
+) {
+  await supabase.from("nutri_plan_history").insert({
+    user_id: userId,
+    objetivo: objetivo ?? null,
+    form_data: form as never,
+    plan: plan as never,
+  });
 }
