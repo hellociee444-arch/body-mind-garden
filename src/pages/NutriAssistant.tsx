@@ -425,9 +425,7 @@ export default function NutriAssistant() {
                 <Button variant="outline" onClick={editar}>
                   <Pencil className="h-4 w-4 mr-1" /> Editar minha dieta
                 </Button>
-                <Button variant="outline" onClick={reset}>
-                  <RefreshCw className="h-4 w-4 mr-1" /> Refazer minha dieta
-                </Button>
+
                 <Button variant="outline" onClick={reset}>
                   <RefreshCw className="h-4 w-4 mr-1" /> Atualizar avaliação
                 </Button>
