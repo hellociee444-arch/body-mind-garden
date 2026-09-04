@@ -23,7 +23,7 @@ import { useMealLogs, MEAL_TYPES, toISODate } from "@/hooks/useMealLogs";
 import { useShoppingList } from "@/hooks/useShoppingList";
 import { enrichedRecipes } from "@/data/enrichedRecipes";
 import { downloadWeeklyMenu, downloadShoppingList, downloadPersonalShoppingList } from "@/lib/pdf";
-import { Download, Utensils, ShoppingBasket, Repeat, Loader2 } from "lucide-react";
+import { Download, Utensils, ShoppingBasket, Repeat, Trash2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 const WEEKDAYS = [
@@ -60,7 +60,7 @@ function equivalentRecipes(description: string) {
 
 export default function MyMenu() {
   const { user } = useAuth();
-  const { plan, loading } = useNutriPlan();
+  const { plan, loading, savePlan } = useNutriPlan();
   const today = new Date();
   const iso = toISODate(today);
   const { getMeal, saveMeal } = useMealLogs(iso);
@@ -349,7 +349,7 @@ export default function MyMenu() {
                     </CardHeader>
                     <CardContent className="space-y-1">
                       {todayPlan?.refeicoes.map((m, i) => (
-                        <MealRow key={i} {...m} />
+                        <MealRow key={i} {...m} dia={todayPlan?.dia} index={i} />
                       ))}
                     </CardContent>
                   </Card>
