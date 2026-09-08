@@ -10,6 +10,7 @@ const Footer = () => {
       { name: "Receitas", path: "/receitas" },
       { name: "Blog", path: "/blog" },
       { name: "Sobre", path: "/sobre" },
+      { name: "Contato", path: "/contato" },
     ],
     Categorias: [
       { name: "Nutrição", path: "/nutricao" },

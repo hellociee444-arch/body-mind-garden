@@ -29,35 +29,39 @@ const Header = () => {
       path: "/nutri-assistente",
       children: [
         { name: "Nutri IA", path: "/nutri-assistente" },
+        { name: "Meu Cardápio", path: "/meu-cardapio" },
+        { name: "Lista de compras", path: "/lista-de-compras" },
+        { name: "Acompanhamento", path: "/acompanhamento" },
         { name: "Ferramentas", path: "/ferramentas" },
       ],
     },
     {
-      name: "Cardápio",
-      path: "/meu-cardapio",
-      children: [
-        { name: "Meu Cardápio", path: "/meu-cardapio" },
-        { name: "Acompanhamento", path: "/acompanhamento" },
-        { name: "Lista de compras", path: "/lista-de-compras" },
-      ],
-    },
-    {
-      name: "Fitness",
+      name: "Treinos",
       path: "/fitness",
       children: [
-        { name: "Fitness", path: "/fitness" },
-        { name: "Treino", path: "/alimentacao-e-treino" },
-        { name: "Bem-Estar", path: "/bem-estar" },
-        { name: "Educação", path: "/educacao-alimentar" },
-        { name: "Blog", path: "/blog" },
+        { name: "Treinos", path: "/fitness" },
+        { name: "Alimentação e treino", path: "/alimentacao-e-treino" },
       ],
     },
     {
-      name: "Contato",
-      path: "/contato",
+      name: "Viva+",
+      path: "/educacao-alimentar",
       children: [
-        { name: "Contato", path: "/contato" },
-        { name: "Sobre", path: "/sobre" },
+        { name: "Educação alimentar", path: "/educacao-alimentar" },
+        { name: "Nutrição", path: "/nutricao" },
+        { name: "Bem-Estar", path: "/bem-estar" },
+        { name: "Blog", path: "/blog" },
+        { name: "Biblioteca", path: "/biblioteca" },
+      ],
+    },
+    {
+      name: "Perfil",
+      path: "/meu-viva-leve",
+      children: [
+        { name: "Meu Viva Leve", path: "/meu-viva-leve" },
+        { name: "Minha conta", path: "/minha-conta" },
+        { name: "Favoritos", path: "/favoritos" },
+        { name: "Medidas e evolução", path: "/medidas" },
       ],
     },
   ];
