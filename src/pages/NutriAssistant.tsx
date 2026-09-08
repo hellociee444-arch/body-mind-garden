@@ -20,6 +20,7 @@ import { ArrowLeft, ArrowRight, Sparkles, Loader2, RefreshCw, Pencil, Droplets, 
 import { downloadNutriReport, downloadWeeklyMenu, downloadShoppingList } from "@/lib/pdf";
 import { enrichedRecipes } from "@/data/enrichedRecipes";
 import { archiveNutriPlan } from "@/hooks/useNutriPlan";
+import SendPdfEmail from "@/components/SendPdfEmail";
 
 
 interface Form {
@@ -150,7 +151,13 @@ export default function NutriAssistant() {
     setStep(0);
   };
 
-  /** Refazer: começa uma nova elaboração sem os dados anteriores. */
+  /** Refazer: gera um novo cardápio com as mesmas respostas (o anterior vai para o histórico). */
+  const refazer = () => {
+    toast.info("Gerando um novo cardápio com as suas respostas...");
+    submit();
+  };
+
+  /** Nova dieta: começa uma nova elaboração sem os dados anteriores. */
   const reset = () => {
     setShowForm(true);
     setForm(initial);
@@ -189,6 +196,9 @@ export default function NutriAssistant() {
               )}
               <Button asChild variant="outline">
                 <Link to="/meu-cardapio">Meu cardápio</Link>
+              </Button>
+              <Button asChild variant="outline">
+                <Link to="/lista-de-compras">Lista de compras</Link>
               </Button>
               <Button asChild variant="outline">
                 <Link to="/acompanhamento">Acompanhamento</Link>
@@ -430,14 +440,33 @@ export default function NutriAssistant() {
                 <Button variant="outline" onClick={() => downloadShoppingList(plan)}>
                   <Download className="h-4 w-4 mr-1" /> Baixar lista de compras
                 </Button>
+              </div>
+
+              <SendPdfEmail
+                options={[
+                  { label: "Dieta / relatório nutricional", run: () => downloadNutriReport(form, plan, enrichedRecipes.slice(0, 8)) },
+                  { label: "Cardápio semanal", run: () => downloadWeeklyMenu(plan) },
+                  { label: "Lista de compras", run: () => downloadShoppingList(plan) },
+                ]}
+              />
+
+              <div className="flex flex-wrap gap-2 justify-center border-t pt-4">
                 <Button variant="outline" onClick={editar}>
-                  <Pencil className="h-4 w-4 mr-1" /> Editar minha dieta
+                  <Pencil className="h-4 w-4 mr-1" /> Editar dieta
                 </Button>
-
+                <Button variant="outline" onClick={refazer} disabled={loading}>
+                  {loading ? <Loader2 className="h-4 w-4 mr-1 animate-spin" /> : <RefreshCw className="h-4 w-4 mr-1" />} Refazer dieta
+                </Button>
                 <Button variant="outline" onClick={reset}>
-                  <RefreshCw className="h-4 w-4 mr-1" /> Atualizar avaliação
+                  <Sparkles className="h-4 w-4 mr-1" /> Nova dieta
                 </Button>
+              </div>
 
+              <div className="flex flex-wrap gap-2 justify-center text-sm">
+                <Button asChild variant="link" size="sm"><Link to="/meu-cardapio">Meu cardápio</Link></Button>
+                <Button asChild variant="link" size="sm"><Link to="/lista-de-compras">Lista de compras</Link></Button>
+                <Button asChild variant="link" size="sm"><Link to="/acompanhamento">Acompanhamento</Link></Button>
+                <Button asChild variant="link" size="sm"><Link to="/receitas">Receitas</Link></Button>
               </div>
             </div>
           )}

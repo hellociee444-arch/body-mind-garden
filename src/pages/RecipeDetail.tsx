@@ -28,6 +28,7 @@ import {
   Download,
 } from "lucide-react";
 import { downloadRecipePdf } from "@/lib/pdf";
+import SendPdfEmail from "@/components/SendPdfEmail";
 import { nutricao } from "@/data/content";
 import { getRecipeById, getRelatedRecipes } from "@/data/enrichedRecipes";
 import { CATEGORY_LABELS } from "@/data/recipeMetadata";
@@ -243,6 +244,9 @@ const RecipeDetail = () => {
                     Baixar receita em PDF
                   </Button>
                 </div>
+
+                <SendPdfEmail options={[{ label: `Receita: ${recipe.nome}`, run: () => downloadRecipePdf(recipe) }]} />
+
 
 
                 {nutritionInfo && (

@@ -23,6 +23,7 @@ import { useMealLogs, MEAL_TYPES, toISODate } from "@/hooks/useMealLogs";
 import { useShoppingList } from "@/hooks/useShoppingList";
 import { enrichedRecipes } from "@/data/enrichedRecipes";
 import { downloadWeeklyMenu, downloadShoppingList, downloadPersonalShoppingList } from "@/lib/pdf";
+import SendPdfEmail from "@/components/SendPdfEmail";
 import { Download, Utensils, ShoppingBasket, Repeat, Trash2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -276,6 +277,13 @@ export default function MyMenu() {
                   <Link to="/receitas">Buscar receitas</Link>
                 </Button>
               </div>
+
+              <SendPdfEmail
+                options={[
+                  { label: "Cardápio semanal", run: () => downloadWeeklyMenu(plan) },
+                  { label: "Lista de compras", run: handleDownloadList },
+                ]}
+              />
 
               <Tabs defaultValue="dia">
                 <TabsList>

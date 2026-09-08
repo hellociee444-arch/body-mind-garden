@@ -25,6 +25,38 @@ function newDoc(title: string) {
   return doc;
 }
 
+// ---------- Save / capture ----------
+// Por padrão o PDF é baixado. Dentro de capturePdf(), o arquivo é capturado
+// (base64) para ser enviado por e-mail, reutilizando a mesma geração.
+
+export interface CapturedPdf { base64: string; filename: string }
+
+let captureSink: ((doc: jsPDF, filename: string) => void) | null = null;
+
+function saveDoc(doc: jsPDF, filename: string) {
+  if (captureSink) {
+    captureSink(doc, filename);
+    return;
+  }
+  doc.save(filename);
+}
+
+/** Executa um gerador de PDF existente e devolve o arquivo em vez de baixá-lo. */
+export async function capturePdf(run: () => void | Promise<void>): Promise<CapturedPdf | null> {
+  let result: CapturedPdf | null = null;
+  const prev = captureSink;
+  captureSink = (doc, filename) => {
+    const uri = doc.output("datauristring");
+    result = { base64: uri.slice(uri.indexOf(",") + 1), filename };
+  };
+  try {
+    await run();
+  } finally {
+    captureSink = prev;
+  }
+  return result;
+}
+
 function drawHeader(doc: jsPDF, title: string, subtitle?: string) {
   doc.setFillColor(BRAND);
   doc.rect(0, 0, PAGE_W, 28, "F");
@@ -206,7 +238,7 @@ export async function downloadRecipePdf(r: EnrichedRecipe) {
   }
 
   drawFooter(doc);
-  doc.save(`viva-leve-${slug(r.nome)}.pdf`);
+  saveDoc(doc, `viva-leve-${slug(r.nome)}.pdf`);
 }
 
 // ---------- Recipe collection (Biblioteca) ----------
@@ -241,7 +273,7 @@ export async function downloadRecipesCollection(
   });
 
   drawFooter(doc);
-  doc.save(`viva-leve-${slug(title)}.pdf`);
+  saveDoc(doc, `viva-leve-${slug(title)}.pdf`);
 }
 
 // ---------- Nutri Report ----------
@@ -356,7 +388,7 @@ export function downloadNutriReport(
   paragraph(doc, c, plan.disclaimer || "Este relatório é uma referência gerada automaticamente e não substitui o acompanhamento de um profissional de saúde.");
 
   drawFooter(doc);
-  doc.save("viva-leve-relatorio-nutricional.pdf");
+  saveDoc(doc, "viva-leve-relatorio-nutricional.pdf");
 }
 
 // ---------- Weekly menu ----------
@@ -394,7 +426,7 @@ export function downloadWeeklyMenu(plan: NutriPlan) {
   });
 
   drawFooter(doc);
-  doc.save("viva-leve-cardapio-semanal.pdf");
+  saveDoc(doc, "viva-leve-cardapio-semanal.pdf");
 }
 
 // ---------- Shopping list ----------
@@ -453,7 +485,7 @@ export function downloadShoppingList(plan: NutriPlan) {
   }
 
   drawFooter(doc);
-  doc.save("viva-leve-lista-de-compras.pdf");
+  saveDoc(doc, "viva-leve-lista-de-compras.pdf");
 }
 
 // ---------- Educational guides ----------
@@ -481,7 +513,7 @@ export function downloadGuidePdf(title: string, subtitle: string, sections: Guid
     9,
   );
   drawFooter(doc);
-  doc.save(`viva-leve-${slug(title)}.pdf`);
+  saveDoc(doc, `viva-leve-${slug(title)}.pdf`);
 }
 
 // ---------- Personal shopping list (saved items) ----------
@@ -523,7 +555,7 @@ export function downloadPersonalShoppingList(items: ShoppingItemLike[]) {
   }
 
   drawFooter(doc);
-  doc.save("viva-leve-lista-de-compras.pdf");
+  saveDoc(doc, "viva-leve-lista-de-compras.pdf");
 }
 
 // ---------- Progress / follow-up report ----------
@@ -616,5 +648,5 @@ export function downloadProgressReport(opts: {
   );
 
   drawFooter(doc);
-  doc.save("viva-leve-meu-relatorio.pdf");
+  saveDoc(doc, "viva-leve-meu-relatorio.pdf");
 }

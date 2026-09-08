@@ -14,6 +14,7 @@ import { useFavorites } from "@/hooks/useFavorites";
 import { useMadeRecipes } from "@/hooks/useMadeRecipes";
 import { useWorkoutLogs } from "@/hooks/useWorkoutLogs";
 import { downloadProgressReport } from "@/lib/pdf";
+import SendPdfEmail from "@/components/SendPdfEmail";
 import { toast } from "sonner";
 import {
   CalendarDays,
@@ -131,6 +132,7 @@ export default function MyVivaLeve() {
               <Button variant="outline" onClick={handleReport} disabled={!user}>
                 <Download className="h-4 w-4 mr-1" /> Baixar meu relatório
               </Button>
+              <SendPdfEmail options={[{ label: "Meu relatório Viva Leve", run: handleReport }]} />
             </CardContent>
           </Card>
 
