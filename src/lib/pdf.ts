@@ -25,6 +25,38 @@ function newDoc(title: string) {
   return doc;
 }
 
+// ---------- Save / capture ----------
+// Por padrão o PDF é baixado. Dentro de capturePdf(), o arquivo é capturado
+// (base64) para ser enviado por e-mail, reutilizando a mesma geração.
+
+export interface CapturedPdf { base64: string; filename: string }
+
+let captureSink: ((doc: jsPDF, filename: string) => void) | null = null;
+
+function saveDoc(doc: jsPDF, filename: string) {
+  if (captureSink) {
+    captureSink(doc, filename);
+    return;
+  }
+  doc.save(filename);
+}
+
+/** Executa um gerador de PDF existente e devolve o arquivo em vez de baixá-lo. */
+export async function capturePdf(run: () => void | Promise<void>): Promise<CapturedPdf | null> {
+  let result: CapturedPdf | null = null;
+  const prev = captureSink;
+  captureSink = (doc, filename) => {
+    const uri = doc.output("datauristring");
+    result = { base64: uri.slice(uri.indexOf(",") + 1), filename };
+  };
+  try {
+    await run();
+  } finally {
+    captureSink = prev;
+  }
+  return result;
+}
+
 function drawHeader(doc: jsPDF, title: string, subtitle?: string) {
   doc.setFillColor(BRAND);
   doc.rect(0, 0, PAGE_W, 28, "F");
