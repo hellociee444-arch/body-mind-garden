@@ -55,7 +55,7 @@ const Header = () => {
       ],
     },
     {
-      name: "Perfil",
+      name: "Minha conta",
       path: "/meu-viva-leve",
       children: [
         { name: "Meu Viva Leve", path: "/meu-viva-leve" },
