@@ -136,6 +136,19 @@ const Fitness = () => {
                 <div className="space-y-2"><Label>Objetivo</Label><Select value={goal} onValueChange={(value) => setGoal(value as WorkoutGoal)}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{GOALS.map((item) => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>)}</SelectContent></Select></div>
                 <div className="space-y-2"><Label>Região do corpo</Label><Select value={region} onValueChange={(value) => setRegion(value as WorkoutRegion)}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{REGIONS.map((item) => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>)}</SelectContent></Select></div>
                 <div className="space-y-2"><Label>Nível</Label><Select value={level} onValueChange={(value) => setLevel(value as WorkoutLevel)}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{LEVELS.map((item) => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>)}</SelectContent></Select></div>
+                <div className="space-y-2 md:col-span-3"><Label>Tipo de treino</Label><Select value={place} onValueChange={(value) => changePlace(value as WorkoutPlace)}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{PLACES.map((item) => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>)}</SelectContent></Select></div>
+                <div className="space-y-2 md:col-span-3">
+                  <Label>Equipamentos disponíveis</Label>
+                  <div className="flex flex-wrap gap-x-4 gap-y-2">
+                    {EQUIPMENTS.map((item) => (
+                      <label key={item.value} className="flex items-center gap-2 text-sm cursor-pointer">
+                        <Checkbox checked={equipment.includes(item.value)} onCheckedChange={(checked) => toggleEquipment(item.value, checked === true)} aria-label={item.label} />
+                        {item.label}
+                      </label>
+                    ))}
+                  </div>
+                  <p className="text-xs text-muted-foreground">Se faltar algum aparelho, trocamos por um exercício similar para a mesma região e objetivo.</p>
+                </div>
                 <Button onClick={generate} className="md:col-span-3"><Sparkles className="h-4 w-4 mr-2" /> Gerar treino</Button>
               </CardContent>
             </Card>
