@@ -14,13 +14,19 @@ import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import {
   generateWorkout,
+  findSimilar,
   GOALS,
   LEVELS,
   REGIONS,
+  PLACES,
+  EQUIPMENTS,
+  PLACE_EQUIPMENT,
   youtubeSearchUrl,
+  type Equipment,
   type WorkoutExercise,
   type WorkoutGoal,
   type WorkoutLevel,
+  type WorkoutPlace,
   type WorkoutRegion,
 } from "@/data/workouts";
 import { useWorkoutLogs } from "@/hooks/useWorkoutLogs";
@@ -38,15 +44,48 @@ const Fitness = () => {
   const [goal, setGoal] = useState<WorkoutGoal>("condicionamento");
   const [region, setRegion] = useState<WorkoutRegion>("corpo-inteiro");
   const [level, setLevel] = useState<WorkoutLevel>("iniciante");
+  const [place, setPlace] = useState<WorkoutPlace>("livre");
+  const [equipment, setEquipment] = useState<Equipment[]>(PLACE_EQUIPMENT.livre);
   const [todayWorkout, setTodayWorkout] = useState<WorkoutExercise[] | null>(null);
   const [todayLogId, setTodayLogId] = useState<string | null>(null);
 
   const completed = useMemo(() => todayWorkout?.filter((exercise) => exercise.done).length ?? 0, [todayWorkout]);
 
+  const changePlace = (value: WorkoutPlace) => {
+    setPlace(value);
+    setEquipment(PLACE_EQUIPMENT[value]);
+  };
+
+  const toggleEquipment = (value: Equipment, checked: boolean) => {
+    setEquipment((current) => (checked ? [...current, value] : current.filter((item) => item !== value)));
+  };
+
   const generate = () => {
-    setTodayWorkout(generateWorkout(goal, region, level));
+    setTodayWorkout(generateWorkout(goal, region, level, place, equipment));
     setTodayLogId(null);
   };
+
+  const replaceExercise = async (index: number) => {
+    if (!todayWorkout) return;
+    const current = todayWorkout[index];
+    const similar = findSimilar(
+      current,
+      equipment.length > 0 ? equipment : PLACE_EQUIPMENT[place],
+      todayWorkout.map((exercise) => exercise.name),
+    );
+    if (!similar) {
+      toast.info("Não encontramos outro exercício equivalente com os equipamentos disponíveis.");
+      return;
+    }
+    const next = todayWorkout.map((exercise, i) =>
+      i === index
+        ? { ...similar, sets: exercise.sets, reps: exercise.reps, rest: exercise.rest, done: false, replacedFor: current.name }
+        : exercise,
+    );
+    setTodayWorkout(next);
+    if (todayLogId) await updateExercises(todayLogId, next);
+  };
+
 
   const toggleExercise = async (index: number, checked: boolean) => {
     if (!todayWorkout) return;
@@ -97,6 +136,19 @@ const Fitness = () => {
                 <div className="space-y-2"><Label>Objetivo</Label><Select value={goal} onValueChange={(value) => setGoal(value as WorkoutGoal)}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{GOALS.map((item) => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>)}</SelectContent></Select></div>
                 <div className="space-y-2"><Label>Região do corpo</Label><Select value={region} onValueChange={(value) => setRegion(value as WorkoutRegion)}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{REGIONS.map((item) => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>)}</SelectContent></Select></div>
                 <div className="space-y-2"><Label>Nível</Label><Select value={level} onValueChange={(value) => setLevel(value as WorkoutLevel)}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{LEVELS.map((item) => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>)}</SelectContent></Select></div>
+                <div className="space-y-2 md:col-span-3"><Label>Tipo de treino</Label><Select value={place} onValueChange={(value) => changePlace(value as WorkoutPlace)}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{PLACES.map((item) => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>)}</SelectContent></Select></div>
+                <div className="space-y-2 md:col-span-3">
+                  <Label>Equipamentos disponíveis</Label>
+                  <div className="flex flex-wrap gap-x-4 gap-y-2">
+                    {EQUIPMENTS.map((item) => (
+                      <label key={item.value} className="flex items-center gap-2 text-sm cursor-pointer">
+                        <Checkbox checked={equipment.includes(item.value)} onCheckedChange={(checked) => toggleEquipment(item.value, checked === true)} aria-label={item.label} />
+                        {item.label}
+                      </label>
+                    ))}
+                  </div>
+                  <p className="text-xs text-muted-foreground">Se faltar algum aparelho, trocamos por um exercício similar para a mesma região e objetivo.</p>
+                </div>
                 <Button onClick={generate} className="md:col-span-3"><Sparkles className="h-4 w-4 mr-2" /> Gerar treino</Button>
               </CardContent>
             </Card>
@@ -113,11 +165,14 @@ const Fitness = () => {
                     <div key={`${exercise.name}-${index}`} className="border border-border rounded-lg p-4 space-y-3">
                       <div className="flex items-start gap-3">
                         <Checkbox checked={Boolean(exercise.done)} onCheckedChange={(checked) => toggleExercise(index, checked === true)} aria-label={`Marcar ${exercise.name} como concluído`} className="mt-1" />
-                        <div className="flex-1"><h3 className={`font-semibold ${exercise.done ? "line-through text-muted-foreground" : ""}`}>{exercise.name}</h3><p className="text-sm text-muted-foreground mt-1">{exercise.sets} séries · {exercise.reps} · descanso de {exercise.rest}</p></div>
+                        <div className="flex-1"><h3 className={`font-semibold ${exercise.done ? "line-through text-muted-foreground" : ""}`}>{exercise.name}</h3><p className="text-sm text-muted-foreground mt-1">{exercise.sets} séries · {exercise.reps} · descanso de {exercise.rest}</p>{exercise.replacedFor && <p className="text-xs text-primary mt-1">Exercício similar, no lugar de {exercise.replacedFor}</p>}</div>
                         <Button asChild variant="ghost" size="icon" aria-label={`Pesquisar demonstração de ${exercise.name}`} title="Pesquisar demonstração no YouTube"><a href={exercise.video || youtubeSearchUrl(exercise.name)} target="_blank" rel="noreferrer"><Play className="h-4 w-4" /></a></Button>
                       </div>
                       <div className="pl-7 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm"><p><strong>Execução:</strong> {exercise.execution}</p><p><strong>Cuidados:</strong> {exercise.care}</p></div>
-                      {!exercise.video && <p className="pl-7 text-xs text-muted-foreground">Pesquisar demonstração no YouTube</p>}
+                      <div className="pl-7 flex flex-wrap items-center gap-3">
+                        <Button variant="ghost" size="sm" onClick={() => replaceExercise(index)}>Trocar por exercício similar</Button>
+                        {!exercise.video && <span className="text-xs text-muted-foreground">Pesquisar demonstração no YouTube</span>}
+                      </div>
                     </div>
                   ))}
                 </CardContent>
