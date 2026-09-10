@@ -44,15 +44,48 @@ const Fitness = () => {
   const [goal, setGoal] = useState<WorkoutGoal>("condicionamento");
   const [region, setRegion] = useState<WorkoutRegion>("corpo-inteiro");
   const [level, setLevel] = useState<WorkoutLevel>("iniciante");
+  const [place, setPlace] = useState<WorkoutPlace>("livre");
+  const [equipment, setEquipment] = useState<Equipment[]>(PLACE_EQUIPMENT.livre);
   const [todayWorkout, setTodayWorkout] = useState<WorkoutExercise[] | null>(null);
   const [todayLogId, setTodayLogId] = useState<string | null>(null);
 
   const completed = useMemo(() => todayWorkout?.filter((exercise) => exercise.done).length ?? 0, [todayWorkout]);
 
+  const changePlace = (value: WorkoutPlace) => {
+    setPlace(value);
+    setEquipment(PLACE_EQUIPMENT[value]);
+  };
+
+  const toggleEquipment = (value: Equipment, checked: boolean) => {
+    setEquipment((current) => (checked ? [...current, value] : current.filter((item) => item !== value)));
+  };
+
   const generate = () => {
-    setTodayWorkout(generateWorkout(goal, region, level));
+    setTodayWorkout(generateWorkout(goal, region, level, place, equipment));
     setTodayLogId(null);
   };
+
+  const replaceExercise = async (index: number) => {
+    if (!todayWorkout) return;
+    const current = todayWorkout[index];
+    const similar = findSimilar(
+      current,
+      equipment.length > 0 ? equipment : PLACE_EQUIPMENT[place],
+      todayWorkout.map((exercise) => exercise.name),
+    );
+    if (!similar) {
+      toast.info("Não encontramos outro exercício equivalente com os equipamentos disponíveis.");
+      return;
+    }
+    const next = todayWorkout.map((exercise, i) =>
+      i === index
+        ? { ...similar, sets: exercise.sets, reps: exercise.reps, rest: exercise.rest, done: false, replacedFor: current.name }
+        : exercise,
+    );
+    setTodayWorkout(next);
+    if (todayLogId) await updateExercises(todayLogId, next);
+  };
+
 
   const toggleExercise = async (index: number, checked: boolean) => {
     if (!todayWorkout) return;
