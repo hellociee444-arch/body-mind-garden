@@ -235,6 +235,12 @@ export default function ShoppingList() {
               ))}
             </div>
           )}
+
+          {items.length > 0 && (
+            <SendPdfEmail
+              options={[{ label: "Lista de compras", run: () => downloadPersonalShoppingList(items) }]}
+            />
+          )}
         </section>
       </main>
       <Footer />
