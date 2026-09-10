@@ -165,11 +165,14 @@ const Fitness = () => {
                     <div key={`${exercise.name}-${index}`} className="border border-border rounded-lg p-4 space-y-3">
                       <div className="flex items-start gap-3">
                         <Checkbox checked={Boolean(exercise.done)} onCheckedChange={(checked) => toggleExercise(index, checked === true)} aria-label={`Marcar ${exercise.name} como concluído`} className="mt-1" />
-                        <div className="flex-1"><h3 className={`font-semibold ${exercise.done ? "line-through text-muted-foreground" : ""}`}>{exercise.name}</h3><p className="text-sm text-muted-foreground mt-1">{exercise.sets} séries · {exercise.reps} · descanso de {exercise.rest}</p></div>
+                        <div className="flex-1"><h3 className={`font-semibold ${exercise.done ? "line-through text-muted-foreground" : ""}`}>{exercise.name}</h3><p className="text-sm text-muted-foreground mt-1">{exercise.sets} séries · {exercise.reps} · descanso de {exercise.rest}</p>{exercise.replacedFor && <p className="text-xs text-primary mt-1">Exercício similar, no lugar de {exercise.replacedFor}</p>}</div>
                         <Button asChild variant="ghost" size="icon" aria-label={`Pesquisar demonstração de ${exercise.name}`} title="Pesquisar demonstração no YouTube"><a href={exercise.video || youtubeSearchUrl(exercise.name)} target="_blank" rel="noreferrer"><Play className="h-4 w-4" /></a></Button>
                       </div>
                       <div className="pl-7 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm"><p><strong>Execução:</strong> {exercise.execution}</p><p><strong>Cuidados:</strong> {exercise.care}</p></div>
-                      {!exercise.video && <p className="pl-7 text-xs text-muted-foreground">Pesquisar demonstração no YouTube</p>}
+                      <div className="pl-7 flex flex-wrap items-center gap-3">
+                        <Button variant="ghost" size="sm" onClick={() => replaceExercise(index)}>Trocar por exercício similar</Button>
+                        {!exercise.video && <span className="text-xs text-muted-foreground">Pesquisar demonstração no YouTube</span>}
+                      </div>
                     </div>
                   ))}
                 </CardContent>
