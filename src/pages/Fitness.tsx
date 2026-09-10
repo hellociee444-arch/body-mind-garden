@@ -14,13 +14,19 @@ import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import {
   generateWorkout,
+  findSimilar,
   GOALS,
   LEVELS,
   REGIONS,
+  PLACES,
+  EQUIPMENTS,
+  PLACE_EQUIPMENT,
   youtubeSearchUrl,
+  type Equipment,
   type WorkoutExercise,
   type WorkoutGoal,
   type WorkoutLevel,
+  type WorkoutPlace,
   type WorkoutRegion,
 } from "@/data/workouts";
 import { useWorkoutLogs } from "@/hooks/useWorkoutLogs";
