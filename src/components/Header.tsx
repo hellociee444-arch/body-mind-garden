@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
   const { favorites } = useFavorites();
   const { user, signOut } = useAuth();
   const location = useLocation();
