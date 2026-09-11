@@ -72,7 +72,9 @@ export default function Auth() {
       <main className="flex-1 flex items-center justify-center py-12 px-4">
         <Card className="w-full max-w-md">
           <CardHeader>
-            <CardTitle className="text-2xl font-heading text-center">Bem-vindo(a) ao Viva Leve</CardTitle>
+            <CardTitle asChild>
+              <h1 className="text-2xl font-heading text-center">Bem-vindo(a) ao Viva Leve</h1>
+            </CardTitle>
             <p className="text-sm text-muted-foreground text-center">Salve seu plano, favoritos e histórico.</p>
           </CardHeader>
           <CardContent>
