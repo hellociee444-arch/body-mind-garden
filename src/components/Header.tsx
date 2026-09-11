@@ -210,32 +210,84 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation — mesma estrutura compacta do desktop */}
         {isMenuOpen && (
           <nav
-            className="lg:hidden border-t border-border py-4 space-y-1 animate-fade-in"
+            className="lg:hidden border-t border-border py-3 space-y-1 animate-fade-in max-h-[calc(100vh-4rem)] overflow-y-auto overscroll-contain"
             aria-label="Navegação móvel"
           >
-            {allMobileItems.map((item) => (
-              <NavLink
-                key={item.name}
-                to={item.path}
-                end={item.path === "/"}
-                onClick={() => setIsMenuOpen(false)}
-                className={({ isActive }) =>
-                  cn(
-                    "block py-2 px-2 rounded-md text-sm font-medium transition-colors",
-                    isActive
-                      ? "text-primary bg-accent/50"
-                      : "text-muted-foreground hover:text-primary hover:bg-accent/30",
-                  )
-                }
-              >
-                {item.name}
-              </NavLink>
-            ))}
+            {navItems.map((item) =>
+              item.children ? (
+                <div key={item.name} className="rounded-md">
+                  <button
+                    type="button"
+                    onClick={() => setOpenGroup(openGroup === item.name ? null : item.name)}
+                    aria-expanded={openGroup === item.name}
+                    className={cn(
+                      "w-full flex items-center justify-between py-2.5 px-2 rounded-md text-sm font-medium transition-colors",
+                      item.children.some((c) => location.pathname === c.path)
+                        ? "text-primary bg-accent/50"
+                        : "text-muted-foreground hover:text-primary hover:bg-accent/30",
+                    )}
+                  >
+                    {item.name}
+                    <ChevronDown
+                      className={cn(
+                        "h-4 w-4 transition-transform duration-300",
+                        openGroup === item.name && "rotate-180",
+                      )}
+                    />
+                  </button>
+                  {openGroup === item.name && (
+                    <div className="mt-1 mb-1 ml-3 pl-3 border-l border-border space-y-0.5 animate-fade-in">
+                      {item.children.map((c) => (
+                        <NavLink
+                          key={c.name}
+                          to={c.path}
+                          onClick={() => {
+                            setIsMenuOpen(false);
+                            setOpenGroup(null);
+                          }}
+                          className={({ isActive }) =>
+                            cn(
+                              "block py-2 px-2 rounded-md text-sm transition-colors",
+                              isActive
+                                ? "text-primary bg-accent/50 font-medium"
+                                : "text-muted-foreground hover:text-primary hover:bg-accent/30",
+                            )
+                          }
+                        >
+                          {c.name}
+                        </NavLink>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <NavLink
+                  key={item.name}
+                  to={item.path}
+                  end={item.path === "/"}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    setOpenGroup(null);
+                  }}
+                  className={({ isActive }) =>
+                    cn(
+                      "block py-2.5 px-2 rounded-md text-sm font-medium transition-colors",
+                      isActive
+                        ? "text-primary bg-accent/50"
+                        : "text-muted-foreground hover:text-primary hover:bg-accent/30",
+                    )
+                  }
+                >
+                  {item.name}
+                </NavLink>
+              ),
+            )}
           </nav>
         )}
+
       </div>
     </header>
   );
