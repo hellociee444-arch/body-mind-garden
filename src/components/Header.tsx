@@ -67,8 +67,6 @@ const Header = () => {
     },
   ];
 
-  const allMobileItems = navItems.flatMap((i) => i.children ?? [i]);
-
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-card/80 backdrop-blur-md supports-[backdrop-filter]:bg-card/70 shadow-sm">
       <div className="container mx-auto px-4">
