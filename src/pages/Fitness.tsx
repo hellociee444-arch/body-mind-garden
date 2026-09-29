@@ -1,11 +1,12 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dumbbell, Clock, Heart, Sparkles, Check, ExternalLink, Play, Trash2, Save } from "lucide-react";
-import { fitness } from "@/data/content";
+import { Dumbbell, Heart, Sparkles, Play, Trash2, Save, Utensils, Activity } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { YOGA_PILATES, WARMUP_MOBILITY } from "@/data/mobility";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -46,8 +47,33 @@ const Fitness = () => {
   const [level, setLevel] = useState<WorkoutLevel>("iniciante");
   const [place, setPlace] = useState<WorkoutPlace>("livre");
   const [equipment, setEquipment] = useState<Equipment[]>(PLACE_EQUIPMENT.livre);
-  const [todayWorkout, setTodayWorkout] = useState<WorkoutExercise[] | null>(null);
-  const [todayLogId, setTodayLogId] = useState<string | null>(null);
+  const stored = (() => {
+    try { return JSON.parse(localStorage.getItem("vivaleve:treino-atual") || "null"); } catch { return null; }
+  })();
+  const [todayWorkout, setTodayWorkout] = useState<WorkoutExercise[] | null>(stored?.workout ?? null);
+  const [todayLogId, setTodayLogId] = useState<string | null>(stored?.logId ?? null);
+  const [routine, setRoutine] = useState<"yoga" | "mobilidade" | null>(null);
+
+  useEffect(() => {
+    if (todayWorkout) localStorage.setItem("vivaleve:treino-atual", JSON.stringify({ workout: todayWorkout, logId: todayLogId }));
+    else localStorage.removeItem("vivaleve:treino-atual");
+  }, [todayWorkout, todayLogId]);
+
+  const openSaved = (id: string) => {
+    const log = workouts.find((w) => w.id === id);
+    if (!log) return;
+    setTodayWorkout(log.exercises);
+    setTodayLogId(log.id);
+    if (GOALS.some((g) => g.value === log.objetivo)) setGoal(log.objetivo as WorkoutGoal);
+    if (REGIONS.some((r) => r.value === log.region)) setRegion(log.region as WorkoutRegion);
+    if (LEVELS.some((l) => l.value === log.level)) setLevel(log.level as WorkoutLevel);
+    document.getElementById("treino-de-hoje")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const removeSaved = async (id: string) => {
+    await remove(id);
+    if (todayLogId === id) setTodayLogId(null);
+  };
 
   const completed = useMemo(() => todayWorkout?.filter((exercise) => exercise.done).length ?? 0, [todayWorkout]);
 
@@ -154,7 +180,7 @@ const Fitness = () => {
             </Card>
 
             {todayWorkout && (
-              <Card className="border-primary/30">
+              <Card id="treino-de-hoje" className="border-primary/30 scroll-mt-24">
                 <CardHeader className="flex flex-row items-center justify-between gap-4 space-y-0">
                   <div><CardTitle className="font-heading">Treino de hoje</CardTitle><p className="text-sm text-muted-foreground mt-1">{completed} de {todayWorkout.length} exercícios concluídos</p></div>
                   <Button variant="outline" onClick={saveWorkout} disabled={Boolean(todayLogId)}><Save className="h-4 w-4 mr-2" /> {todayLogId ? "Salvo" : "Salvar histórico"}</Button>
@@ -185,7 +211,7 @@ const Fitness = () => {
                 <CardContent className="space-y-3">
                   {workouts.slice(0, 5).map((workout) => {
                     const done = workout.exercises.filter((exercise) => exercise.done).length;
-                    return <div key={workout.id} className="flex items-center justify-between gap-3 border-b border-border pb-3 last:border-0"><div><p className="font-medium">{new Date(`${workout.log_date}T12:00:00`).toLocaleDateString("pt-BR")}</p><p className="text-sm text-muted-foreground">{GOALS.find((item) => item.value === workout.objetivo)?.label} · {done}/{workout.exercises.length} concluídos</p></div><Button variant="ghost" size="icon" aria-label="Remover treino do histórico" onClick={() => remove(workout.id)}><Trash2 className="h-4 w-4" /></Button></div>;
+                    return <div key={workout.id} className={`flex items-center justify-between gap-3 border-b border-border pb-3 last:border-0 ${todayLogId === workout.id ? "text-primary" : ""}`}><button type="button" onClick={() => openSaved(workout.id)} className="flex-1 text-left rounded-md p-1 -m-1 hover:bg-accent/40 transition-colors" aria-label="Abrir treino salvo"><p className="font-medium">{new Date(`${workout.log_date}T12:00:00`).toLocaleDateString("pt-BR")}</p><p className="text-sm text-muted-foreground">{GOALS.find((item) => item.value === workout.objetivo)?.label} · {REGIONS.find((item) => item.value === workout.region)?.label} · {done}/{workout.exercises.length} concluídos</p></button><Button variant="ghost" size="icon" aria-label="Remover treino do histórico" onClick={() => removeSaved(workout.id)}><Trash2 className="h-4 w-4" /></Button></div>;
                   })}
                 </CardContent>
               </Card>
@@ -195,10 +221,30 @@ const Fitness = () => {
 
         <section className="py-16 bg-accent/20">
           <div className="container mx-auto px-4 max-w-5xl">
-            <div className="text-center mb-10 space-y-3"><h2 className="font-heading text-3xl md:text-4xl font-bold">Treinos recomendados</h2><p className="text-muted-foreground text-lg">Treinos práticos e eficientes para todos os níveis</p></div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">{fitness.map((item, index) => { const Icon = iconMap[item.treino] || Dumbbell; return <Card key={index} className="border-none shadow-card hover:shadow-soft transition-all duration-300 hover:-translate-y-1"><CardContent className="p-6 space-y-4"><div className="inline-flex rounded-full bg-accent p-3"><Icon className="h-6 w-6 text-accent-foreground" /></div><h3 className="font-heading text-xl font-semibold">{item.treino}</h3><div className="flex items-center gap-2 text-sm text-muted-foreground"><Clock className="h-4 w-4" /><span>{item.duracao}</span></div><p className="text-muted-foreground leading-relaxed">{item.beneficios}</p><div className="pt-3 border-t border-border"><p className="text-sm font-medium text-foreground mb-1">Combinação alimentar:</p><p className="text-sm text-muted-foreground">{item.combinacao_alimentar}</p></div></CardContent></Card>; })}</div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Link to="/categoria/pre-treino" className="block"><Card className="h-full border-none shadow-card hover:shadow-soft transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]"><CardContent className="p-6 space-y-3"><div className="inline-flex rounded-full bg-accent p-3"><Utensils className="h-6 w-6 text-accent-foreground" /></div><h3 className="font-heading text-xl font-semibold">Receitas pré-treino</h3><p className="text-sm text-muted-foreground">Energia leve e de fácil digestão antes de treinar.</p></CardContent></Card></Link>
+              <button type="button" onClick={() => setRoutine("yoga")} className="text-left"><Card className="h-full border-none shadow-card hover:shadow-soft transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]"><CardContent className="p-6 space-y-3"><div className="inline-flex rounded-full bg-accent p-3"><Heart className="h-6 w-6 text-accent-foreground" /></div><h3 className="font-heading text-xl font-semibold">Yoga/Pilates</h3><p className="text-sm text-muted-foreground">Equilíbrio, força e respiração.</p></CardContent></Card></button>
+              <button type="button" onClick={() => setRoutine("mobilidade")} className="text-left"><Card className="h-full border-none shadow-card hover:shadow-soft transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]"><CardContent className="p-6 space-y-3"><div className="inline-flex rounded-full bg-accent p-3"><Activity className="h-6 w-6 text-accent-foreground" /></div><h3 className="font-heading text-xl font-semibold">Aquecimento e mobilidade</h3><p className="text-sm text-muted-foreground">Prepare o corpo e ganhe amplitude.</p></CardContent></Card></button>
+            </div>
           </div>
         </section>
+
+        <Dialog open={routine !== null} onOpenChange={(open) => !open && setRoutine(null)}>
+          <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
+            <DialogHeader><DialogTitle className="font-heading">{routine === "yoga" ? "Yoga/Pilates" : "Aquecimento e mobilidade"}</DialogTitle></DialogHeader>
+            <div className="space-y-3">
+              {(routine === "yoga" ? YOGA_PILATES : WARMUP_MOBILITY).map((exercise) => (
+                <div key={exercise.name} className="border border-border rounded-lg p-4 space-y-2">
+                  <div className="flex items-start gap-3">
+                    <div className="flex-1"><h3 className="font-semibold">{exercise.name}</h3><p className="text-sm text-muted-foreground mt-1">{exercise.sets} séries · {exercise.reps} · descanso de {exercise.rest}</p></div>
+                    <Button asChild variant="ghost" size="icon" aria-label={`Pesquisar demonstração de ${exercise.name}`} title="Pesquisar demonstração no YouTube"><a href={exercise.video || youtubeSearchUrl(exercise.name)} target="_blank" rel="noreferrer"><Play className="h-4 w-4" /></a></Button>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm"><p><strong>Execução:</strong> {exercise.execution}</p><p><strong>Cuidados:</strong> {exercise.care}</p></div>
+                </div>
+              ))}
+            </div>
+          </DialogContent>
+        </Dialog>
 
         <section className="py-16"><div className="container mx-auto px-4 max-w-3xl"><h2 className="font-heading text-3xl md:text-4xl font-bold mb-8 text-center">Dicas para começar</h2><div className="space-y-4">{["Comece devagar", "Hidrate-se bem", "Nutrição é fundamental", "Descanse adequadamente"].map((title) => <Card key={title} className="border-none shadow-card"><CardContent className="p-6"><h3 className="font-heading text-lg font-semibold mb-2">{title}</h3><p className="text-muted-foreground">Respeite seu ritmo, observe seu corpo e construa uma rotina possível de manter.</p></CardContent></Card>)}</div><div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3"><Button asChild variant="outline"><Link to="/alimentacao-e-treino">Alimentação e treino</Link></Button><Button asChild variant="outline"><Link to="/bem-estar">Bem-estar e mente</Link></Button><Button asChild variant="outline"><Link to="/receitas">Receitas para o treino</Link></Button></div></div></section>
       </main>
