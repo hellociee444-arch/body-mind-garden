@@ -216,6 +216,16 @@ export const CATEGORIES: CategoryDefinition[] = [
     description: "Receitas ricas em proteínas para apoiar treinos e ganho de massa.",
     match: (r) => r.proteins >= 20 || r.goals.includes("ganho-massa"),
   },
+  {
+    slug: "pre-treino",
+    label: "Pré-treino",
+    short: "Pré-treino",
+    description: "Receitas leves com energia de fácil digestão para antes do treino.",
+    match: (r) =>
+      hasTag(r, "pré-treino", "pre-treino", "energia") ||
+      (r.carbs >= 20 && r.fats <= 12 && r.timeMinutes <= 30) ||
+      hasIng(r, "banana", "aveia", "batata-doce", "tapioca"),
+  },
 ];
 
 export const getCategoryBySlug = (slug: string) =>
