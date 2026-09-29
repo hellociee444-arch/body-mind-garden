@@ -47,18 +47,30 @@ const Fitness = () => {
   })();
   const [todayWorkout, setTodayWorkout] = useState<WorkoutExercise[] | null>(stored?.workout ?? null);
   const [todayLogId, setTodayLogId] = useState<string | null>(stored?.logId ?? null);
+  const [todayLogDate, setTodayLogDate] = useState<string | null>(stored?.logDate ?? null);
   const [routine, setRoutine] = useState<"yoga" | "mobilidade" | null>(null);
 
   useEffect(() => {
-    if (todayWorkout) localStorage.setItem("vivaleve:treino-atual", JSON.stringify({ workout: todayWorkout, logId: todayLogId }));
+    if (todayWorkout) localStorage.setItem("vivaleve:treino-atual", JSON.stringify({ workout: todayWorkout, logId: todayLogId, logDate: todayLogDate }));
     else localStorage.removeItem("vivaleve:treino-atual");
-  }, [todayWorkout, todayLogId]);
+  }, [todayWorkout, todayLogId, todayLogDate]);
+
+  /** Título do treino aberto, conforme a data em que ele foi salvo. */
+  const workoutTitle = (logDate: string | null) => {
+    const parse = (value: string) => new Date(`${value}T12:00:00`);
+    const startOfDay = (date: Date) => new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+    const days = Math.round((startOfDay(new Date()) - startOfDay(logDate ? parse(logDate) : new Date())) / 86_400_000);
+    if (days === 0) return "Treino de hoje";
+    if (days === 1) return "Treino de ontem";
+    return `Treino de ${(logDate ? parse(logDate) : new Date()).toLocaleDateString("pt-BR")}`;
+  };
 
   const openSaved = (id: string) => {
     const log = workouts.find((w) => w.id === id);
     if (!log) return;
     setTodayWorkout(log.exercises);
     setTodayLogId(log.id);
+    setTodayLogDate(log.log_date);
     if (GOALS.some((g) => g.value === log.objetivo)) setGoal(log.objetivo as WorkoutGoal);
     if (REGIONS.some((r) => r.value === log.region)) setRegion(log.region as WorkoutRegion);
     if (LEVELS.some((l) => l.value === log.level)) setLevel(log.level as WorkoutLevel);
@@ -84,6 +96,7 @@ const Fitness = () => {
   const generate = () => {
     setTodayWorkout(generateWorkout(goal, region, level, place, equipment));
     setTodayLogId(null);
+    setTodayLogDate(null);
   };
 
   const replaceExercise = async (index: number) => {
@@ -124,6 +137,7 @@ const Fitness = () => {
     const log = await save(goal, region, level, todayWorkout);
     if (log) {
       setTodayLogId(log.id);
+      setTodayLogDate(log.log_date);
       toast.success("Treino salvo no seu histórico.");
     } else {
       toast.error("Não foi possível salvar o treino.");
@@ -177,7 +191,7 @@ const Fitness = () => {
             {todayWorkout && (
               <Card id="treino-de-hoje" className="border-primary/30 scroll-mt-24">
                 <CardHeader className="flex flex-row items-center justify-between gap-4 space-y-0">
-                  <div><CardTitle className="font-heading">Treino de hoje</CardTitle><p className="text-sm text-muted-foreground mt-1">{completed} de {todayWorkout.length} exercícios concluídos</p></div>
+                  <div><CardTitle className="font-heading">{workoutTitle(todayLogDate)}</CardTitle><p className="text-sm text-muted-foreground mt-1">{completed} de {todayWorkout.length} exercícios concluídos</p></div>
                   <Button variant="outline" onClick={saveWorkout} disabled={Boolean(todayLogId)}><Save className="h-4 w-4 mr-2" /> {todayLogId ? "Salvo" : "Salvar histórico"}</Button>
                 </CardHeader>
                 <CardContent className="space-y-4">
