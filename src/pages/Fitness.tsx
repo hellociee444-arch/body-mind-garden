@@ -96,6 +96,7 @@ const Fitness = () => {
   const generate = () => {
     setTodayWorkout(generateWorkout(goal, region, level, place, equipment));
     setTodayLogId(null);
+    setTodayLogDate(null);
   };
 
   const replaceExercise = async (index: number) => {
@@ -136,6 +137,7 @@ const Fitness = () => {
     const log = await save(goal, region, level, todayWorkout);
     if (log) {
       setTodayLogId(log.id);
+      setTodayLogDate(log.log_date);
       toast.success("Treino salvo no seu histórico.");
     } else {
       toast.error("Não foi possível salvar o treino.");
@@ -189,7 +191,7 @@ const Fitness = () => {
             {todayWorkout && (
               <Card id="treino-de-hoje" className="border-primary/30 scroll-mt-24">
                 <CardHeader className="flex flex-row items-center justify-between gap-4 space-y-0">
-                  <div><CardTitle className="font-heading">Treino de hoje</CardTitle><p className="text-sm text-muted-foreground mt-1">{completed} de {todayWorkout.length} exercícios concluídos</p></div>
+                  <div><CardTitle className="font-heading">{workoutTitle(todayLogDate)}</CardTitle><p className="text-sm text-muted-foreground mt-1">{completed} de {todayWorkout.length} exercícios concluídos</p></div>
                   <Button variant="outline" onClick={saveWorkout} disabled={Boolean(todayLogId)}><Save className="h-4 w-4 mr-2" /> {todayLogId ? "Salvo" : "Salvar histórico"}</Button>
                 </CardHeader>
                 <CardContent className="space-y-4">
