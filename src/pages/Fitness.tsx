@@ -35,11 +35,6 @@ import { useAuth } from "@/contexts/AuthContext";
 import { SEO } from "@/components/SEO";
 
 const Fitness = () => {
-  const iconMap: { [key: string]: any } = {
-    "HIIT (Alta Performance)": Dumbbell,
-    "Yoga / Pilates (Equilíbrio e Força)": Heart,
-    "Corrida Leve / Caminhada": Sparkles,
-  };
   const { user } = useAuth();
   const { workouts, save, updateExercises, remove } = useWorkoutLogs();
   const [goal, setGoal] = useState<WorkoutGoal>("condicionamento");
